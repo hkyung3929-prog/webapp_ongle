@@ -192,7 +192,11 @@ select{border:1px solid var(--line);background:var(--surface);border-radius:10px
 .ghead{display:flex;align-items:center;gap:8px 10px;font-weight:600;font-size:14px;flex-wrap:wrap}
 .ghead .hint{font-weight:400}
 .repolist{border:1px solid var(--line);border-radius:12px;max-height:260px;overflow:auto}
-.repo{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line);cursor:pointer}
+.repo{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line)}
+.repo .rl{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;cursor:pointer;min-width:0}
+.repo .rl>div{min-width:0}
+.rcat{padding:5px 8px;font-size:13px;border-width:1.5px;border-radius:8px;background:var(--bg)}
+.repo .badge{display:inline-flex;align-items:center;gap:4px}
 .repo:last-child{border-bottom:0}
 .repo .rn{font-weight:600;font-size:14px;overflow-wrap:anywhere}
 .repo .ru{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -253,7 +257,7 @@ select{border:1px solid var(--line);background:var(--surface);border-radius:10px
 /* ================= 기본값 ================= */
 const CATS=["class","work","personal"];
 const CCOLOR={class:"var(--class)",work:"var(--work)",personal:"var(--personal)"};
-const DEF_SETTINGS={cats:{class:{label:"수업용"},work:{label:"업무용"},personal:{label:"개인용"}},gh:{a:{handle:"",cat:"personal"},b:{handle:"",cat:"work"}}};
+const DEF_SETTINGS={cats:{class:{label:"수업용"},work:{label:"업무용"},personal:{label:"개인용"}},gh:{a:{handle:"",cat:"personal"},b:{handle:"",cat:"work"}},kw:{class:"class, lesson, 수업",work:"",personal:""}};
 const SLOTS=["a","b"];
 const ICOLORS=["#3B7A4B","#3452C4","#A8571F","#B3362B","#6B3FA0","#1F7A80","#C0548A","#3D4A55"];
 const LS={data:"wd-data",cfg:"wd-cfg",queue:"wd-queue",sort:"wd-sort",view:"wd-view",seen:"wd-seen",check:"wd-check"};
@@ -269,6 +273,7 @@ function normSettings(s){
   if(s.cats)CATS.forEach(c=>{if(s.cats[c]&&s.cats[c].label)o.cats[c].label=s.cats[c].label});
   if(s.gh)SLOTS.forEach(k=>{if(s.gh[k]){o.gh[k].handle=s.gh[k].handle||"";if(CATS.includes(s.gh[k].cat))o.gh[k].cat=s.gh[k].cat}});
   else{if(s.personal&&s.personal.handle)o.gh.a.handle=s.personal.handle;if(s.work&&s.work.handle)o.gh.b.handle=s.work.handle}
+  if(s.kw)CATS.forEach(c=>{if(typeof s.kw[c]==="string")o.kw[c]=s.kw[c]});
   return o;
 }
 function normLink(l){
@@ -306,6 +311,13 @@ function safeHref(u){return /^https?:\/\//i.test(u||"")?u:"#"}
 function catLabel(c){return S.settings.cats[c]?.label||DEF_SETTINGS.cats[c].label}
 function ghHandle(k){return (S.settings.gh[k]?.handle||"").trim()}
 function ghCat(k){return S.settings.gh[k]?.cat||DEF_SETTINGS.gh[k].cat}
+function kwList(c){return String(S.settings.kw?.[c]||"").split(/[,\n]/).map(w=>w.trim().toLowerCase()).filter(Boolean)}
+/* 저장소 이름·설명·토픽에 분류 키워드가 있으면 그 분류, 없으면 계정의 기본 분류 */
+function autoCat(r,slot){
+  const hay=[r.name,r.full,r.desc,...(r.topics||[])].join(" ").toLowerCase();
+  for(const c of CATS){const w=kwList(c).find(w=>hay.includes(w));if(w)return {cat:c,word:w}}
+  return {cat:ghCat(slot),word:""};
+}
 function token(k){return (S.cfg.tokens?.[k]||"").trim()}
 function connected(){return !!(S.cfg.url&&S.cfg.key)}
 function hashColor(s){let h=0;for(const c of String(s||""))h=(h*31+c.charCodeAt(0))>>>0;return ICOLORS[h%ICOLORS.length]}
@@ -387,7 +399,7 @@ function parseRepos(arr){
     let pages="";
     if(r.has_pages&&owner){const o=owner.toLowerCase();pages=r.name.toLowerCase()===o+".github.io"?`https://${o}.github.io/`:`https://${o}.github.io/${r.name}/`}
     return {name:r.name,full,owner,repoUrl:r.html_url||("https://github.com/"+full),deploy:home?normUrl(home):pages,
-      priv:!!r.private,fork:!!r.fork,archived:!!r.archived,desc:r.description||"",updated:Date.parse(r.pushed_at||r.updated_at||"")||0};
+      topics:Array.isArray(r.topics)?r.topics:[],priv:!!r.private,fork:!!r.fork,archived:!!r.archived,desc:r.description||"",updated:Date.parse(r.pushed_at||r.updated_at||"")||0};
   }).sort((a,b)=>b.updated-a.updated);
 }
 async function ghRepos(slot){
@@ -740,6 +752,10 @@ function openSettings(){
         <label class="field"><span>가져올 때 기본 분류</span><select id="st-ghcat-${k}">${catOpts(st.gh[k].cat)}</select></label></div>`).join("")}
       <p class="hint">토큰은 이 브라우저에만 저장하고 시트로 보내지 않아요. GitHub 설정 → Developer settings → Fine-grained tokens에서 만들고, 저장소 접근은 All repositories, 권한은 Metadata 읽기만 주면 돼요.</p>
     </section>
+    <section class="sec"><h4>자동 분류 키워드</h4>
+      <div class="row3">${CATS.map(c=>`<label class="field"><span><i class="dot" style="--c:${CCOLOR[c]};margin-right:6px"></i>${esc(catLabel(c))}</span><input type="text" id="st-kw-${c}" value="${esc(st.kw[c])}" placeholder="예: ${{class:"class, lesson",work:"report, admin",personal:"diary"}[c]}"></label>`).join("")}</div>
+      <p class="hint">GitHub 동기화 때 저장소 이름·설명·토픽에 이 단어가 들어 있으면 그 분류로 담아요. 쉼표로 여러 개 적을 수 있어요. 맞는 단어가 없으면 위의 “가져올 때 기본 분류”를 따라요.</p>
+    </section>
     <section class="sec"><h4>구글 시트 연결</h4>
       <label class="field"><span>Apps Script 웹앱 주소</span><input type="url" id="st-url" class="mono" value="${esc(S.cfg.url)}" placeholder="https://script.google.com/macros/s/…/exec" spellcheck="false"></label>
       <label class="field"><span>연결 키</span><input type="password" id="st-key" class="mono" value="${esc(S.cfg.key)}" placeholder="setup 실행 후 나온 키" autocomplete="off"></label>
@@ -769,11 +785,13 @@ function openSettings(){
   m.querySelector("#st-save").addEventListener("click",async()=>{
     const btn=m.querySelector("#st-save");
     CATS.forEach(c=>{st.cats[c].label=m.querySelector(`#st-cat-${c}`).value.trim()||DEF_SETTINGS.cats[c].label});
+    st.kw=st.kw||{};CATS.forEach(c=>{st.kw[c]=m.querySelector(`#st-kw-${c}`).value.trim()});
     const labels=CATS.map(c=>st.cats[c].label);
     if(new Set(labels).size<3||labels.includes("설정")){toast("분류 이름은 서로 달라야 하고 ‘설정’은 쓸 수 없어요.");return}
     SLOTS.forEach(k=>{
       st.gh[k].handle=m.querySelector(`#st-gh-${k}`).value.trim().replace(/^@/,"").replace(/^https?:\/\/github\.com\//i,"").replace(/\/.*/,"");
       st.gh[k].cat=m.querySelector(`#st-ghcat-${k}`).value;
+      st.kw=st.kw||{};
       S.cfg.tokens[k]=m.querySelector(`#st-tok-${k}`).value.trim();
     });
     const wasConnected=connected();
@@ -795,12 +813,12 @@ function openSettings(){
 
 /* ================= GitHub 동기화 창 ================= */
 function openImport(){
-  let groups=null,sel=new Set(),gcat={},f={deployOnly:true,hideFork:true,hideArch:true};
+  let groups=null,sel=new Set(),rcat={},f={deployOnly:true,hideFork:true,hideArch:true};
   const m=openModal(`<div class="m-head"><h3>GitHub 동기화</h3>${XBTN}</div>
   <div class="m-body" id="im-body"></div>
   <div class="m-foot"><button class="btn ghost" type="button" id="im-reload">다시 불러오기</button><p class="hint" id="im-sum"></p><div class="r"><button class="btn" type="button" data-close>닫기</button><button class="btn primary" type="button" id="im-go" disabled>가져오기</button></div></div>`,true);
   const body=m.querySelector("#im-body");
-  SLOTS.forEach(k=>gcat[k]=ghCat(k));
+  const key=(g,r)=>g.slot+"|"+r.full;
 
   async function load(force){
     if(!ghSlots().length){
@@ -810,42 +828,51 @@ function openImport(){
     }
     body.innerHTML=`<p class="hint" style="display:flex;gap:8px;align-items:center"><span class="spin"></span>저장소 목록을 불러오는 중…</p>`;
     groups=await fetchAllRepos(force);
-    sel=new Set();
-    groups.forEach(g=>g.repos.forEach(r=>{if(r.deploy&&!r.fork&&!r.archived)sel.add(g.slot+"|"+r.full)}));
+    sel=new Set();rcat={};
+    groups.forEach(g=>g.repos.forEach(r=>{const k=key(g,r);rcat[k]=autoCat(r,g.slot);if(r.deploy&&!r.fork&&!r.archived)sel.add(k)}));
     draw();render();
   }
   function shown(g){return g.repos.filter(r=>(!f.deployOnly||r.deploy)&&(!f.hideFork||!r.fork)&&(!f.hideArch||!r.archived))}
+  function catSelect(k){
+    const rc=rcat[k];
+    return `<select class="rcat" data-rc="${esc(k)}" aria-label="담을 분류" style="border-color:${CCOLOR[rc.cat]}">${CATS.map(c=>`<option value="${c}" ${rc.cat===c?"selected":""}>${esc(catLabel(c))}</option>`).join("")}</select>`;
+  }
   function draw(){
     body.innerHTML=`<div class="checks"><label><input type="checkbox" id="f-dep" ${f.deployOnly?"checked":""}>배포 주소 있는 것만</label><label><input type="checkbox" id="f-fork" ${f.hideFork?"checked":""}>포크 숨기기</label><label><input type="checkbox" id="f-arch" ${f.hideArch?"checked":""}>보관된 저장소 숨기기</label></div>
-    ${groups.map(g=>{const v=shown(g),h=ghHandle(g.slot);return `<div class="group">
+    <p class="hint">저장소마다 오른쪽에서 담을 분류를 고를 수 있어요. 이름·설명·토픽에 <button class="linkish" type="button" id="im-kw">자동 분류 키워드</button>가 있으면 미리 골라 둬요.</p>
+    ${groups.map(g=>{const v=shown(g),h=ghHandle(g.slot),fresh=v.filter(r=>!existing(r));return `<div class="group">
       <div class="ghead"><span class="mono">@${esc(h||"토큰 계정")}</span>
         ${g.error?"":`<span class="hint">저장소 ${g.repos.length}개 중 ${v.length}개 표시${token(g.slot)?" · 비공개 포함":" · 공개만"}</span>`}
         ${!g.error&&v.length?`<button class="linkish" type="button" data-all="${g.slot}">모두 선택</button>`:""}</div>
-      ${g.error?"":`<div class="seg sm" data-gcat="${g.slot}" aria-label="새로 담을 분류">${CATS.map(c=>`<button type="button" data-c="${c}" aria-pressed="${gcat[g.slot]===c}"><i class="dot" style="--c:${CCOLOR[c]}"></i>${esc(catLabel(c))}에 담기</button>`).join("")}</div>`}
-      ${g.error?`<p class="err">${esc(g.error)}</p>`:v.length?`<div class="repolist">${v.map(r=>{const k=g.slot+"|"+r.full,ex=existing(r);return `<label class="repo"><input type="checkbox" data-k="${esc(k)}" ${sel.has(k)?"checked":""}>
-        <div><div class="rn">${esc(prettyName(r.name))}</div><div class="ru">${esc(r.deploy?hostOf(r.deploy):"배포 주소 없음 · 저장소 페이지로 연결")}</div></div>
-        <span class="rmeta">${r.priv?'<span class="badge">비공개</span>':""}${ex?`<span class="badge">${esc(catLabel(ex.category))}에 있음 · 갱신</span>`:'<span class="badge">새로</span>'}</span></label>`}).join("")}</div>`
+      ${!g.error&&fresh.length>1?`<div class="seg sm" data-gall="${g.slot}"><span class="hint" style="align-self:center">새 저장소 한꺼번에:</span>${CATS.map(c=>`<button type="button" data-c="${c}"><i class="dot" style="--c:${CCOLOR[c]}"></i>${esc(catLabel(c))}</button>`).join("")}</div>`:""}
+      ${g.error?`<p class="err">${esc(g.error)}</p>`:v.length?`<div class="repolist">${v.map(r=>{const k=key(g,r),ex=existing(r);return `<div class="repo">
+        <label class="rl"><input type="checkbox" data-k="${esc(k)}" ${sel.has(k)?"checked":""}>
+        <div><div class="rn">${esc(prettyName(r.name))}${r.priv?' <span class="badge">비공개</span>':""}</div><div class="ru">${esc(r.deploy?hostOf(r.deploy):"배포 주소 없음 · 저장소 페이지로 연결")}${rcat[k].word&&!ex?` · “${esc(rcat[k].word)}”`:""}</div></div></label>
+        <span class="rmeta">${ex?`<span class="badge"><i class="dot" style="--c:${CCOLOR[ex.category]}"></i> ${esc(catLabel(ex.category))}에 있음</span>`:catSelect(k)}</span></div>`}).join("")}</div>`
         :`<p class="hint">조건에 맞는 저장소가 없어요. 저장소 About의 Website 칸에 배포 주소를 적어 두면 자동으로 잡혀요.</p>`}</div>`}).join("")}
-    <p class="hint">이미 있는 링크는 분류·메모·썸네일을 그대로 두고 주소만 최신으로 맞춰요.</p>`;
+    <p class="hint">이미 담긴 링크는 분류·메모·썸네일을 그대로 두고 주소만 최신으로 맞춰요. 분류를 옮기려면 카드의 편집에서 바꿔 주세요.</p>`;
     body.querySelector("#f-dep").addEventListener("change",e=>{f.deployOnly=e.target.checked;draw()});
     body.querySelector("#f-fork").addEventListener("change",e=>{f.hideFork=e.target.checked;draw()});
     body.querySelector("#f-arch").addEventListener("change",e=>{f.hideArch=e.target.checked;draw()});
-    body.querySelectorAll("[data-gcat] button").forEach(b=>b.addEventListener("click",()=>{gcat[b.parentElement.dataset.gcat]=b.dataset.c;draw()}));
-    body.querySelectorAll("[data-all]").forEach(b=>b.addEventListener("click",()=>{const g=groups.find(x=>x.slot===b.dataset.all);const v=shown(g);const all=v.every(r=>sel.has(g.slot+"|"+r.full));v.forEach(r=>all?sel.delete(g.slot+"|"+r.full):sel.add(g.slot+"|"+r.full));draw()}));
+    body.querySelector("#im-kw").addEventListener("click",()=>{closeModal();openSettings()});
+    body.querySelectorAll("[data-rc]").forEach(x=>x.addEventListener("change",()=>{rcat[x.dataset.rc]={cat:x.value,word:""};x.style.borderColor=CCOLOR[x.value];upd()}));
+    body.querySelectorAll("[data-gall] button").forEach(b=>b.addEventListener("click",()=>{const g=groups.find(x=>x.slot===b.parentElement.dataset.gall);shown(g).forEach(r=>{if(!existing(r))rcat[key(g,r)]={cat:b.dataset.c,word:""}});draw()}));
+    body.querySelectorAll("[data-all]").forEach(b=>b.addEventListener("click",()=>{const g=groups.find(x=>x.slot===b.dataset.all);const v=shown(g);const all=v.every(r=>sel.has(key(g,r)));v.forEach(r=>all?sel.delete(key(g,r)):sel.add(key(g,r)));draw()}));
     body.querySelectorAll("[data-k]").forEach(c=>c.addEventListener("change",()=>{c.checked?sel.add(c.dataset.k):sel.delete(c.dataset.k);upd()}));
     upd();
   }
-  function picked(){const out=[];(groups||[]).forEach(g=>shown(g).forEach(r=>{if(sel.has(g.slot+"|"+r.full))out.push({slot:g.slot,r})}));return out}
-  function upd(){const p=picked(),n=p.filter(x=>!existing(x.r)).length,u=p.length-n;
-    m.querySelector("#im-sum").textContent=p.length?`새로 ${n}개${u?` · 갱신 ${u}개`:""}`:"";
+  function picked(){const out=[];(groups||[]).forEach(g=>shown(g).forEach(r=>{const k=key(g,r);if(sel.has(k))out.push({k,r})}));return out}
+  function upd(){const p=picked(),fresh=p.filter(x=>!existing(x.r)),u=p.length-fresh.length;
+    const per=CATS.map(c=>[c,fresh.filter(x=>rcat[x.k].cat===c).length]).filter(x=>x[1]);
+    m.querySelector("#im-sum").textContent=p.length?(per.map(([c,n])=>`${catLabel(c)} ${n}`).join(" · ")+(u?`${per.length?" · ":""}갱신 ${u}`:"")):"";
     const go=m.querySelector("#im-go");go.disabled=!p.length;go.textContent=p.length?`${p.length}개 가져오기`:"가져오기"}
   m.querySelector("#im-reload").addEventListener("click",()=>load(true));
   m.querySelector("#im-go").addEventListener("click",()=>{
     let made=0,upd2=0;
-    for(const {slot,r} of picked()){
+    for(const {k,r} of picked()){
       const url=r.deploy||r.repoUrl,ex=existing(r);
       if(ex){if(ex.url!==url||(!ex.memo&&r.desc)){putLink(Object.assign({},ex,{url,memo:ex.memo||r.desc}));upd2++}}
-      else{putLink({id:newId(),name:prettyName(r.name),url,memo:r.desc,links:[{label:"GitHub",url:r.repoUrl}],thumb:"",category:gcat[slot],repo:r.full,icon:{type:"auto"},pinned:false,opens:0,createdAt:Date.now()});made++}
+      else{putLink({id:newId(),name:prettyName(r.name),url,memo:r.desc,links:[{label:"GitHub",url:r.repoUrl}],thumb:"",category:rcat[k].cat,repo:r.full,icon:{type:"auto"},pinned:false,opens:0,createdAt:Date.now()});made++}
     }
     markSeen();closeModal();toast(made||upd2?`새로 ${made}개 추가${upd2?`, ${upd2}개 갱신`:""}했어요.`:"바뀐 게 없어요.");
   });
