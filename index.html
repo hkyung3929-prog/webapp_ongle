@@ -4,159 +4,312 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>🐯🐿️ONGLEDONGLE웹앱모음🍒</title>
-<meta name="theme-color" content="#ECEEEA" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#CFEAFB">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="🐯🐿️ONGLEDONGLE웹앱모음🍒">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231B1F1D'/%3E%3Crect x='14' y='14' width='15' height='15' rx='4' fill='%23E59A62'/%3E%3Crect x='35' y='14' width='15' height='15' rx='4' fill='%2393A6F6'/%3E%3Crect x='14' y='35' width='15' height='15' rx='4' fill='%237FC290'/%3E%3Crect x='35' y='35' width='15' height='15' rx='4' fill='%2393A6F6'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23CFEAFB'/%3E%3Cpath d='M12 50h40V30L32 14 12 30z' fill='%23FFC93C' stroke='%2323222B' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='27' y='36' width='10' height='14' fill='%23F28C38' stroke='%2323222B' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
-/* Layout: a drawer of app cards — header with tallies, category tabs, a folder bar for 학교용, then folder sections of cards (thumbnail on top) or a compact icon grid */
+/* 옹글동글 마을: 동네 지도(전체) → 거리(폴더별 가게 줄) / 목록 보기 토글 */
 :root{
-  --bg:#ECEEEA; --surface:#F8F9F6; --sunk:#E2E5E0; --ink:#1B1F1D; --muted:#5C6560; --line:#D2D7D1;
-  --school:#3452C4; --personal:#3B7A4B; --danger:#B3362B; --focus:#3452C4; --star:#B7811F;
-  --shadow:0 1px 2px rgba(27,31,29,.06),0 6px 18px -10px rgba(27,31,29,.25);
-  --f-display:"Bricolage Grotesque","IBM Plex Sans KR",system-ui,sans-serif;
-  --f-body:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --ink:#23222B; --ink2:#45434F; --muted:#6E6B78; --faint:#9C98A6; --line:#E8DFCB; --line2:#F1EADB;
+  --paper:#FFFDF7; --cream:#FFF6E3; --sunk:#F4EDDC; --bg:#D4ECFB;
+  --sky1:#BDE3FF; --sky2:#E6F5FF; --sea:#8ED2F5; --sea2:#6FC1EC; --grass:#BCE59B; --grass2:#A3D77E; --sand:#FBE7B0;
+  --school:#5B7CFA; --personal:#F28C38; --star:#FFC93C; --pink:#FF9EBB; --danger:#E5484D; --focus:#5B7CFA; --green:#3E9A5B;
+  --surface:var(--paper);
+  --hs:3px 3px 0 var(--ink); --hs2:0 3px 0 var(--ink);
+  --f:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-cute:"Jua","Pretendard Variable",Pretendard,system-ui,sans-serif;
+  --f-mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root{
-  --bg:#121413; --surface:#1B1E1C; --sunk:#0D0F0E; --ink:#E6EAE5; --muted:#99A29C; --line:#2D332F;
-  --school:#93A6F6; --personal:#7FC290; --danger:#F08A7E; --focus:#93A6F6; --star:#E2B85A;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 20px -12px rgba(0,0,0,.7); color-scheme:dark}}
-
 *{box-sizing:border-box}
-html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
+html{padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--ink);font-family:var(--f);font-size:14.5px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  background:var(--bg) radial-gradient(circle,rgba(255,255,255,.55) 1.6px,transparent 2px) 0 0/26px 26px;
+  padding:22px max(16px,env(safe-area-inset-right,0px)) calc(70px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));min-height:100dvh}
 img{max-width:100%}
 [hidden]{display:none!important}
-.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 button,input,select,textarea{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-.mono{font-family:var(--f-mono)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 a{color:inherit}
+.mono{font-family:var(--f-mono)}
+.cute{font-family:var(--f-cute);font-weight:400}
+.wrap{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
 
-header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
-.brand h1{font-family:var(--f-display);font-weight:800;font-size:clamp(25px,5vw,44px);line-height:1;letter-spacing:-.02em;margin:0;text-wrap:balance}
-.tally{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
-.tally span{display:inline-flex;align-items:center;gap:6px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--muted));flex:none;display:inline-block}
-.acts{display:flex;flex-wrap:wrap;gap:8px}
-.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:500;font-size:14px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;text-decoration:none}
-.btn:hover{border-color:var(--muted)}
-.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.btn.primary:hover{opacity:.88}
-.btn.ghost{background:transparent;border-color:transparent}
-.btn.ghost:hover{background:var(--sunk)}
-.btn.sm{padding:5px 10px;font-size:13px}
+/* ---- 공통 버튼 ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:2px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:999px;
+  padding:6px 14px;font-family:var(--f-cute);font-size:15px;line-height:1.2;cursor:pointer;white-space:nowrap;text-decoration:none;box-shadow:var(--hs2);transition:transform .08s,box-shadow .08s;min-height:36px}
+.btn:hover{background:#fff}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.btn.primary{background:var(--star)}
+.btn.primary:hover{background:#FFD45E}
+.btn.ghost{border-color:transparent;background:transparent;box-shadow:none}
+.btn.ghost:hover{background:rgba(35,34,43,.07)}
+.btn.sm{min-height:30px;padding:3px 11px;font-size:14px}
+.btn.icon{width:38px;padding:0}
 .btn.danger{color:var(--danger)}
-.btn.danger.arm{background:var(--danger);color:var(--surface);border-color:var(--danger)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.btn svg{width:16px;height:16px;flex:none}
-.btn .cnt{font-family:var(--f-mono);font-size:11px;background:var(--school);color:var(--surface);border-radius:999px;padding:0 6px}
+.btn.danger.arm{background:var(--danger);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn svg{width:17px;height:17px;flex:none}
+.btn[aria-pressed="true"]{background:var(--ink);color:#fff}
+.btn .cnt{font-family:var(--f-mono);font-size:11px;background:var(--danger);color:#fff;border-radius:999px;padding:1px 6px;margin-left:2px}
+.linkish{border:0;background:none;padding:0;color:var(--ink);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;cursor:pointer;font-size:13.5px;font-family:var(--f-cute)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--c,var(--muted));flex:none;display:inline-block;border:1.5px solid var(--ink)}
+.badge{font-size:11px;border:1.5px solid var(--line);border-radius:6px;padding:0 6px;color:var(--muted);white-space:nowrap}
 
-.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px}
-.tabs{display:flex;flex-wrap:wrap;gap:4px;background:var(--sunk);padding:4px;border-radius:12px}
-.tab{border:0;background:transparent;padding:6px 12px;border-radius:9px;cursor:pointer;font-size:14px;display:inline-flex;gap:7px;align-items:center;color:var(--muted)}
-.tab[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);font-weight:600}
-.tab .n{font-family:var(--f-mono);font-size:12px;opacity:.75;font-variant-numeric:tabular-nums}
-.tools{display:flex;gap:8px;flex-wrap:wrap;flex:1 1 300px;justify-content:flex-end;align-items:center}
-.search{position:relative;flex:1 1 200px;max-width:320px;display:block}
-.search input{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 34px 8px 12px}
-.search kbd{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-family:var(--f-mono);font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:0 5px}
-select{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 10px}
-.viewsw{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
-.viewsw button{border:0;background:transparent;padding:7px 9px;cursor:pointer;color:var(--muted);display:grid;place-items:center}
-.viewsw button[aria-pressed="true"]{background:var(--sunk);color:var(--ink)}
-.viewsw svg{width:17px;height:17px}
+/* ---- 머리 ---- */
+.hd{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand .mascot{width:58px;height:58px;flex:none;filter:drop-shadow(2px 3px 0 rgba(35,34,43,.18))}
+.brand h1{font-family:var(--f-cute);font-weight:400;font-size:clamp(22px,4.4vw,36px);line-height:1.1;margin:0;letter-spacing:-.01em;text-wrap:balance;
+  color:var(--ink);text-shadow:2px 2px 0 #fff}
+.brand .sub{font-family:var(--f-cute);color:var(--ink2);font-size:14px;margin-top:3px;display:flex;flex-wrap:wrap;gap:4px 10px}
+.acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--paper);border:2.5px solid var(--ink);border-radius:22px;box-shadow:var(--hs);padding:10px 12px}
+.guide{display:flex;align-items:center;gap:8px;flex:none}
+.guide svg{width:42px;height:42px}
+.bubble{position:relative;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:4px 10px;font-family:var(--f-cute);font-size:14px;white-space:nowrap}
+.bubble::before{content:"";position:absolute;left:-7px;top:50%;width:10px;height:10px;background:#fff;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:translateY(-50%) rotate(45deg)}
+.search{position:relative;flex:1 1 220px;display:block;min-width:0}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+.search input{width:100%;border:2px solid var(--line);background:#fff;border-radius:999px;padding:8px 38px 8px 36px;outline:none}
+.search input:focus{border-color:var(--ink)}
+.search kbd{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:var(--f-mono);font-size:11px;color:var(--muted);border:1.5px solid var(--line);border-radius:6px;padding:0 5px;background:var(--paper)}
+select{border:2px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;cursor:pointer;outline:none}
+select:focus{border-color:var(--ink)}
+.viewsw{display:flex;border:2px solid var(--ink);border-radius:999px;overflow:hidden;background:#fff;box-shadow:var(--hs2)}
+.viewsw button{border:0;background:transparent;padding:6px 13px;cursor:pointer;font-family:var(--f-cute);font-size:15px;display:inline-flex;gap:5px;align-items:center}
+.viewsw button+button{border-left:2px solid var(--ink)}
+.viewsw button[aria-pressed="true"]{background:var(--star)}
+
+/* ---- 칩 이동줄 ---- */
+.chips{display:grid;gap:8px}
+.crow{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 5px}
+.crow::-webkit-scrollbar{display:none}
+.chip-n{flex:none;border:2px solid var(--ink);background:var(--paper);border-radius:999px;padding:4px 12px;cursor:pointer;font-family:var(--f-cute);font-size:14.5px;display:inline-flex;gap:6px;align-items:center;box-shadow:0 2px 0 var(--ink);white-space:nowrap}
+.chip-n .n{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.chip-n[aria-pressed="true"]{background:var(--ink);color:#fff}
+.chip-n[aria-pressed="true"] .n{color:#ddd}
+.chip-n.sub{border-width:1.5px;box-shadow:none;background:rgba(255,255,255,.7);font-size:14px}
+.chip-n.sub[aria-pressed="true"]{background:var(--green);color:#fff;border-color:var(--ink)}
+.chip-n.add{border-style:dashed;box-shadow:none;background:transparent}
+
+/* ---- 알림 ---- */
 .notices{display:grid;gap:8px}
-.notice{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:13px;color:var(--muted);background:var(--sunk);border-radius:10px;padding:9px 14px}
-.notice b{color:var(--ink);font-weight:600}
-.linkish{border:0;background:none;padding:0;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:13px}
+.notice{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:14px;background:var(--paper);border:2px solid var(--ink);border-radius:16px;padding:8px 14px;box-shadow:0 3px 0 rgba(35,34,43,.18)}
+.notice .who{width:40px;height:40px;flex:none;margin:-4px 0}
+.notice b{font-weight:700}
+.notice.letter{background:#FFF1D6}
 
-/* ---- icons ---- */
-.ico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;flex:none;overflow:hidden;
-  font-family:var(--f-display);font-weight:800;font-size:21px;letter-spacing:-.02em;color:#fff;background:var(--ic,#555)}
-.ico.emoji{font-size:28px;background:var(--sunk)}
-.ico.site{background:var(--sunk)}
+/* ---- 지도 ---- */
+.map{position:relative;border:3px solid var(--ink);border-radius:30px;overflow:hidden;box-shadow:4px 5px 0 var(--ink);
+  background:var(--sea) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='46'%3E%3Cpath d='M8 14q6-6 12 0t12 0M52 36q6-6 12 0t12 0' fill='none' stroke='%23ffffff' stroke-opacity='.55' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E")}
+.sky{position:relative;height:150px;background:linear-gradient(var(--sky1),var(--sky2));overflow:hidden}
+.sky .sun{position:absolute;right:7%;top:16px;width:64px;height:64px}
+.sky .cloud{position:absolute;top:70px;width:110px;height:50px;animation:drift 38s linear infinite}
+.sky .cloud.c2{top:44px;width:80px;animation-duration:52s;animation-delay:-20s}
+.sky .cloud.c3{top:12px;width:70px;animation-duration:64s;animation-delay:-40s}
+@keyframes drift{from{transform:translateX(-140px)}to{transform:translateX(1300px)}}
+.sky .hills{position:absolute;left:0;right:0;bottom:-2px;width:100%;height:84px}
+.isle-row{display:flex;justify-content:center;padding:18px 16px 4px;position:relative}
+.island{position:relative;border:0;background:none;cursor:pointer;display:grid;justify-items:center;padding:0}
+.isle-land{display:flex;align-items:flex-end;justify-content:center;gap:2px;min-width:220px;padding:6px 26px 14px;background:var(--grass);border:3px solid var(--ink);border-radius:50% 50% 46% 46%/34% 34% 66% 66%;
+  box-shadow:0 0 0 8px var(--sand),0 0 0 11px var(--ink)}
+.isle-land .mini{width:58px;height:54px}
+.isle-land .lh{width:60px;height:70px}
+.island .pill{margin-top:16px}
+.island:hover .isle-land{transform:translateY(-3px)}
+.isle-land{transition:transform .2s}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:3px 13px;font-family:var(--f-cute);font-size:15px;box-shadow:var(--hs2);white-space:nowrap}
+.pill b{font-family:var(--f-mono);font-size:12px;font-weight:500;background:var(--ink);color:#fff;border-radius:999px;padding:0 6px}
+.pill.star{background:#FFE7A0}
+.pill.school{background:#DCE3FF}
+.pill.home{background:#FFE1C7}
+.lands{display:grid;grid-template-columns:minmax(0,1.7fr) 150px minmax(0,1fr);gap:22px;padding:30px 30px 34px;align-items:start}
+.land{position:relative;background:var(--grass);border:3px solid var(--ink);border-radius:34px 44px 30px 40px;box-shadow:0 0 0 9px var(--sand),0 0 0 12px var(--ink);padding:16px 16px 18px;display:grid;gap:14px;min-width:0}
+.land.home{background:#CFEBA9}
+.land-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.land-h .pill{cursor:pointer;font-size:17px}
+.land-h .pill:hover{transform:translateY(-1px)}
+.land-h .tree{width:30px;height:34px;margin-left:auto}
+.hoods{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:14px}
+.hood{position:relative;border:2.5px solid var(--ink);background:#FFF8E6;border-radius:20px;cursor:pointer;padding:10px 8px 12px;display:grid;gap:8px;justify-items:center;
+  box-shadow:inset 0 -14px 0 #EADBB8, var(--hs2);transition:transform .15s;min-width:0;text-align:center}
+.hood:hover{transform:translateY(-3px) rotate(-.6deg)}
+.hood .blds{display:flex;align-items:flex-end;justify-content:center;gap:0;min-height:62px;width:100%}
+.hood .mini{width:54px;height:50px;flex:none}
+.hood .tree{width:24px;height:30px;flex:none}
+.hood .pill{font-size:14px;max-width:100%;box-shadow:none;padding:2px 10px}
+.hood .pill{overflow:hidden}.hood .pill span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.hood.big{grid-column:1/-1}
+.hood.empty{background:#F2F7E8;box-shadow:inset 0 -14px 0 #DCE8C4, var(--hs2)}
+.hood.empty .blds{font-family:var(--f-cute);color:var(--muted);align-items:center;flex-direction:column;gap:2px;font-size:13px}
+.hood.add{border-style:dashed;background:transparent;box-shadow:none;align-content:center;min-height:120px;font-family:var(--f-cute);font-size:15px;color:var(--ink2)}
+.hood.big .blds{flex-wrap:wrap;min-height:110px;gap:4px 0}
+.harbor{display:grid;gap:18px;justify-items:center;align-content:start;padding-top:8px}
+.boat{border:0;background:none;cursor:pointer;display:grid;justify-items:center;gap:2px;padding:0;animation:bob 3.2s ease-in-out infinite}
+.boat:nth-child(2){animation-delay:-1.6s}
+.boat svg{width:104px;height:72px}
+.boat .pill{font-family:var(--f-mono);font-size:12px;padding:2px 9px}
+.boat .to{font-family:var(--f-cute);font-size:12.5px;color:var(--ink);background:rgba(255,255,255,.7);border-radius:8px;padding:0 6px}
+.boat[aria-pressed="true"] .pill{background:var(--ink);color:#fff}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-5px) rotate(1.5deg)}}
+.lot{border:2.5px solid var(--ink);background:#FFF1C9;border-radius:18px;padding:8px 10px 10px;cursor:pointer;display:grid;justify-items:center;gap:4px;box-shadow:var(--hs2);font-family:var(--f-cute);font-size:14px;text-align:center}
+.lot svg{width:86px;height:62px}
+.lot:hover{transform:translateY(-2px)}
+.callboat{font-size:14px}
+
+/* ---- 장소 머리 ---- */
+.placebar{display:flex;align-items:center;gap:10px 12px;flex-wrap:wrap}
+.roadsign{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;border:3px solid var(--ink);border-radius:12px;padding:5px 16px 5px 12px;font-family:var(--f-cute);font-size:clamp(18px,3vw,24px);box-shadow:var(--hs);position:relative}
+.roadsign::after{content:"";position:absolute;inset:3px;border:1.5px solid rgba(255,255,255,.7);border-radius:8px;pointer-events:none}
+.roadsign.blue{background:var(--school)}
+.roadsign.orange{background:var(--personal)}
+.roadsign.gold{background:#E9A800}
+.roadsign.gray{background:#6E6B78}
+.roadsign .crumb{opacity:.85;font-size:.8em}
+.placebar .n{font-family:var(--f-cute);font-size:15px;color:var(--ink2)}
+
+/* ---- 거리 ---- */
+.sections{display:grid;gap:26px}
+.sec-street{display:grid;gap:12px}
+.sec-street .sh{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sec-street .roadsign{font-size:18px;padding:3px 13px 3px 10px;box-shadow:var(--hs2)}
+.sec-street .sh .linkish{margin-left:auto}
+.street{list-style:none;margin:0;padding:0 10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));grid-auto-rows:214px;
+  border:3px solid var(--ink);border-radius:26px;box-shadow:4px 5px 0 var(--ink);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='214'%3E%3Crect y='128' width='60' height='32' fill='%23CDEFB0'/%3E%3Crect y='160' width='60' height='19' fill='%23F3E5C4'/%3E%3Cpath d='M0 160.5h60' stroke='%2323222B' stroke-width='2.5'/%3E%3Crect y='179' width='60' height='35' fill='%239C9AAE'/%3E%3Cpath d='M0 179.5h60' stroke='%2323222B' stroke-width='2'/%3E%3Crect x='14' y='194' width='26' height='4' rx='2' fill='%23ffffff'/%3E%3C/svg%3E") 0 0/60px 214px,linear-gradient(#E6F5FF,#F4FBEB)}
+.bld{position:relative;height:214px;min-width:0}
+.b-link{position:absolute;inset:0;display:block;text-decoration:none;color:inherit;border-radius:16px}
+.b-art{position:absolute;left:50%;top:26px;width:146px;height:136px;transform:translateX(-50%);transform-origin:50% 100%}
+.b-art svg{width:100%;height:100%;display:block;overflow:visible}
+.b-name{position:absolute;left:50%;top:164px;transform:translateX(-50%);max-width:calc(100% - 10px);display:inline-flex;align-items:center;gap:4px;
+  background:var(--paper);border:2.5px solid var(--ink);border-radius:999px;padding:2px 11px;font-family:var(--f-cute);font-size:14.5px;box-shadow:var(--hs2);white-space:nowrap;z-index:2}
+.b-name .nm{overflow:hidden;text-overflow:ellipsis}
+.b-name .ar{font-size:12px;flex:none}
+.bld.pin .b-name{background:#FFE7A0}
+.bld:hover .b-art{animation:boing .45s ease}
+.bld:hover .b-name{background:#fff}
+.bld.pin:hover .b-name{background:#FFF0BF}
+@keyframes boing{0%{transform:translateX(-50%) scale(1)}30%{transform:translateX(-50%) scale(1.05,.94)}60%{transform:translateX(-50%) scale(.97,1.05)}100%{transform:translateX(-50%) scale(1)}}
+.b-flag{position:absolute;left:10px;top:8px;font-size:18px;filter:drop-shadow(1px 1px 0 #fff);z-index:3;pointer-events:none}
+.b-acts{position:absolute;top:6px;right:6px;display:flex;gap:4px;z-index:4;opacity:0;transition:opacity .15s}
+.bld:hover .b-acts,.bld:focus-within .b-acts{opacity:1}
+.rb{width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);background:var(--paper);display:grid;place-items:center;cursor:pointer;color:var(--ink);padding:0}
+.rb svg{width:15px;height:15px}
+.rb:hover{background:#fff}
+.rb.on{background:var(--star)}
+.rb.on svg{fill:currentColor}
+.b-pop{position:absolute;left:50%;bottom:calc(100% - 30px);width:232px;transform:translateX(-50%) translateY(6px);background:#fff;border:2.5px solid var(--ink);border-radius:16px;padding:8px 10px;z-index:10;
+  box-shadow:var(--hs);opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;display:grid;gap:6px;font-size:12.5px}
+.b-pop::after{content:"";position:absolute;left:50%;bottom:-8px;width:12px;height:12px;background:#fff;border-right:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink);transform:translateX(-50%) rotate(45deg)}
+.b-pop img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top;border-radius:9px;border:1.5px solid var(--line);display:block}
+.b-pop .memo{color:var(--ink2);white-space:pre-line;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.b-pop .host{font-family:var(--f-mono);font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.b-pop .lks{display:flex;flex-wrap:wrap;gap:4px}
+@media (hover:hover){.bld:hover{z-index:6}.bld:hover .b-pop{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);transition-delay:.25s}}
+@media (hover:none){.b-acts{opacity:1}.b-pop{display:none}}
+.lk{font-size:12px;color:var(--ink2);text-decoration:none;border:1.5px solid var(--ink);border-radius:999px;padding:1px 8px;white-space:nowrap;background:var(--paper);font-family:var(--f-cute)}
+.lk:hover{background:var(--star)}
+.zz{animation:zz 2.4s ease-in-out infinite}
+@keyframes zz{0%,100%{opacity:.35;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+.smoke circle{animation:puff 3s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.smoke circle:nth-child(2){animation-delay:1s}.smoke circle:nth-child(3){animation-delay:2s}
+@keyframes puff{0%{opacity:0;transform:translateY(6px) scale(.5)}30%{opacity:.9}100%{opacity:0;transform:translateY(-16px) scale(1.4)}}
+.emptylot{border:3px dashed rgba(35,34,43,.35);border-radius:22px;padding:18px 20px;display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.5);font-family:var(--f-cute);font-size:15px;color:var(--ink2);flex-wrap:wrap}
+.emptylot svg{width:46px;height:46px;flex:none}
+
+/* ---- 목록 ---- */
+.groups{display:grid;gap:20px}
+.grp{display:grid;gap:8px}
+.grp-h{display:flex;align-items:center;gap:8px;padding:0 4px;flex-wrap:wrap}
+.grp-h .t{font-family:var(--f-cute);font-size:17px;display:inline-flex;gap:7px;align-items:center}
+.grp-h .n{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.grp-h .linkish{margin-left:auto}
+.list{list-style:none;margin:0;padding:6px;background:var(--paper);border:2.5px solid var(--ink);border-radius:22px;box-shadow:var(--hs)}
+.item{position:relative;display:flex;align-items:center;gap:10px;border-radius:14px;min-height:60px;padding-right:8px}
+.item+.item::before{content:"";position:absolute;left:62px;right:14px;top:0;border-top:2px dashed var(--line2)}
+.item:hover{background:var(--cream)}
+.item:hover::before,.item:hover+.item::before{opacity:0}
+.i-main{flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:9px 4px 9px 9px;text-decoration:none;color:inherit;border-radius:14px}
+.i-text{min-width:0;flex:1;display:flex;flex-direction:column;gap:1px}
+.i-name{font-family:var(--f-cute);font-size:16px;display:flex;align-items:center;gap:5px;min-width:0;line-height:1.3}
+.i-name .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.i-sub{display:flex;gap:8px;font-size:12.5px;color:var(--muted);min-width:0;white-space:nowrap}
+.i-host{font-family:var(--f-mono);font-size:11.5px;color:var(--faint);flex:none;max-width:45%;overflow:hidden;text-overflow:ellipsis}
+.i-memo{overflow:hidden;text-overflow:ellipsis}
+.i-meta{display:flex;gap:6px;align-items:center;flex:none}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-family:var(--f-cute);color:var(--ink2);background:var(--sunk);border-radius:8px;padding:1px 8px;white-space:nowrap;max-width:190px;overflow:hidden;text-overflow:ellipsis}
+.tag svg{width:13px;height:13px;flex:none}
+.owner{font-family:var(--f-mono);font-size:11.5px;color:var(--faint)}
+.i-links{display:flex;gap:4px;flex:none}
+.i-acts{display:flex;gap:4px;flex:none;opacity:0;transition:opacity .15s}
+.item:hover .i-acts,.item:focus-within .i-acts{opacity:1}
+.i-acts .rb.on{opacity:1}
+.item .pinmark{color:#E9A800;font-size:13px;flex:none}
+@media (hover:none){.i-acts{opacity:1}}
+@media (max-width:1000px){.i-links{display:none}}
+@media (max-width:720px){.owner{display:none}}
+@media (max-width:560px){.i-meta{display:none}.i-sub.hasmemo .i-host{display:none}}
+
+/* ---- 아이콘(목록·창) ---- */
+.ico{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;flex:none;overflow:hidden;border:2px solid var(--ink);
+  font-family:var(--f-cute);font-size:16px;color:#fff;background:var(--ic,#555)}
+.ico.emoji{font-size:21px;background:var(--cream)}
+.ico.emoji[style*="--eb"]{background:color-mix(in srgb,var(--eb) 26%,#fff)}
+.ico.site{background:#fff}
 .ico.site img{width:62%;height:62%;object-fit:contain}
 .ico.image img{width:100%;height:100%;object-fit:cover}
-.ico.sm{width:36px;height:36px;border-radius:10px;font-size:15px}
-.ico.sm.emoji{font-size:20px}
+.ico.sm{width:34px;height:34px;border-radius:11px;font-size:14px}
+.ico.sm.emoji{font-size:18px}
 
-/* ---- card view ---- */
-.cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
-.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:border-color .15s}
-.card:hover{border-color:var(--muted)}
-.c-thumb{display:block;position:relative;aspect-ratio:16/9;max-width:100%;background:color-mix(in srgb,var(--cc) 13%,var(--surface));border-bottom:1px solid var(--line);overflow:hidden}
-.c-thumb .panel{position:absolute;inset:0;display:grid;place-items:center}
-.c-thumb .panel .ico{width:64px;height:64px;border-radius:18px;font-size:26px;box-shadow:var(--shadow)}
-.c-thumb .panel .ico.emoji{font-size:36px;background:var(--surface)}
-.c-thumb img.thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
-.c-body{display:flex;flex-direction:column;gap:10px;padding:14px 14px 12px;flex:1;min-width:0}
-.c-head{display:flex;gap:10px;align-items:center;min-width:0}
-.card.nothumb .c-head .ico.sm{display:none}
-.c-title{display:flex;flex-direction:column;min-width:0}
-.c-name{font-weight:600;font-size:15.5px;line-height:1.3;text-decoration:none;overflow-wrap:anywhere}
-.c-name:hover{text-decoration:underline;text-underline-offset:3px}
-.t-host{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.c-memo{margin:0;font-size:13.5px;color:var(--muted);white-space:pre-line;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
-.c-links{display:flex;flex-wrap:wrap;gap:6px}
-.chip{font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;text-decoration:none;display:inline-flex;gap:4px;align-items:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--bg)}
-.chip:hover{border-color:var(--muted)}
-.foot{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-top:auto;flex-wrap:wrap}
-.foot .cat{display:inline-flex;align-items:center;gap:5px}
-.badge{font-size:11px;border:1px solid var(--line);border-radius:6px;padding:0 6px;color:var(--muted);white-space:nowrap}
+/* ---- 고르기 ---- */
+.pickmark{display:none;width:24px;height:24px;border-radius:8px;border:2.5px solid var(--ink);background:#fff;place-items:center;flex:none;z-index:5}
+.pickmark svg{width:15px;height:15px;opacity:0}
+body.selecting .pickmark{display:grid}
+body.selecting .item,body.selecting .bld{cursor:pointer}
+body.selecting .i-acts,body.selecting .b-acts,body.selecting .b-pop{display:none}
+.item .pickmark{margin-left:10px}
+.bld .pickmark{position:absolute;left:10px;top:10px}
+.picked .pickmark{background:var(--school);color:#fff}
+.picked .pickmark svg{opacity:1}
+.item.picked{background:#E3E9FF}
+.bld.picked::after{content:"";position:absolute;inset:16px 8px 50px;border:3px dashed var(--school);border-radius:18px;background:rgba(91,124,250,.08);pointer-events:none}
+.bld.picked .b-name{background:var(--school);color:#fff}
+body.selecting{padding-bottom:120px}
+.selbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--paper);border-top:3px solid var(--ink);
+  padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.selbar .in{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
+.selbar b{font-family:var(--f-cute);font-weight:400;font-size:16px;min-width:7em}
+.selbar select,.selbar .inp{padding:6px 10px;font-size:14px;width:auto;max-width:100%}
+.selbar .grow{flex:1 1 auto}
 
-.ctl{position:absolute;top:8px;right:8px;display:flex;gap:4px}
-.icbtn{width:30px;height:30px;border-radius:8px;border:0;background:var(--surface);color:var(--muted);cursor:pointer;display:grid;place-items:center;opacity:0;transition:opacity .15s;box-shadow:var(--shadow)}
-.icbtn svg{width:16px;height:16px}
-.icbtn:hover{color:var(--ink)}
-.card:hover .icbtn,.tile:hover .icbtn,.card:focus-within .icbtn,.tile:focus-within .icbtn,.icbtn.on{opacity:1}
-.icbtn.on{color:var(--star)}
-.icbtn.on svg{fill:currentColor}
-@media (hover:none){.icbtn{opacity:1}}
+.nomatch{display:flex;align-items:center;gap:12px;font-family:var(--f-cute);font-size:16px;color:var(--ink2);padding:18px 6px;flex-wrap:wrap}
+.nomatch svg{width:56px;height:56px}
+.status{font-size:12.5px;color:var(--ink2);display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;font-family:var(--f-cute)}
 
-/* ---- icon view ---- */
-.grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
-.tile{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;transition:border-color .15s;min-width:0}
-.tile:hover{border-color:var(--muted)}
-.tile .icbtn{box-shadow:none;background:transparent}
-.tile .icbtn:hover{background:var(--sunk)}
-.tile-link{display:flex;flex-direction:column;gap:12px;padding:16px 14px 14px;color:inherit;text-decoration:none;border-radius:16px;height:100%}
-.t-name{font-weight:600;font-size:15px;line-height:1.3;overflow-wrap:anywhere}
-.t-body{display:flex;flex-direction:column;gap:2px;min-width:0}
-
-.empty{border:1.5px dashed var(--line);border-radius:18px;padding:32px 24px;display:grid;gap:18px;justify-items:start}
-.empty h2{font-family:var(--f-display);font-weight:800;font-size:24px;margin:0;letter-spacing:-.01em}
-.steps{margin:0;padding:0;list-style:none;display:grid;gap:12px;max-width:62ch;counter-reset:s}
-.steps li{display:grid;grid-template-columns:28px 1fr;gap:10px;color:var(--muted)}
-.steps li::before{counter-increment:s;content:counter(s);font-family:var(--f-mono);font-size:12px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink)}
-.steps b{color:var(--ink);font-weight:600}
-.nomatch{color:var(--muted);padding:24px 4px}
-.status{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-
-/* ---- modal ---- */
-.scrim{position:fixed;inset:0;background:rgba(10,12,11,.45);display:grid;place-items:center;z-index:50;
+/* ---- 창(모달) ---- */
+.scrim{position:fixed;inset:0;background:rgba(35,34,43,.42);display:grid;place-items:center;z-index:50;
   padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-.modal{background:var(--surface);border:1px solid var(--line);border-radius:18px;width:min(600px,100%);max-height:100%;overflow:auto;box-shadow:0 30px 60px -20px rgba(0,0,0,.45);display:flex;flex-direction:column}
-.modal.wide{width:min(760px,100%)}
-.m-head{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 6px;gap:12px}
-.m-head h3{font-family:var(--f-display);font-weight:800;font-size:22px;margin:0;letter-spacing:-.01em}
+.modal{background:var(--paper);border:3px solid var(--ink);border-radius:24px;width:min(600px,100%);max-height:100%;overflow:auto;box-shadow:6px 7px 0 var(--ink);display:flex;flex-direction:column}
+.modal.wide{width:min(780px,100%)}
+.m-head{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 4px;gap:12px}
+.m-head h3{font-family:var(--f-cute);font-weight:400;font-size:24px;margin:0}
 .m-body{padding:10px 20px 6px;display:grid;gap:18px}
-.m-foot{position:sticky;bottom:0;background:var(--surface);padding:14px 20px 18px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:10px;align-items:center}
+.m-foot{position:sticky;bottom:0;background:var(--paper);padding:14px 20px 18px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:2px dashed var(--line);margin-top:10px;align-items:center}
 .m-foot .r{display:flex;gap:8px;margin-left:auto}
 .sec{display:grid;gap:12px}
-.sec+.sec{border-top:1px solid var(--line);padding-top:16px}
-.sec h4{margin:0;font-size:12px;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.sec+.sec{border-top:2px dashed var(--line);padding-top:16px}
+.sec h4{margin:0;font-family:var(--f-cute);font-weight:400;font-size:16px;color:var(--ink)}
 .field{display:grid;gap:6px;min-width:0}
-.field>span,.flabel{font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--muted)}
-.field input,.field textarea,.inp{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;min-width:0}
+.field>span,.flabel{font-size:13px;font-weight:700;color:var(--ink2)}
+.field input,.field textarea,.inp,.modal select{width:100%;border:2px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;min-width:0;outline:none}
+.field input:focus,.field textarea:focus,.inp:focus,.modal select:focus{border-color:var(--ink)}
 .field textarea{resize:vertical;min-height:76px;line-height:1.55}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -164,147 +317,193 @@ select{border:1px solid var(--line);background:var(--surface);border-radius:10px
 @media (max-width:560px){.row,.row3,.ghrow{grid-template-columns:1fr}}
 .hint{font-size:12.5px;color:var(--muted);margin:0}
 .seg{display:flex;flex-wrap:wrap;gap:6px}
-.seg button{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:7px 12px;cursor:pointer;display:inline-flex;gap:7px;align-items:center;font-size:14px}
-.seg button[aria-pressed="true"]{border-color:var(--ink);background:var(--surface);font-weight:600;box-shadow:inset 0 0 0 1px var(--ink)}
-.seg.sm button{padding:4px 10px;font-size:13px}
-
+.seg button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;cursor:pointer;display:inline-flex;gap:7px;align-items:center;font-size:13.5px}
+.seg button[aria-pressed="true"]{border-color:var(--ink);background:var(--star);font-weight:700}
+.seg.sm button{padding:3px 10px;font-size:13px}
 .xlinks{display:grid;gap:8px}
 .xl{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr) auto;gap:8px;align-items:center}
 @media (max-width:480px){.xl{grid-template-columns:1fr auto}.xl .xl-url{grid-column:1/2}}
-
 .thumbed{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:start}
 @media (max-width:520px){.thumbed{grid-template-columns:1fr}}
-.tprev{aspect-ratio:16/9;max-width:100%;border-radius:12px;border:1px solid var(--line);overflow:hidden;position:relative;background:var(--sunk);display:grid;place-items:center;color:var(--muted);font-size:12px}
+.tprev{aspect-ratio:16/9;max-width:100%;border-radius:12px;border:2px solid var(--line);overflow:hidden;position:relative;background:var(--sunk);display:grid;place-items:center;color:var(--muted);font-size:12px}
 .tprev img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
 .topts{display:grid;gap:10px;min-width:0}
-
 .iconed{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
-.iconed .ico{width:64px;height:64px;border-radius:18px;font-size:26px}
-.iconed .ico.emoji{font-size:36px}
+.ed-bld{display:block;width:120px;height:112px;background:linear-gradient(#E6F5FF 0 80%,#CDEFB0 80%);border:2px solid var(--ink);border-radius:16px;padding:6px 6px 0;overflow:hidden}
+.ed-bld svg{width:100%;height:100%;display:block}
 .icopts{display:grid;gap:10px;min-width:0}
 .swatches{display:flex;flex-wrap:wrap;gap:6px}
-.sw{width:26px;height:26px;border-radius:8px;border:2px solid transparent;cursor:pointer;background:var(--c)}
+.sw{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;background:var(--c);box-shadow:inset 0 0 0 2px rgba(255,255,255,.6)}
 .sw[aria-pressed="true"]{border-color:var(--ink)}
 .filebtn{position:relative;overflow:hidden}
 .filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
-
 .group{display:grid;gap:8px}
-.ghead{display:flex;align-items:center;gap:8px 10px;font-weight:600;font-size:14px;flex-wrap:wrap}
+.ghead{display:flex;align-items:center;gap:8px 10px;font-weight:700;font-size:14px;flex-wrap:wrap}
 .ghead .hint{font-weight:400}
-.repolist{border:1px solid var(--line);border-radius:12px;max-height:260px;overflow:auto}
-.repo{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line)}
+.repolist{border:2px solid var(--line);border-radius:14px;max-height:260px;overflow:auto;background:#fff}
+.repo{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:8px 12px;border-bottom:1.5px solid var(--line2)}
 .repo .rl{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;cursor:pointer;min-width:0}
 .repo .rl>div{min-width:0}
-.rcat{padding:5px 8px;font-size:13px;border-width:1.5px;border-radius:8px;background:var(--bg)}
+.rcat{padding:5px 8px!important;font-size:13px;border-radius:9px!important;width:auto!important}
 .repo .badge{display:inline-flex;align-items:center;gap:4px}
 .repo:last-child{border-bottom:0}
-.repo .rn{font-weight:600;font-size:14px;overflow-wrap:anywhere}
+.repo .rn{font-weight:700;font-size:14px;overflow-wrap:anywhere}
 .repo .ru{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .repo .rmeta{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
 .repo>div{min-width:0}
-.checks{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+.checks{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink2)}
 .checks label{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
 .err{color:var(--danger);font-size:13px;margin:0}
-
-.fbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:-8px}
-.fchip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:13.5px;display:inline-flex;gap:6px;align-items:center}
-.fchip svg{width:15px;height:15px;color:var(--school)}
-.fchip .n{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
-.fchip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.fchip[aria-pressed="true"] .n,.fchip[aria-pressed="true"] svg{color:var(--bg)}
-.fchip.none{border-style:dashed}
-.sections{display:grid;gap:30px}
-.fsec{display:grid;gap:12px}
-.fsec-h{display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap;padding-bottom:8px;border-bottom:1px solid var(--line)}
-.fsec-h svg{width:20px;height:20px;color:var(--school);flex:none}
-.fsec-h h2{margin:0;font-size:17px;font-weight:600}
-.fsec-h .n{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
-.fsec-h .linkish{margin-left:auto}
-.fsec.none .fsec-h svg{color:var(--muted)}
-.fempty{border:1.5px dashed var(--line);border-radius:12px;padding:14px 16px}
-.folderline{display:inline-flex;align-items:center;gap:4px}
-body.selecting{padding-bottom:110px}
-body.selecting .card,body.selecting .tile{cursor:pointer}
-body.selecting .ctl{display:none}
-.pickmark{position:absolute;top:8px;left:8px;width:26px;height:26px;border-radius:8px;border:2px solid var(--muted);background:var(--surface);display:none;place-items:center;z-index:2}
-.pickmark svg{width:16px;height:16px;opacity:0}
-body.selecting .pickmark{display:grid}
-.picked{outline:2.5px solid var(--school);outline-offset:-1px}
-.picked .pickmark{background:var(--school);border-color:var(--school);color:var(--surface)}
-.picked .pickmark svg{opacity:1}
-.selbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -10px 30px -18px rgba(0,0,0,.4);
-  padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-.selbar .in{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
-.selbar b{font-size:14px;min-width:6.5em}
-.selbar select,.selbar .inp{padding:6px 10px;font-size:14px;width:auto;max-width:100%}
-.selbar .grow{flex:1 1 auto}
 .fmgr{display:grid;gap:8px}
 .frow{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto;gap:6px;align-items:center}
 .frow .n{font-family:var(--f-mono);font-size:12px;color:var(--muted);min-width:3.5em;text-align:right}
 .frow svg{width:16px;height:16px}
 .frow.del .inp{text-decoration:line-through;opacity:.5}
 .fadd{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
-.ico.emoji[style*="--eb"],.c-thumb .panel .ico.emoji[style*="--eb"]{background:color-mix(in srgb,var(--eb) 26%,var(--surface))}
 .emopick{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
-.emo{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:19px;display:grid;place-items:center;padding:0}
-.emo:hover{border-color:var(--muted)}
-.emo.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);background:var(--surface)}
+.emo{width:34px;height:34px;border-radius:10px;border:2px solid var(--line);background:#fff;cursor:pointer;font-size:19px;display:grid;place-items:center;padding:0}
+.emo:hover{border-color:var(--ink2)}
+.emo.on{border-color:var(--ink);background:var(--star)}
 .emomore summary{cursor:pointer;font-size:12.5px;color:var(--muted);margin-bottom:6px}
 .emomore .emopick{max-height:150px;overflow:auto}
-.icmk{display:grid;gap:2px;border:1px solid var(--line);border-radius:12px;max-height:56vh;overflow:auto}
-.icrow{display:grid;grid-template-columns:auto auto auto auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line)}
+.icmk{display:grid;gap:2px;border:2px solid var(--line);border-radius:14px;max-height:56vh;overflow:auto;background:#fff}
+.icrow{display:grid;grid-template-columns:auto auto auto auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 12px;border-bottom:1.5px solid var(--line2)}
 .icrow:last-child{border-bottom:0}
 .icrow .arrow{color:var(--muted)}
 .icname{display:flex;flex-direction:column;min-width:0}
-.icname b{font-weight:600;font-size:14px;overflow-wrap:anywhere}
+.icname b{font-weight:700;font-size:14px;overflow-wrap:anywhere}
 .icname .hint{font-size:12px}
 @media (max-width:600px){.icrow{grid-template-columns:auto auto auto auto minmax(0,1fr)}.icrow .emopick{grid-column:1/-1;padding-left:28px}}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:10px;font-size:14px;z-index:60;box-shadow:var(--shadow);max-width:calc(100% - 32px)}
-.spin{width:14px;height:14px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--ink);animation:sp .8s linear infinite;display:inline-block;flex:none}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 18px;border-radius:999px;font-family:var(--f-cute);font-size:15px;z-index:60;box-shadow:0 4px 0 rgba(0,0,0,.25);max-width:calc(100% - 32px)}
+.spin{width:14px;height:14px;border-radius:50%;border:2.5px solid var(--line);border-top-color:var(--ink);animation:sp .8s linear infinite;display:inline-block;flex:none}
 @keyframes sp{to{transform:rotate(360deg)}}
+
+/* ---- 휴대폰 화면 (body.m) ---- */
+.macts,.tabbar{display:none}
+body.m{padding:12px max(12px,env(safe-area-inset-right,0px)) calc(108px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+body.m .wrap{gap:12px}
+body.m .hd{flex-wrap:nowrap;gap:10px}
+body.m .hd .acts{display:none}
+body.m .macts{display:flex;flex:none}
+body.m .viewsw.mini button{padding:5px 10px;font-size:15px}
+body.m .brand{flex:1;min-width:0;gap:8px}
+body.m .brand>div{min-width:0}
+body.m .brand .mascot{width:40px;height:40px}
+body.m .brand h1{font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.m .brand .sub{font-size:12.5px}
+body.m .brand .sub .mono{display:none}
+body.m .bar{display:none}
+body.m.msearch .bar{display:flex;position:sticky;top:calc(8px + env(safe-area-inset-top,0px));z-index:25;padding:8px;border-radius:999px}
+body.m .bar .guide,body.m .bar #sort,body.m .bar .viewsw,body.m .bar #b-select{display:none}
+body.m .bar .search input{font-size:16px}
+body.m .notice{font-size:13.5px;padding:8px 12px}
+.mnote{cursor:pointer;width:100%;justify-content:space-between;font-family:var(--f-cute);font-size:15px;text-align:left;color:var(--ink)}
+body.m .sky{height:108px}
+body.m .lands{grid-template-columns:1fr;padding:24px 18px 28px;gap:28px}
+body.m .harbor{grid-template-columns:repeat(auto-fit,minmax(110px,1fr));justify-items:center;align-items:end;padding:0}
+body.m .hoods{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+body.m .hood .mini{width:42px;height:39px}
+body.m .hood.add{min-height:96px}
+body.m .land-h .hint{display:none}
+body.m .placebar .roadsign{font-size:19px}
+body.m .street{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));padding:0 4px;border-radius:20px;box-shadow:3px 4px 0 var(--ink)}
+body.m .b-acts,body.m .i-acts{opacity:1}
+body.m .b-pop{display:none}
+body.m .rb{width:32px;height:32px}
+body.m .i-meta,body.m .i-links{display:none}
+body.m .i-sub.hasmemo .i-host{display:none}
+body.m .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:30;
+  background:var(--paper);border:2.5px solid var(--ink);border-radius:24px;box-shadow:var(--hs);padding:6px 5px}
+.tabbar button{border:0;background:none;display:grid;justify-items:center;align-content:center;gap:1px;padding:5px 0;border-radius:16px;cursor:pointer;position:relative;color:var(--ink)}
+.tabbar b{font-size:21px;line-height:1.1;font-weight:400}
+.tabbar span{font-family:var(--f-cute);font-size:12.5px}
+.tabbar button[aria-current="true"]{background:var(--star);box-shadow:inset 0 0 0 2px var(--ink)}
+.tabbar .build b{width:42px;height:30px;display:grid;place-items:center;background:var(--star);border:2px solid var(--ink);border-radius:999px;font-size:18px}
+.tabbar .tcnt{position:absolute;top:1px;right:calc(50% - 22px);font-style:normal;font-family:var(--f-mono);font-size:10.5px;background:var(--danger);color:#fff;border-radius:999px;padding:0 5px;border:1.5px solid var(--ink)}
+body.m.selecting .tabbar{display:none}
+body.m.selecting{padding-bottom:180px}
+body.m .toast{bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+body.m .scrim{place-items:end center;padding:0}
+body.m .modal,body.m .modal.wide{width:100%;max-height:92dvh;border-radius:26px 26px 0 0;border-bottom:0;box-shadow:0 -5px 0 rgba(35,34,43,.18);animation:sheet .22s ease-out}
+body.m .modal::before{content:"";display:block;width:46px;height:5px;border-radius:9px;background:var(--line);margin:9px auto 0;flex:none}
+body.m .m-head{padding-top:10px}
+body.m .m-foot{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+body.m .field input,body.m .field textarea,body.m .inp,body.m .modal select{font-size:16px}
+@keyframes sheet{from{transform:translateY(60px);opacity:.3}}
+.more .mi{display:grid;gap:2px;width:100%;text-align:left;border:2px solid var(--ink);background:#fff;border-radius:16px;padding:11px 14px;font-family:var(--f-cute);font-size:16.5px;cursor:pointer;box-shadow:var(--hs2)}
+.more .mi small{font-family:var(--f);font-size:12.5px;color:var(--muted)}
+.more .mi .cnt{font-family:var(--f-mono);font-size:11px;background:var(--danger);color:#fff;border-radius:999px;padding:1px 6px}
+.more .row{grid-template-columns:1fr 1fr}
+.more .row .mi{text-align:center}
+.more .status{justify-content:flex-start}
+
+.brand .mascot svg,.notice .who svg,.mini svg{width:100%;height:100%;display:block}
+.mini{display:block}
+/* ---- 좁은 화면 ---- */
+@media (max-width:900px){
+  .lands{grid-template-columns:1fr;padding:26px 22px 30px;gap:30px}
+  .harbor{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));justify-items:center;align-items:end;padding:0}
+}
+@media (max-width:640px){
+  body{padding-top:14px}
+  .brand .mascot{width:46px;height:46px}
+  .guide .bubble{display:none}
+  .tx{display:none}
+  .bar{border-radius:18px}
+  .sky{height:120px}
+  .street{grid-template-columns:repeat(2,minmax(0,1fr));padding:0 4px}
+  .hoods{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .hood .mini{width:44px;height:41px}
+}
+@media (max-width:380px){.b-art{width:128px;height:119px;top:43px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-@media (max-width:420px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tile-link{padding:14px 12px 12px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
+  <header class="hd">
     <div class="brand">
-      <h1>🐯🐿️ONGLEDONGLE웹앱모음🍒</h1>
-      <div class="tally" id="tally"></div>
+      <span id="logo"></span>
+      <div><h1>🐯🐿️ONGLEDONGLE웹앱모음🍒</h1><div class="sub" id="sub"></div></div>
     </div>
+    <div class="macts"><div class="viewsw mini" role="group" aria-label="보기 방식"><button type="button" data-view="map" title="지도">🗺️</button><button type="button" data-view="list" title="목록">📋</button></div></div>
     <div class="acts">
-      <button class="btn" id="b-settings" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>설정</button>
-      <button class="btn" id="b-import" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>GitHub 동기화<span class="cnt" id="newcnt" hidden></span></button>
-      <button class="btn primary" id="b-add" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>링크 추가</button>
+      <button class="btn icon" type="button" data-act="settings" aria-label="설정" title="설정"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button>
+      <button class="btn" type="button" data-act="import" title="두 GitHub 계정에서 배포된 웹앱 불러오기">⛵ <span class="tx">GitHub 동기화</span><span class="cnt" id="newcnt" hidden></span></button>
+      <button class="btn primary" type="button" data-act="add" title="링크 추가">🏗️ <span class="tx">가게 짓기</span></button>
     </div>
   </header>
 
-  <div class="toolbar">
-    <div class="tabs" role="tablist" id="tabs"></div>
-    <div class="tools">
-      <label class="search"><input id="q" type="search" placeholder="이름, 메모, 주소 검색" aria-label="검색" autocomplete="off"><kbd>/</kbd></label>
-      <select id="sort" aria-label="정렬">
-        <option value="pinned">고정 먼저</option>
-        <option value="recent">최근 연 순</option>
-        <option value="opens">자주 연 순</option>
-        <option value="name">이름 순</option>
-        <option value="added">추가한 순</option>
-      </select>
-      <button class="btn" id="b-select" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="m8 12 3 3 5-6"/></svg>골라서 옮기기</button>
-      <div class="viewsw" role="group" aria-label="보기 방식">
-        <button type="button" data-view="card" aria-label="카드로 보기" title="카드로 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="8" height="16" rx="2"/><rect x="13" y="4" width="8" height="16" rx="2"/><path d="M3 11h8M13 11h8"/></svg></button>
-        <button type="button" data-view="icon" aria-label="아이콘으로 보기" title="아이콘으로 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></button>
-      </div>
+  <div class="bar">
+    <div class="guide"><span id="guide-tiger"></span><span class="bubble" id="bubble">어느 동네로 갈까요?</span></div>
+    <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="가게 이름, 메모, 주소 찾기" aria-label="검색" autocomplete="off"><kbd>/</kbd></label>
+    <select id="sort" aria-label="정렬">
+      <option value="pinned">⭐ 고정 먼저</option>
+      <option value="recent">최근 연 순</option>
+      <option value="opens">자주 연 순</option>
+      <option value="name">이름 순</option>
+      <option value="added">새로 지은 순</option>
+    </select>
+    <div class="viewsw" role="group" aria-label="보기 방식">
+      <button type="button" data-view="map" title="지도로 보기">🗺️<span class="tx"> 지도</span></button>
+      <button type="button" data-view="list" title="목록으로 보기">📋<span class="tx"> 목록</span></button>
     </div>
+    <button class="btn sm" id="b-select" type="button" aria-pressed="false" title="가게를 골라 다른 거리로 옮기기">📦 <span class="tx">골라서 옮기기</span></button>
   </div>
 
-  <div class="fbar" id="fbar" hidden></div>
+  <nav class="chips" id="chips" aria-label="동네 이동"></nav>
   <div class="notices" id="notice"></div>
   <main id="main"></main>
-  <div class="status" id="status"></div>
+  <div class="status" data-status></div>
 </div>
 <div class="selbar" id="selbar" hidden></div>
+<nav class="tabbar" id="tabbar" aria-label="아래 메뉴">
+  <button type="button" data-tab="all" id="tb-all"><b>🗺️</b><span>마을</span></button>
+  <button type="button" data-tab="pinned" id="tb-pin"><b>⭐</b><span>랜드마크</span></button>
+  <button type="button" data-act="msearch" id="tb-search"><b>🔎</b><span>찾기</span></button>
+  <button type="button" data-act="add" class="build"><b>🏗️</b><span>짓기</span></button>
+  <button type="button" data-act="more" id="tb-more"><b>☰</b><span>더보기</span><i class="tcnt" id="tb-cnt" hidden></i></button>
+</nav>
 <div id="modal-root"></div>
 
 <script>
@@ -313,14 +512,16 @@ body.selecting .pickmark{display:grid}
 /* ================= 기본값 ================= */
 const CATS=["school","personal"];
 const CCOLOR={school:"var(--school)",personal:"var(--personal)"};
-const DEF_SETTINGS={cats:{school:{label:"학교용"},personal:{label:"개인용"}},gh:{a:{handle:"",cat:"personal"},b:{handle:"",cat:"school"}},folders:[]};
+const LAND={school:"학교 동네",personal:"우리집 동네"};
+const LAND_EMO={school:"🏫",personal:"🏡"};
+const DEF_SETTINGS={cats:{school:{label:"학교용"},personal:{label:"개인용"}},gh:{a:{handle:"hkyung3929-prog",cat:"personal"},b:{handle:"dhkyung1020-rgb",cat:"school"}},folders:[]};
 const SLOTS=["a","b"];
 const NONE="__none";
 const ICOLORS=["#3B7A4B","#3452C4","#A8571F","#B3362B","#6B3FA0","#1F7A80","#C0548A","#3D4A55"];
-const LS={data:"wd-data",cfg:"wd-cfg",queue:"wd-queue",sort:"wd-sort",view:"wd-view",seen:"wd-seen",check:"wd-check"};
+const LS={data:"wd-data",cfg:"wd-cfg",queue:"wd-queue",sort:"wd-sort",view:"wd-view2",seen:"wd-seen",check:"wd-check"};
 const CHECK_EVERY=6*3600e3;
 const FOLDER_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
-const CHECK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
+const CHECK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
 
 /* ---- 아이콘 추천 규칙: [키워드들, 이모지 후보들, 바탕색] ----
    영어 키워드: 4자 이상은 단어 어디에 있어도, 3자는 단어 시작에서, 2자 이하는 단어 전체가 같을 때만 맞습니다.
@@ -390,6 +591,14 @@ const ICON_RULES=[
 ];
 const PICKER_EMOJI=["📝","✅","❓","💯","📋","🙋","🗓️","⏱️","🎲","🏆","⭐","👥","🪑","🗳️","🧑‍🏫","🏫","🎒","📘","📚","📖","✍️","🔤","🧮","➗","🔬","🧪","🪐","🗺️","🏛️","🎨","🖍️","🎵","🥁","⚽","🍳","🎮","🕹️","👾","🧩","🧱","🤖","🧠","💬","💻","⌨️","🎬","📷","📊","📈","💰","🧾","📢","✉️","📌","🗒️","📄","🔗","🧭","🌐","🏠","💗","🌱","♻️","🐾","⛅","🩺","🛍️","✨","🌟","🔥","💡","🎯","🚀","🍒","🐯","🐿️"];
 
+/* 아이콘 규칙의 첫 키워드 → 건물 모양 */
+const BTYPE={"home economics":"shop",attendance:"school",quiz:"school",chalk:"school",beat:"shop",music:"shop",game:"arcade",factory:"factory",block:"factory",draft:"house",
+  ai:"dome",bot:"dome",code:"tower",studio:"arcade",photo:"shop",read:"library",story:"house",log:"house",math:"school",science:"dome",space:"dome",english:"school",
+  korean:"library",history:"library",map:"tower",sport:"school",timer:"tower",schedule:"tower",seat:"shop",random:"arcade",group:"house",vote:"library",score:"tower",
+  report:"tower",budget:"shop",notice:"house",todo:"house",note:"house",document:"library",sheet:"library",link:"tower",portfolio:"tower",web:"tower",home:"house",
+  lesson:"school",school:"school",puzzle:"arcade",card:"shop",emotion:"house",counsel:"house",eco:"house",plant:"shop",animal:"house",weather:"tower",health:"school",
+  career:"tower",typing:"arcade",pixel:"arcade",translate:"library",shop:"shop",test:"school"};
+
 function lsGet(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch{return d}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
 function clone(o){return JSON.parse(JSON.stringify(o))}
@@ -400,7 +609,7 @@ function uniq(arr){const o=[];arr.forEach(f=>{f=cleanFolder(f);if(f&&!o.includes
 function normSettings(s){
   const o=clone(DEF_SETTINGS);if(!s)return o;
   if(s.cats)CATS.forEach(c=>{if(s.cats[c]&&s.cats[c].label)o.cats[c].label=s.cats[c].label});
-  if(s.gh)SLOTS.forEach(k=>{if(s.gh[k]){o.gh[k].handle=s.gh[k].handle||"";if(CATS.includes(s.gh[k].cat))o.gh[k].cat=s.gh[k].cat}});
+  if(s.gh)SLOTS.forEach(k=>{if(s.gh[k]){o.gh[k].handle=(s.gh[k].handle||"").trim()||o.gh[k].handle;if(CATS.includes(s.gh[k].cat))o.gh[k].cat=s.gh[k].cat}});
   else{if(s.personal&&s.personal.handle)o.gh.a.handle=s.personal.handle;if(s.work&&s.work.handle)o.gh.b.handle=s.work.handle}
   if(Array.isArray(s.folders))o.folders=uniq(s.folders);
   return o;
@@ -434,7 +643,7 @@ const S={
   cfg:cfg0,
   queue:lsGet(LS.queue,[]),
   sync:"local",syncErr:"",sheetUrl:saved.sheetUrl||"",lastSync:0,
-  tab:"all",folder:"",q:"",sort:lsGet(LS.sort,"pinned"),view:lsGet(LS.view,"card"),
+  tab:"all",folder:"",q:"",sort:lsGet(LS.sort,"pinned"),view:lsGet(LS.view,"map")==="list"?"list":"map",
   selecting:false,picked:new Set(),
   newRepos:[]
 };
@@ -450,7 +659,8 @@ function ghHandle(k){return (S.settings.gh[k]?.handle||"").trim()}
 function ghCat(k){return S.settings.gh[k]?.cat||DEF_SETTINGS.gh[k].cat}
 function token(k){return (S.cfg.tokens?.[k]||"").trim()}
 function connected(){return !!(S.cfg.url&&S.cfg.key)}
-function hashColor(s){let h=0;for(const c of String(s||""))h=(h*31+c.charCodeAt(0))>>>0;return ICOLORS[h%ICOLORS.length]}
+function hashNum(s){let h=0;for(const c of String(s||""))h=(h*31+c.charCodeAt(0))>>>0;return h}
+function hashColor(s){return ICOLORS[hashNum(s)%ICOLORS.length]}
 function mono(name){const t=(name||"?").trim()||"?";const parts=t.split(/[\s\-_.]+/).filter(Boolean);
   if(/^[A-Za-z]/.test(t)&&parts.length>1)return (parts[0][0]+parts[1][0]).toUpperCase();
   return /^[A-Za-z]/.test(t)?t.slice(0,2).replace(/^./,c=>c.toUpperCase()):t.slice(0,1)}
@@ -471,7 +681,9 @@ function kwHit(text,kw){
   return new RegExp("(^|[^a-z])"+k+"([^a-z]|$)").test(text);
 }
 /* 이름(3점) > 저장소 이름(2점) > 메모(1점)로 점수를 매겨 어울리는 이모지 후보를 돌려줍니다 */
+const sugCache=new Map();
 function suggestIcons(l){
+  const ck=[l.name,l.repo,l.memo].join("\u0001");if(sugCache.has(ck))return sugCache.get(ck);
   const parts=[[normText(l.name),3],[normText((l.repo||"").split("/")[1]||""),2],[normText(l.memo),1]];
   const scored=[];
   ICON_RULES.forEach((r,i)=>{
@@ -481,9 +693,9 @@ function suggestIcons(l){
   });
   scored.sort((a,b)=>b.sc-a.sc);
   const out=[],seen=new Set();
-  scored.forEach((s,rank)=>s.emojis.forEach((e,j)=>{if(!seen.has(e)&&(rank===0||j===0)){seen.add(e);out.push({emoji:e,color:s.color,word:s.word})}}));
-  if(!out.length){const g=["✨","🌟","🧭","🔖","💡","🪄"],h=hashColor(l.name);const st=(h.charCodeAt(2)+h.charCodeAt(4))%g.length;for(let k=0;k<4;k++)out.push({emoji:g[(st+k)%g.length],color:h,word:""})}
-  return out.slice(0,6);
+  scored.forEach((s,rank)=>s.emojis.forEach((e,j)=>{if(!seen.has(e)&&(rank===0||j===0)){seen.add(e);out.push({emoji:e,color:s.color,word:s.word,i:s.i})}}));
+  if(!out.length){const g=["✨","🌟","🧭","🔖","💡","🪄"],h=hashColor(l.name);const st=(h.charCodeAt(2)+h.charCodeAt(4))%g.length;for(let k=0;k<4;k++)out.push({emoji:g[(st+k)%g.length],color:h,word:"",i:-1})}
+  const res=out.slice(0,6);if(sugCache.size>800)sugCache.clear();sugCache.set(ck,res);return res;
 }
 function autoIcon(l){const s=suggestIcons(l)[0];return {type:"emoji",value:s.emoji,color:s.color}}
 function hasLetterIcon(l){const t=(l.icon||{}).type||"auto";return t==="auto"||t==="mono"||t==="site"}
@@ -511,7 +723,12 @@ function destOptions(sel,withNew){
 }
 function parseDest(v){if(v==="personal")return {category:"personal",folder:""};const f=String(v||"").replace(/^school\|/,"");return {category:"school",folder:cleanFolder(f)}}
 
-/* ================= 구글 시트 동기화 ================= */
+/* ================= 구글 시트 동기화 =================
+   모든 기기가 같은 시트를 기준으로 맞춰요.
+   - 바뀐 내용은 '작업 목록(queue)'에 쌓아 두었다가 시트로 보내고, 시트의 최신 목록을 받아와요.
+   - 고정·옮기기·폴더 이름 바꾸기는 바뀐 칸만 보내서(patch) 다른 기기의 수정을 덮어쓰지 않아요.
+   - 앱을 연 횟수는 +1만 보내서(open) 기기끼리 합쳐져요.
+   - 열려 있는 동안 30초마다, 창으로 돌아올 때마다 새로 받아와요. */
 async function api(body){
   let r;
   try{r=await fetch(S.cfg.url,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({},body,{key:S.cfg.key})),redirect:"follow"})}
@@ -524,14 +741,20 @@ function apiErr(e){
   const c=e&&e.error;
   if(c==="bad_key")return "연결 키가 맞지 않아요.";
   if(c==="no_key")return "Apps Script에서 setup을 먼저 실행해 주세요.";
-  if(c==="busy")return "시트가 다른 저장을 처리하는 중이에요. 잠시 후 다시 시도할게요.";
+  if(c==="busy")return "시트가 다른 기기의 저장을 처리하는 중이에요. 잠시 후 다시 할게요.";
   if(c==="not_json")return "웹앱 주소가 맞는지, 배포할 때 액세스를 ‘모든 사용자’로 했는지 확인해 주세요.";
   if(c==="server")return "시트에서 오류가 났어요: "+(e.message||"");
-  return "시트에 연결하지 못했어요. 인터넷 연결과 웹앱 주소를 확인해 주세요.";
+  return "시트에 연결하지 못했어요. 인터넷 연결을 확인해 주세요.";
+}
+function applyOp(m,op){
+  if(op.op==="upsert")m.set(op.link.id,op.link);
+  else if(op.op==="delete")m.delete(op.id);
+  else if(op.op==="patch"){const l=m.get(op.id);if(l)m.set(op.id,normLink(Object.assign({},l,op.fields)))}
+  else if(op.op==="open"){const l=m.get(op.id);if(l)m.set(op.id,Object.assign({},l,{opens:(l.opens||0)+1,lastOpenedAt:Math.max(l.lastOpenedAt||0,op.at||0)}))}
 }
 function applyServer(res){
   const m=new Map((res.links||[]).map(l=>{const x=normLink(l);return [x.id,x]}));
-  for(const op of S.queue){if(op.op==="upsert")m.set(op.link.id,op.link);else if(op.op==="delete")m.delete(op.id)}
+  for(const op of S.queue)applyOp(m,op);
   S.links=m;
   if(res.settings){const keep=S.settings.folders;S.settings=normSettings(res.settings);if(pendingSettings)S.settings.folders=keep}
   if(res.sheetUrl)S.sheetUrl=res.sheetUrl;
@@ -544,13 +767,14 @@ async function flush(){
   if(flushing){again=true;return false}
   flushing=true;
   const ops=S.queue.slice();
-  S.sync="syncing";renderStatus();
+  S.sync="syncing";if(ops.length)renderStatus();
   try{
     const res=await api({action:"batch",ops});
     S.queue=S.queue.slice(ops.length);lsSet(LS.queue,S.queue);
     applyServer(res);S.sync="ok";S.syncErr="";S.lastSync=Date.now();
-  }catch(e){S.sync="error";S.syncErr=apiErr(e)}
-  flushing=false;render();
+  }catch(e){S.sync="error";S.syncErr=apiErr(e);if(e&&e.error==="busy")scheduleFlush(4000)}
+  flushing=false;
+  if(!$("#modal-root").firstChild||ops.length)render();else renderStatus();
   if(again){again=false;flush()}
   return S.sync==="ok";
 }
@@ -559,17 +783,37 @@ function enqueue(op){
   if(!connected())return;
   S.queue.push(op);lsSet(LS.queue,S.queue);scheduleFlush();
 }
-function putLink(l,quiet){S.links.set(l.id,l);enqueue({op:"upsert",link:l});if(!quiet)render()}
+function putLink(l,quiet){l.updatedAt=Date.now();S.links.set(l.id,l);enqueue({op:"upsert",link:l});if(!quiet)render()}
+function patchLink(id,fields,quiet){const l=S.links.get(id);if(!l)return;S.links.set(id,normLink(Object.assign({},l,fields,{updatedAt:Date.now()})));enqueue({op:"patch",id,fields});if(!quiet)render()}
 function removeLink(id){S.links.delete(id);enqueue({op:"delete",id});render()}
 async function putSettings(st){
   S.settings=st;saveData();render();
   if(!connected())return true;
   pendingSettings++;
-  try{const res=await api({action:"settings",settings:st});pendingSettings--;applyServer(res);S.sync="ok";render();return true}
+  try{const res=await api({action:"settings",settings:st});pendingSettings--;applyServer(res);S.sync="ok";S.lastSync=Date.now();render();return true}
   catch(e){pendingSettings--;S.sync="error";S.syncErr=apiErr(e);render();toast(S.syncErr);return false}
 }
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&connected()&&Date.now()-S.lastSync>60e3)flush()});
+const pullIfStale=ms=>{if(!document.hidden&&connected()&&!flushing&&Date.now()-S.lastSync>ms)flush()};
+document.addEventListener("visibilitychange",()=>pullIfStale(5e3));
+window.addEventListener("focus",()=>pullIfStale(5e3));
 window.addEventListener("online",()=>{if(connected())flush()});
+setInterval(()=>pullIfStale(30e3),10e3);
+
+/* 다른 기기 연결 링크: 주소#connect=… 로 열면 시트 주소와 키를 자동으로 넣어요 */
+function connectLink(){return location.origin+location.pathname+"#connect="+btoa(unescape(encodeURIComponent(JSON.stringify({u:S.cfg.url,k:S.cfg.key}))))}
+function readConnectHash(){
+  const m=/[#&]connect=([^&]+)/.exec(location.hash);if(!m)return false;
+  history.replaceState(null,"",location.pathname+location.search);
+  try{
+    const j=JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(m[1])))));
+    if(!j.u||!j.k||!/^https:\/\/script\.google\.com\//.test(j.u))throw 0;
+    const was=connected(),changed=j.u!==S.cfg.url||j.k!==S.cfg.key;
+    S.cfg.url=j.u;S.cfg.key=j.k;lsSet(LS.cfg,S.cfg);
+    if(changed&&!was&&S.links.size){for(const l of S.links.values())S.queue.push({op:"upsert",link:l});lsSet(LS.queue,S.queue)}
+    setTimeout(()=>toast("🔗 구글 시트에 연결했어요! 마을을 불러올게요."),300);
+    return true;
+  }catch{setTimeout(()=>toast("연결 링크를 읽지 못했어요. 링크를 다시 복사해 주세요."),300);return false}
+}
 
 /* ================= GitHub ================= */
 function parseRepos(arr){
@@ -623,6 +867,107 @@ async function autoCheck(){
 }
 function prettyName(n){const p=n.replace(/\.github\.io$/i,"").replace(/[-_]+/g," ").trim().replace(/\b[a-z]/g,c=>c.toUpperCase());return p||n}
 
+/* ================= 그림 ================= */
+const INK="#23222B";
+function hexRgb(h){h=String(h||"").replace("#","");if(h.length===3)h=h.split("").map(c=>c+c).join("");const n=parseInt(h,16);return (h.length!==6||isNaN(n))?[120,120,140]:[n>>16&255,n>>8&255,n&255]}
+function mix(a,b,t){const x=hexRgb(a),y=hexRgb(b);return "#"+x.map((v,i)=>Math.round(v+(y[i]-v)*t).toString(16).padStart(2,"0")).join("")}
+const TIGER='<svg viewBox="0 0 64 64" aria-hidden="true"><g stroke="#23222B" stroke-width="2.5" stroke-linejoin="round"><circle cx="14" cy="17" r="8" fill="#F7A43B"/><circle cx="50" cy="17" r="8" fill="#F7A43B"/><circle cx="14" cy="17" r="3.5" fill="#FFE1C2" stroke="none"/><circle cx="50" cy="17" r="3.5" fill="#FFE1C2" stroke="none"/><ellipse cx="32" cy="36" rx="24" ry="21" fill="#F7A43B"/><ellipse cx="32" cy="45" rx="12.5" ry="8.5" fill="#FFF6E8"/></g><path d="M32 16v7M25 17l2 6M39 17l-2 6M8.5 32h6M9.5 39h5M55.5 32h-6M54.5 39h-5" stroke="#23222B" stroke-width="2.5" stroke-linecap="round"/><circle cx="23" cy="34" r="2.7" fill="#23222B"/><circle cx="41" cy="34" r="2.7" fill="#23222B"/><circle cx="24" cy="33" r=".9" fill="#fff"/><circle cx="42" cy="33" r=".9" fill="#fff"/><path d="M29 41h6l-3 3.2z" fill="#23222B" stroke="#23222B" stroke-width="1.5" stroke-linejoin="round"/><path d="M32 44q-2.5 3.5-5.5 1.2M32 44q2.5 3.5 5.5 1.2" fill="none" stroke="#23222B" stroke-width="2" stroke-linecap="round"/><circle cx="16.5" cy="42" r="3" fill="#FF9EBB" opacity=".85"/><circle cx="47.5" cy="42" r="3" fill="#FF9EBB" opacity=".85"/></svg>';
+const TIGER_SAD=TIGER.replace('M32 44q-2.5 3.5-5.5 1.2M32 44q2.5 3.5 5.5 1.2','M27 47q5-4 10 0');
+const SQUIRREL='<svg viewBox="0 0 64 64" aria-hidden="true"><g stroke="#23222B" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"><path d="M40 54c16-2 21-20 13-31-6-8-18-7-18 3 0 6 6 9 10 5" fill="#C9874A"/><ellipse cx="28" cy="45" rx="14" ry="14" fill="#DE9D5E"/><path d="M19 15l2-9 7 7z" fill="#DE9D5E"/><circle cx="26" cy="25" r="12" fill="#DE9D5E"/><ellipse cx="27" cy="47" rx="7" ry="9" fill="#FCE6C8" stroke="none"/><rect x="12" y="39" width="20" height="14" rx="2.5" fill="#fff"/><path d="m12.5 40 9.5 7 9.5-7" fill="none"/></g><path d="M22 47.5c-1.6-1.4-3.6.4-2 2l2 1.8 2-1.8c1.6-1.6-.4-3.4-2-2z" fill="#EE4B5B"/><circle cx="21" cy="24" r="2.4" fill="#23222B"/><circle cx="21.7" cy="23.2" r=".8" fill="#fff"/><circle cx="14.8" cy="28" r="1.8" fill="#23222B"/><circle cx="23" cy="30" r="2.6" fill="#FF9EBB" opacity=".85"/></svg>';
+const CHERRY='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M21 40C25 24 34 13 46 8M43 42c-1-15 1-25 3-34" fill="none" stroke="#3E8E4B" stroke-width="3" stroke-linecap="round"/><path d="M46 8c6-6 14-5 16 0-6 4-12 4-16 0z" fill="#7CC56B" stroke="#23222B" stroke-width="2.5" stroke-linejoin="round"/><g stroke="#23222B" stroke-width="2.5"><circle cx="21" cy="45" r="13" fill="#EE4B5B"/><circle cx="44" cy="47" r="12" fill="#EE4B5B"/></g><ellipse cx="15" cy="40" rx="3" ry="2" fill="#fff" opacity=".7"/><ellipse cx="39" cy="42" rx="2.6" ry="1.8" fill="#fff" opacity=".7"/><circle cx="17" cy="46" r="1.6" fill="#23222B"/><circle cx="25" cy="46" r="1.6" fill="#23222B"/><path d="M19 50q2 2 4 0" fill="none" stroke="#23222B" stroke-width="1.8" stroke-linecap="round"/><circle cx="40" cy="48" r="1.5" fill="#23222B"/><circle cx="48" cy="48" r="1.5" fill="#23222B"/><path d="M42 52q2 2 4 0" fill="none" stroke="#23222B" stroke-width="1.8" stroke-linecap="round"/></svg>';
+const TREE='<svg class="tree" viewBox="0 0 30 36" aria-hidden="true"><rect x="12.5" y="22" width="5" height="12" rx="1.5" fill="#A9743F" stroke="#23222B" stroke-width="2"/><path d="M15 2C6 2 3 10 4.5 16 2 20 5 26 11 25h8c6 1 9-5 6.5-9C27 10 24 2 15 2z" fill="#5DBB63" stroke="#23222B" stroke-width="2.2" stroke-linejoin="round"/><path d="M10 11q2-3 5-3" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2" stroke-linecap="round"/></svg>';
+const SUN='<svg class="sun" viewBox="0 0 64 64" aria-hidden="true"><g stroke="#23222B" stroke-width="2.5" stroke-linecap="round"><path d="M32 3v8M32 53v8M3 32h8M53 32h8M11.5 11.5l5.5 5.5M47 47l5.5 5.5M52.5 11.5 47 17M17 47l-5.5 5.5"/><circle cx="32" cy="32" r="15" fill="#FFD84D"/></g><circle cx="27" cy="31" r="1.8" fill="#23222B"/><circle cx="37" cy="31" r="1.8" fill="#23222B"/><path d="M28 36q4 3 8 0" fill="none" stroke="#23222B" stroke-width="2" stroke-linecap="round"/></svg>';
+const CLOUD=c=>`<svg class="cloud ${c}" viewBox="0 0 110 50" aria-hidden="true"><path d="M20 44h70c11 0 16-14 6-20 0-10-12-16-21-10C71 4 54 2 47 12 38 6 26 12 27 22 14 21 8 40 20 44z" fill="#fff" stroke="#23222B" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
+const HILLS='<svg class="hills" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 92V60C80 30 150 26 230 52 300 14 400 4 480 44 540 22 600 20 660 48 760 6 860 10 950 46 1020 28 1100 30 1200 50V92z" fill="#66C46E" stroke="#23222B" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 92V74C120 58 260 60 380 72 520 54 660 58 800 72 940 56 1080 58 1200 70V92z" fill="#8ED67F" stroke="#23222B" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>';
+const LIGHTHOUSE='<svg class="lh" viewBox="0 0 60 70" aria-hidden="true"><g stroke="#23222B" stroke-width="2.5" stroke-linejoin="round"><path d="M22 66l4-44h8l4 44z" fill="#fff"/><path d="M24.5 50h11l1 8h-13zM25.8 34h8.4l.8 8h-10z" fill="#EE4B5B"/><rect x="23" y="12" width="14" height="10" rx="2" fill="#FFE27A"/><path d="M21 12h18l-9-8z" fill="#EE4B5B"/></g><path d="M40 16l14-5M40 18h15M40 20l14 5" stroke="#FFC93C" stroke-width="2.5" stroke-linecap="round"/></svg>';
+const CRANE='<svg viewBox="0 0 86 62" aria-hidden="true"><g stroke="#23222B" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"><path d="M20 58V10M28 58V10M20 18l8 8M28 18l-8 8M20 34l8 8M28 34l-8 8" fill="none"/><path d="M12 10h68" /><path d="M24 10l-2-6h4z" fill="#FFC93C"/><path d="M68 10v18" /><path d="M64 28h8v6h-8z" fill="#FFC93C"/><path d="M42 58V44h30v14z" fill="#F3E5C4"/><path d="M42 44h30l-15-10z" fill="#FF9EBB"/></g><path d="M4 58h80" stroke="#23222B" stroke-width="3"/><path d="M8 52l6 6M14 52l6 6M60 54h4M66 54h4" stroke="#E9A800" stroke-width="3"/></svg>';
+const boatSVG=col=>`<svg viewBox="0 0 104 72" aria-hidden="true"><path d="M6 62q8-5 16 0t16 0 16 0 16 0 16 0 16 0" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".85"/><g stroke="#23222B" stroke-width="2.6" stroke-linejoin="round"><path d="M50 34V6" fill="none"/><path d="M50 6l20 7-20 7z" fill="${col}"/><rect x="30" y="30" width="38" height="18" rx="4" fill="#fff"/><path d="M8 46h88l-12 14H20z" fill="${col}"/><path d="M14 50h76" stroke="#fff" stroke-width="2.5"/></g><circle cx="40" cy="39" r="3.4" fill="#BFE6FF" stroke="#23222B" stroke-width="2"/><circle cx="51" cy="39" r="3.4" fill="#BFE6FF" stroke="#23222B" stroke-width="2"/><circle cx="62" cy="39" r="3.4" fill="#BFE6FF" stroke="#23222B" stroke-width="2"/></svg>`;
+
+/* ---- 가게 건물 ---- */
+function bInfo(l){
+  const s=suggestIcons(l)[0],ic=l.icon||{};
+  let type=s.i>=0?(BTYPE[ICON_RULES[s.i][0][0]]||"house"):["house","shop","tower","house","dome"][hashNum(l.id||l.name)%5];
+  const base=ic.color||s.color||hashColor(displayName(l));
+  return {type,base};
+}
+function bState(l){
+  const now=Date.now(),d=864e5;
+  const lit=(l.opens||0)>=3&&l.lastOpenedAt&&now-l.lastOpenedAt<14*d;
+  const sleepy=!l.pinned&&!lit&&(l.lastOpenedAt?now-l.lastOpenedAt>30*d:(l.createdAt&&now-l.createdAt>21*d));
+  return {lit:!!lit,sleepy:!!sleepy};
+}
+function signContent(l,cx,cy,size){
+  const ic=l.icon||{};
+  if(ic.type==="emoji"&&ic.value)return `<text x="${cx}" y="${cy}" font-size="${size}" text-anchor="middle" dominant-baseline="central">${esc(ic.value)}</text>`;
+  if(ic.type==="image"&&ic.value){const r=size*.62;return `<image href="${esc(ic.value)}" x="${cx-r}" y="${cy-r}" width="${2*r}" height="${2*r}" preserveAspectRatio="xMidYMid slice" style="clip-path:inset(0 round 5px)"/>`}
+  const t=(ic.type==="mono"&&ic.value)?ic.value:mono(displayName(l));
+  return `<text x="${cx}" y="${cy+1}" font-size="${size*(t.length>2?.5:.68)}" font-family="Jua,sans-serif" fill="${INK}" text-anchor="middle" dominant-baseline="central">${esc(t)}</text>`;
+}
+function buildingSVG(l,st){
+  st=st||{};
+  const {type,base}=bInfo(l);
+  const W=mix(base,"#FFFFFF",.74),R=mix(base,"#FFFFFF",.18),D=mix(base,INK,.22);
+  const G=st.sleepy?"#A9B4C6":st.lit?"#FFE27A":"#CFEFFF";
+  const K=`stroke="${INK}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"`;
+  const win=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${G}" ${K}/><path d="M${x+w/2} ${y}v${h}M${x} ${y+h/2}h${w}" stroke="${INK}" stroke-width="2"/>`;
+  const door=(x,y,w,h)=>`<path d="M${x} ${y+h}V${y+w/2}a${w/2} ${w/2} 0 0 1 ${w} 0V${y+h}Z" fill="${D}" ${K}/><circle cx="${x+w*.75}" cy="${y+h*.6}" r="1.6" fill="#FFE27A"/>`;
+  const sign=(cx,cy,r)=>`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" ${K}/>${signContent(l,cx,cy+1,r*1.45)}`;
+  const board=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="#fff" ${K}/>${signContent(l,x+w/2,y+h/2+1,h*.78)}`;
+  let s="",smoke=null;
+  if(type==="house"){
+    s=`<rect x="90" y="26" width="13" height="28" fill="${D}" ${K}/><rect x="28" y="60" width="84" height="68" fill="${W}" ${K}/><path d="M18 64L70 20l52 44z" fill="${R}" ${K}/>${sign(70,48,11)}${win(38,74,24,20)}${door(78,88,22,40)}`;smoke=[96,20];
+  }else if(type==="shop"){
+    let aw="";for(let i=0;i<5;i++)aw+=`<rect x="${18+i*20}" y="58" width="20" height="14" fill="${i%2?"#fff":R}"/>`;
+    let sc="M18 72";for(let i=0;i<10;i++)sc+="q5 8 10 0";
+    s=`<rect x="18" y="48" width="104" height="80" fill="${W}" ${K}/><rect x="14" y="42" width="112" height="10" rx="2" fill="${R}" ${K}/>${board(28,12,84,28)}${aw}<rect x="18" y="58" width="104" height="14" fill="none" ${K}/><path d="${sc}" fill="${R}" ${K}/>${win(26,88,46,28)}${door(84,86,26,42)}`;
+  }else if(type==="school"){
+    s=`<rect x="14" y="62" width="112" height="66" fill="${W}" ${K}/><rect x="10" y="56" width="120" height="10" rx="2" fill="${R}" ${K}/><rect x="50" y="28" width="40" height="34" fill="${W}" ${K}/><path d="M44 30L70 6l26 24z" fill="${R}" ${K}/><path d="M70 6V-6" ${K}/><path d="M70 -6l12 4-12 4z" fill="#EE4B5B" ${K}/>${sign(70,45,12)}${win(22,76,18,16)}${win(100,76,18,16)}${win(22,100,18,16)}${win(100,100,18,16)}${door(58,92,24,36)}`;
+  }else if(type==="tower"){
+    s=`<rect x="18" y="80" width="30" height="48" fill="${W}" ${K}/><rect x="92" y="80" width="30" height="48" fill="${W}" ${K}/><rect x="44" y="30" width="52" height="98" fill="${W}" ${K}/><path d="M38 32L70 4l32 28z" fill="${R}" ${K}/>${sign(70,52,14)}${win(53,76,14,12)}${win(73,76,14,12)}${win(53,94,14,12)}${win(73,94,14,12)}${win(26,92,14,12)}${win(100,92,14,12)}${door(61,108,18,20)}`;
+  }else if(type==="dome"){
+    s=`<path d="M70 32V14" ${K}/><circle cx="70" cy="12" r="4" fill="#EE4B5B" ${K}/><rect x="24" y="72" width="92" height="56" fill="${W}" ${K}/><path d="M28 74a42 42 0 0 1 84 0z" fill="${R}" ${K}/><rect x="65" y="40" width="10" height="34" rx="3" fill="${G}" ${K}/>${board(48,80,44,20)}<circle cx="38" cy="100" r="8" fill="${G}" ${K}/><circle cx="102" cy="100" r="8" fill="${G}" ${K}/>${door(61,104,18,24)}`;
+  }else if(type==="arcade"){
+    let bulbs="";for(let x=24;x<=118;x+=13)bulbs+=`<circle cx="${x}" cy="16" r="3" fill="${st.sleepy?"#ccc":"#FFE27A"}" stroke="${INK}" stroke-width="1.6"/>`;
+    s=`<rect x="20" y="44" width="100" height="84" fill="${W}" ${K}/><rect x="12" y="16" width="116" height="32" rx="10" fill="${R}" ${K}/>${bulbs}${board(46,21,48,24)}${win(28,58,84,28)}<path d="M40 66l2 4 4 .5-3 3 .8 4-3.8-2-3.8 2 .8-4-3-3 4-.5z" fill="#fff" stroke="${INK}" stroke-width="1.5"/>${door(54,96,32,32)}`;
+  }else if(type==="library"){
+    let cols="";[28,50,80,102].forEach(x=>cols+=`<rect x="${x}" y="64" width="10" height="52" fill="#fff" ${K}/>`);
+    s=`<rect x="22" y="62" width="96" height="56" fill="${W}" ${K}/>${cols}<rect x="18" y="52" width="104" height="12" fill="${W}" ${K}/><path d="M14 54L70 22l56 32z" fill="${R}" ${K}/>${sign(70,42,9)}${door(62,86,16,32)}<rect x="12" y="116" width="116" height="12" rx="2" fill="#EDE3CF" ${K}/>`;
+  }else{ /* factory */
+    s=`<rect x="98" y="18" width="14" height="50" fill="${D}" ${K}/><path d="M98 30h14" stroke="#fff" stroke-width="3"/><rect x="14" y="66" width="112" height="62" fill="${W}" ${K}/><path d="M14 66V44l26 22V44l26 22V44l26 22z" fill="${R}" ${K}/>${board(24,80,52,24)}${win(24,108,22,14)}${win(52,108,22,14)}${door(88,92,26,36)}`;smoke=[105,12];
+  }
+  const sm=st.lit&&smoke?`<g class="smoke" fill="#fff" stroke="${INK}" stroke-width="2"><circle cx="${smoke[0]}" cy="${smoke[1]}" r="5"/><circle cx="${smoke[0]+4}" cy="${smoke[1]-6}" r="6"/><circle cx="${smoke[0]}" cy="${smoke[1]-12}" r="4"/></g>`:"";
+  const zz=st.sleepy?`<text class="zz" x="116" y="20" font-family="Jua,sans-serif" font-size="17" fill="#6E6B78">Zz</text>`:"";
+  return `<svg viewBox="0 0 140 130" aria-hidden="true"${st.sleepy?' style="filter:saturate(.55)"':""}>${s}${sm}${zz}</svg>`;
+}
+function miniB(l){return `<span class="mini" title="${esc(displayName(l))}">${buildingSVG(l,bState(l))}</span>`}
+
+/* ================= 휴대폰 / PC 화면 ================= */
+const LAYOUT_KEY="wd-layout";
+let layoutPref=lsGet(LAYOUT_KEY,"auto");
+function autoMobile(){return matchMedia("(max-width: 760px)").matches||(matchMedia("(pointer: coarse)").matches&&innerWidth<1100)}
+function isM(){return layoutPref==="mobile"||(layoutPref==="auto"&&autoMobile())}
+function applyLayout(){const m=isM(),ch=document.body.classList.contains("m")!==m||!document.body.classList.contains(m?"m":"pc");document.body.classList.toggle("m",m);document.body.classList.toggle("pc",!m);return ch}
+addEventListener("resize",()=>{if(applyLayout())render()});
+function setMsearch(on){S.msearch=on;document.body.classList.toggle("msearch",on);if(on)setTimeout(()=>$("#q").focus(),60);else if(S.q){S.q="";$("#q").value=""}render()}
+function openMore(){
+  const m=openModal(`<div class="m-head"><h3>☰ 더보기</h3>${XBTN}</div><div class="m-body more">
+    <button class="mi" type="button" data-mact="import">⛵ GitHub 동기화${S.newRepos.length?` <span class="cnt">${S.newRepos.length}</span>`:""}<small>@${esc(ghHandle("a"))} · @${esc(ghHandle("b"))} 의 새 웹앱 불러오기</small></button>
+    <button class="mi" type="button" data-mact="select">📦 골라서 옮기기<small>여러 가게를 한 번에 다른 거리로</small></button>
+    <div class="row"><button class="mi" type="button" data-mact="folders">✏️ 거리 관리</button><button class="mi" type="button" data-mact="icons">🍒 간판 달기</button></div>
+    <div class="row"><label class="field"><span>정렬</span><select id="mo-sort">${$("#sort").innerHTML}</select></label>
+    <div class="field"><span>보기</span><div class="seg" id="mo-view"><button type="button" data-v="map" aria-pressed="${S.view==="map"}">🗺️ 지도</button><button type="button" data-v="list" aria-pressed="${S.view==="list"}">📋 목록</button></div></div></div>
+    <button class="mi" type="button" data-mact="settings">⚙️ 설정 · 구글 시트 연결<small>${connected()?"연결됨 · 모든 기기에서 같은 마을이에요":"아직 이 기기에만 저장돼요"}</small></button>
+    <button class="mi" type="button" data-mact="pc">🖥️ PC 화면으로 보기<small>설정 › 이 기기 화면에서 되돌릴 수 있어요</small></button>
+    <div class="status" data-status></div></div>`);
+  const ms=m.querySelector("#mo-sort");ms.value=S.sort;
+  ms.addEventListener("change",()=>{S.sort=ms.value;$("#sort").value=S.sort;lsSet(LS.sort,S.sort);render()});
+  m.querySelectorAll("#mo-view button").forEach(b=>b.addEventListener("click",()=>{S.view=b.dataset.v;lsSet(LS.view,S.view);m.querySelectorAll("#mo-view button").forEach(x=>x.setAttribute("aria-pressed",x===b));render()}));
+  m.querySelectorAll("[data-mact]").forEach(b=>b.addEventListener("click",()=>{const a=b.dataset.mact;closeModal();
+    if(a==="import")openImport();if(a==="select")startSelect();if(a==="folders")openFolders();if(a==="icons")openIconMaker();if(a==="settings")openSettings();
+    if(a==="pc"){layoutPref="pc";lsSet(LAYOUT_KEY,"pc");applyLayout();render();toast("🖥️ PC 화면으로 바꿨어요.")}}));
+  renderStatus();
+}
+
 /* ================= 화면 ================= */
 function sortLinks(arr){
   const byName=(a,b)=>(a.name||"").localeCompare(b.name||"","ko");
@@ -635,11 +980,17 @@ function sortLinks(arr){
     return byName(a,b);
   });
 }
+function ownerOf(l){const r=(l.repo||"").split("/")[0];if(r&&l.repo.includes("/"))return r.toLowerCase();const m=/^https?:\/\/([a-z0-9-]+)\.github\.io/i.exec(l.url||"");return m?m[1].toLowerCase():""}
+function tabSlot(){return S.tab.startsWith("gh:")?S.tab.slice(3):""}
+function slotLinks(k){const h=ghHandle(k).toLowerCase();return h?[...S.links.values()].filter(l=>ownerOf(l)===h):[]}
 function visible(){
   let arr=[...S.links.values()];
-  if(S.tab!=="all")arr=arr.filter(l=>l.category===S.tab);
-  if(S.tab==="school"&&S.folder)arr=arr.filter(l=>S.folder===NONE?!l.folder:l.folder===S.folder);
-  const q=S.q.trim().toLowerCase();
+  const k=tabSlot(),q=S.q.trim().toLowerCase();
+  if(q)arr=arr; /* 찾기는 마을 전체에서 */
+  else if(S.tab==="pinned")arr=arr.filter(l=>l.pinned);
+  else if(k){const h=ghHandle(k).toLowerCase();arr=arr.filter(l=>ownerOf(l)===h)}
+  else if(S.tab!=="all")arr=arr.filter(l=>l.category===S.tab);
+  if(!q&&S.tab==="school"&&S.folder)arr=arr.filter(l=>S.folder===NONE?!l.folder:l.folder===S.folder);
   if(q)arr=arr.filter(l=>[l.name,l.url,l.memo,l.repo,l.folder,...(l.links||[]).flatMap(x=>[x.label,x.url])].some(x=>(x||"").toLowerCase().includes(q)));
   return sortLinks(arr);
 }
@@ -653,118 +1004,203 @@ function icoHTML(l,cls){
 }
 document.addEventListener("error",e=>{const t=e.target;if(!t||!t.classList)return;
   if(t.classList.contains("fav")){const sp=t.parentElement;sp.className="ico"+(sp.classList.contains("sm")?" sm":"");sp.style.setProperty("--ic",t.dataset.c);sp.textContent=t.dataset.m}
-  if(t.classList.contains("thumb"))t.remove();
+  if(t.classList.contains("pthumb"))t.remove();
 },true);
 
-const STAR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
-const PEN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg>';
-function ctlHTML(l){return `<span class="ctl"><button class="icbtn${l.pinned?" on":""}" type="button" data-pin="${esc(l.id)}" aria-pressed="${!!l.pinned}" aria-label="${l.pinned?"고정 해제":"맨 앞에 고정"}" title="${l.pinned?"고정 해제":"맨 앞에 고정"}">${STAR}</button><button class="icbtn" type="button" data-edit="${esc(l.id)}" aria-label="편집" title="편집">${PEN}</button></span>`}
-function footHTML(l){return `<span class="foot"><span class="cat"><i class="dot" style="--c:${CCOLOR[l.category]}"></i>${esc(placeLabel(l))}</span>${l.repo?`<span class="badge mono" title="${esc(l.repo)}">repo</span>`:""}</span>`}
+const STAR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
+const PEN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg>';
 const pickHTML=`<span class="pickmark" aria-hidden="true">${CHECK_SVG}</span>`;
-function cardHTML(l){
-  const href=esc(safeHref(l.url)),ts=thumbSrc(l),pk=S.picked.has(l.id);
-  const xl=(l.links||[]).filter(x=>x&&x.url);
-  return `<li class="card${ts?"":" nothumb"}${pk?" picked":""}" data-id="${esc(l.id)}" style="--cc:${CCOLOR[l.category]}">${pickHTML}
-    <a class="c-thumb" href="${href}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" tabindex="-1" aria-hidden="true">
-      <span class="panel">${icoHTML(l)}</span>${ts?`<img class="thumb" alt="" loading="lazy" referrerpolicy="no-referrer" src="${esc(ts)}">`:""}</a>
-    <div class="c-body">
-      <div class="c-head">${icoHTML(l,"sm")}<div class="c-title"><a class="c-name" href="${href}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}">${esc(displayName(l))}</a><span class="t-host">${esc(hostOf(l.url))}</span></div></div>
-      ${l.memo?`<p class="c-memo" title="${esc(l.memo)}">${esc(l.memo)}</p>`:""}
-      ${xl.length?`<div class="c-links">${xl.map(x=>`<a class="chip" href="${esc(safeHref(normUrl(x.url)))}" target="_blank" rel="noopener noreferrer" title="${esc(x.url)}">${esc(x.label||hostOf(normUrl(x.url)))} ↗</a>`).join("")}</div>`:""}
-      ${footHTML(l)}
-    </div>${ctlHTML(l)}</li>`;
+function actsHTML(l,cls){return `<span class="${cls}"><button class="rb${l.pinned?" on":""}" type="button" data-pin="${esc(l.id)}" aria-pressed="${!!l.pinned}" aria-label="${l.pinned?"고정 해제":"랜드마크로 고정"}" title="${l.pinned?"고정 해제":"랜드마크로 고정"}">${STAR}</button><button class="rb" type="button" data-edit="${esc(l.id)}" aria-label="고치기" title="고치기">${PEN}</button></span>`}
+function xlinks(l){return (l.links||[]).filter(x=>x&&x.url)}
+function lkHTML(x){return `<a class="lk" href="${esc(safeHref(normUrl(x.url)))}" target="_blank" rel="noopener noreferrer" title="${esc(x.url)}">${esc(x.label||hostOf(normUrl(x.url)))} ↗</a>`}
+function placeTag(l,ctx){
+  if(ctx==="none")return "";
+  if(ctx==="folder")return l.folder?`<span class="tag">${FOLDER_SVG}${esc(l.folder)}</span>`:"";
+  return `<span class="tag"><i class="dot" style="--c:${CCOLOR[l.category]}"></i>${esc(placeLabel(l))}</span>`;
 }
-function tileHTML(l){
-  return `<li class="tile${S.picked.has(l.id)?" picked":""}" data-id="${esc(l.id)}">${pickHTML}<a class="tile-link" href="${esc(safeHref(l.url))}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" title="${esc(l.memo||"")}">
-    ${icoHTML(l)}<span class="t-body"><span class="t-name">${esc(displayName(l))}</span><span class="t-host">${esc(hostOf(l.url))}</span></span>${footHTML(l)}</a>${ctlHTML(l)}</li>`;
+function ctxFor(){if(S.q)return "full";return S.tab==="personal"||(S.tab==="school"&&S.folder)?"none":S.tab==="school"?"folder":"full"}
+
+/* 거리 위 가게 하나 */
+function bldHTML(l){
+  const href=esc(safeHref(l.url)),st=bState(l),ts=thumbSrc(l),xl=xlinks(l),pk=S.picked.has(l.id);
+  const pop=(l.memo||ts||xl.length)?`<span class="b-pop">${ts?`<img class="pthumb" alt="" loading="lazy" referrerpolicy="no-referrer" src="${esc(ts)}">`:""}${l.memo?`<span class="memo">${esc(l.memo)}</span>`:""}<span class="host">${esc(hostOf(l.url))}</span>${xl.length?`<span class="lks">${xl.map(lkHTML).join("")}</span>`:""}</span>`:"";
+  return `<li class="bld${l.pinned?" pin":""}${pk?" picked":""}" data-id="${esc(l.id)}">${pickHTML}
+    <a class="b-link" href="${href}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" title="${esc(displayName(l)+(l.memo?" · "+l.memo.split("\n")[0]:""))}">
+      <span class="b-art">${buildingSVG(l,st)}</span>
+      <span class="b-name"><span class="nm">${esc(displayName(l))}</span><span class="ar">↗</span></span>
+    </a>${l.pinned?'<span class="b-flag" aria-hidden="true">⭐</span>':""}${pop}${actsHTML(l,"b-acts")}</li>`;
 }
-function listHTML(items){return S.view==="icon"?`<ul class="grid">${items.map(tileHTML).join("")}</ul>`:`<ul class="cards">${items.map(cardHTML).join("")}</ul>`}
-function sectionHTML(f,items){
+function streetHTML(items){return `<ul class="street">${items.map(bldHTML).join("")}</ul>`}
+function emptyLot(msg){return `<div class="emptylot">${TREE}${TREE}<span>${msg}</span></div>`}
+function streetSection(f,items){
   const none=f===NONE;
-  return `<section class="fsec${none?" none":""}"><div class="fsec-h">${FOLDER_SVG}<h2>${none?"폴더 없음":esc(f)}</h2><span class="n">${items.length}</span>
-    <button class="linkish" type="button" data-folder="${esc(f)}">이 폴더만 보기</button></div>
-    ${items.length?listHTML(items):`<p class="hint fempty">비어 있어요. <b>골라서 옮기기</b>로 카드를 골라 이 폴더에 넣어 보세요.</p>`}</section>`;
+  return `<section class="sec-street"><div class="sh"><span class="roadsign${none?" gray":""}">📍 ${none?"이름 없는 골목":esc(f)}</span><span class="n cute">${items.length}곳</span><button class="linkish" type="button" data-folder="${esc(f)}">이 거리만 보기 →</button></div>
+    ${items.length?streetHTML(items):emptyLot(`아직 빈 땅이에요. <b>골라서 옮기기</b>로 가게를 이 거리에 옮겨 보세요.`)}</section>`;
+}
+
+/* 목록 한 줄 */
+function itemHTML(l,ctx){
+  const href=esc(safeHref(l.url)),xl=xlinks(l),own=ownerOf(l),memo=(l.memo||"").split("\n")[0];
+  return `<li class="item${S.picked.has(l.id)?" picked":""}" data-id="${esc(l.id)}">${pickHTML}
+    <a class="i-main" href="${href}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" title="${esc(l.memo||"")}">
+      ${icoHTML(l)}<span class="i-text"><span class="i-name"><span class="nm">${esc(displayName(l))}</span>${l.pinned?'<span class="pinmark">⭐</span>':""}</span>
+      <span class="i-sub${memo?" hasmemo":""}"><span class="i-host">${esc(hostOf(l.url))}</span>${memo?`<span class="i-memo">${esc(memo)}</span>`:""}</span></span></a>
+    <span class="i-meta">${placeTag(l,ctx)}${own&&!tabSlot()?`<span class="owner">@${esc(own)}</span>`:""}</span>
+    ${xl.length?`<span class="i-links">${xl.slice(0,3).map(lkHTML).join("")}</span>`:""}
+    ${actsHTML(l,"i-acts")}</li>`;
+}
+function listHTML(items,ctx){return `<ul class="list">${items.map(l=>itemHTML(l,ctx)).join("")}</ul>`}
+function grpHTML(title,items,ctx,extra){return `<section class="grp"><div class="grp-h"><span class="t">${title}</span><span class="n">${items.length}</span>${extra||""}</div>${items.length?listHTML(items,ctx):`<p class="hint" style="padding:0 6px">비어 있어요.</p>`}</section>`}
+
+/* ---- 지도 ---- */
+function hoodHTML(f,items){
+  const none=f===NONE,top=items.slice(0,3);
+  const name=none?"이름 없는 골목":f;
+  const blds=top.length?top.map(miniB).join("")+(top.length<3?TREE:""):`${TREE}<span>🌱 빈 땅</span>`;
+  return `<button class="hood${items.length?"":" empty"}" type="button" data-folder="${esc(f)}" title="${esc(name)} 거리로 가기"><span class="blds">${blds}</span><span class="pill"><span>📍 ${esc(name)}</span><b>${items.length}</b></span></button>`;
+}
+function mapHTML(all,fl){
+  const pinned=sortLinks(all.filter(l=>l.pinned));
+  const sch=sortLinks(all.filter(l=>l.category==="school")),per=sortLinks(all.filter(l=>l.category==="personal"));
+  const island=`<button class="island" type="button" data-tab="pinned" title="⭐ 고정한 가게 모아 보기"><span class="isle-land">${pinned.length?pinned.slice(0,5).map(miniB).join(""):LIGHTHOUSE}</span><span class="pill star">⭐ 랜드마크 섬 <b>${pinned.length}</b></span></button>`;
+  let hoods=fl.map(f=>hoodHTML(f,sch.filter(l=>l.folder===f))).join("");
+  const none=sch.filter(l=>!l.folder);
+  if(none.length||!fl.length)hoods+=hoodHTML(NONE,none);
+  hoods+=`<button class="hood add" type="button" data-act="folders">＋ 새 거리 만들기</button>`;
+  const slots=SLOTS.filter(k=>ghHandle(k));
+  const harbor=`<div class="harbor">
+    ${S.newRepos.length?`<button class="lot" type="button" data-act="import">${CRANE}<span>🏗️ 공사 중 ${S.newRepos.length}곳</span><span class="hint">눌러서 마을에 들이기</span></button>`:""}
+    ${slots.map(k=>`<button class="boat" type="button" data-tab="gh:${k}" aria-pressed="${S.tab==="gh:"+k}" title="@${esc(ghHandle(k))} 계정 가게만 보기"><span>${boatSVG(ghCat(k)==="personal"?"#F28C38":"#5B7CFA")}</span><span class="pill">@${esc(ghHandle(k))}</span><span class="to">→ ${LAND[ghCat(k)]}</span></button>`).join("")}
+    <button class="btn sm callboat" type="button" data-act="import">⛵ 배 부르기</button></div>`;
+  const perBlds=per.slice(0,8);
+  return `<div class="map">
+    <div class="sky">${SUN}${CLOUD("c1")}${CLOUD("c2")}${CLOUD("c3")}${HILLS}</div>
+    <div class="isle-row">${island}</div>
+    <div class="lands">
+      <section class="land school"><div class="land-h"><button class="pill school" type="button" data-tab="school">🏫 ${LAND.school} <b>${sch.length}</b></button><span class="hint cute" style="color:var(--ink2)">거리를 누르면 가게들이 보여요</span>${TREE}</div><div class="hoods">${hoods}</div></section>
+      ${harbor}
+      <section class="land home"><div class="land-h"><button class="pill home" type="button" data-tab="personal">🏡 ${LAND.personal} <b>${per.length}</b></button>${TREE}</div>
+        <div class="hoods"><button class="hood big${per.length?"":" empty"}" type="button" data-tab="personal"><span class="blds">${perBlds.length?perBlds.map(miniB).join(""):`${TREE}<span>🌱 빈 땅</span>`}</span><span class="pill"><span>🏠 ${esc(catLabel("personal"))} 거리</span><b>${per.length}</b></span></button></div></section>
+    </div></div>`;
+}
+
+function titleHTML(){
+  if(S.q)return {cls:"gray",t:`🔎 “${esc(S.q)}” 찾기`};
+  if(S.tab==="pinned")return {cls:"gold",t:"⭐ 랜드마크 섬"};
+  const k=tabSlot();if(k)return {cls:ghCat(k)==="personal"?"orange":"blue",t:`⛵ <span class="mono" style="font-size:.8em">@${esc(ghHandle(k))}</span>`};
+  if(S.tab==="school")return {cls:S.folder?"":"blue",t:S.folder?`<span class="crumb">🏫 ${LAND.school} ›</span> 📍 ${S.folder===NONE?"이름 없는 골목":esc(S.folder)}`:`🏫 ${LAND.school}`};
+  if(S.tab==="personal")return {cls:"orange",t:`🏡 ${LAND.personal}`};
+  return {cls:"",t:"🗺️ 마을 전체"};
+}
+function bubbleText(){
+  if(S.selecting)return "옮길 가게를 눌러서 골라요!";
+  if(S.sync==="syncing")return "시트에 저장하는 중…";
+  if(S.q){const n=visible().length;return n?`${n}곳 찾았어요!`:"그런 가게는 없어요…"}
+  if(!S.links.size)return "배를 불러 마을을 채워요!";
+  if(S.view==="map"&&S.tab==="all")return "어느 동네로 갈까요?";
+  return "가게를 누르면 바로 열려요!";
 }
 
 function render(){
   const all=[...S.links.values()],fl=folderList();
   const cnt={school:0,personal:0};all.forEach(l=>cnt[l.category]++);
-  $("#tally").innerHTML=CATS.map(c=>`<span><i class="dot" style="--c:${CCOLOR[c]}"></i>${esc(catLabel(c))} ${cnt[c]}${c==="school"&&fl.length?` · 폴더 ${fl.length}`:""}</span>`).join("")
-    +SLOTS.filter(k=>ghHandle(k)).map(k=>`<span class="mono">@${esc(ghHandle(k))}</span>`).join("");
-  const tabs=[["all","전체",all.length],...CATS.map(c=>[c,catLabel(c),cnt[c]])];
-  $("#tabs").innerHTML=tabs.map(([k,n,c])=>`<button class="tab" role="tab" type="button" data-tab="${k}" aria-selected="${S.tab===k}">${k!=="all"?`<i class="dot" style="--c:${CCOLOR[k]}"></i>`:""}${esc(n)}<span class="n">${c}</span></button>`).join("");
+  if(S.folder&&S.folder!==NONE&&!fl.includes(S.folder))S.folder="";
+  if(tabSlot()&&!ghHandle(tabSlot()))S.tab="all";
+  const slots=SLOTS.filter(k=>ghHandle(k));
+
+  $("#sub").innerHTML=`<span>옹글동글 마을 · 가게 ${all.length}곳</span>${slots.map(k=>`<span class="mono" style="font-size:12px;font-family:var(--f-mono)">⛵ @${esc(ghHandle(k))}</span>`).join("")}`;
   document.querySelectorAll("[data-view]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.view===S.view));
   $("#b-select").setAttribute("aria-pressed",S.selecting);
+  const nc=$("#newcnt");nc.hidden=!S.newRepos.length;nc.textContent=S.newRepos.length;
+  const v=visible(),overview=S.tab==="all"&&!S.q;
+  $("#bubble").textContent=bubbleText();
+  $("#guide-tiger").innerHTML=S.q&&!v.length?TIGER_SAD:TIGER;
 
-  /* 학교용 폴더 막대 */
-  if(S.folder&&S.folder!==NONE&&!fl.includes(S.folder))S.folder="";
-  const fb=$("#fbar");fb.hidden=S.tab!=="school";
+  /* 이동 칩 */
+  const ch=(attrs,on,label,n,cls)=>`<button class="chip-n${cls?" "+cls:""}" type="button" ${attrs} aria-pressed="${on}">${label}${n!=null?`<span class="n">${n}</span>`:""}</button>`;
+  let r1=ch('data-tab="all"',S.tab==="all",S.view==="map"?"🗺️ 마을 지도":"📋 전체",all.length)
+    +ch('data-tab="pinned"',S.tab==="pinned","⭐ 랜드마크",all.filter(l=>l.pinned).length)
+    +CATS.map(c=>ch(`data-tab="${c}"`,S.tab===c,`${LAND_EMO[c]} ${LAND[c]}`,cnt[c])).join("")
+    +slots.map(k=>ch(`data-tab="gh:${k}"`,S.tab==="gh:"+k,`⛵ <span style="font-family:var(--f-mono);font-size:12.5px">@${esc(ghHandle(k))}</span>`,slotLinks(k).length)).join("");
+  let r2="";
   if(S.tab==="school"){
     const nn=folderCount(NONE);
-    fb.innerHTML=`<button class="fchip" type="button" data-folder="" aria-pressed="${!S.folder}">모든 폴더<span class="n">${cnt.school}</span></button>`
-      +fl.map(f=>`<button class="fchip" type="button" data-folder="${esc(f)}" aria-pressed="${S.folder===f}">${FOLDER_SVG}${esc(f)}<span class="n">${folderCount(f)}</span></button>`).join("")
-      +(nn?`<button class="fchip none" type="button" data-folder="${NONE}" aria-pressed="${S.folder===NONE}">폴더 없음<span class="n">${nn}</span></button>`:"")
-      +`<button class="btn sm ghost" type="button" data-act="folders">${fl.length?"폴더 관리":"+ 폴더 만들기"}</button>`;
+    r2=ch('data-folder=""',!S.folder,"모든 거리",cnt.school,"sub")+fl.map(f=>ch(`data-folder="${esc(f)}"`,S.folder===f,`📍 ${esc(f)}`,folderCount(f),"sub")).join("")
+      +(nn?ch(`data-folder="${NONE}"`,S.folder===NONE,"이름 없는 골목",nn,"sub"):"")
+      +`<button class="chip-n sub add" type="button" data-act="folders">${fl.length?"✏️ 거리 관리":"＋ 거리 만들기"}</button>`;
   }
+  $("#chips").innerHTML=`<div class="crow">${r1}</div>${r2?`<div class="crow">${r2}</div>`:""}`;
 
-  const nc=$("#newcnt");nc.hidden=!S.newRepos.length;nc.textContent=S.newRepos.length;
+  /* 알림 */
   let nt="";
-  if(S.newRepos.length)nt+=`<div class="notice"><span><b>새로 배포된 저장소 ${S.newRepos.length}개</b>가 있어요: ${S.newRepos.slice(0,3).map(r=>esc(prettyName(r.name))).join(", ")}${S.newRepos.length>3?" 외":""}</span><button class="linkish" data-act="import" type="button">확인하기</button><button class="linkish" data-act="seen" type="button">넘어가기</button></div>`;
+  if(!all.length)nt+=`<div class="notice letter"><span class="who">${SQUIRREL}</span><span><b>아직 마을이 비어 있어요!</b> 두 GitHub 계정에서 배포된 웹앱을 배로 실어 올게요.</span><button class="btn sm primary" data-act="import" type="button">⛵ 배 부르기</button><button class="linkish" data-act="add" type="button">직접 가게 짓기</button></div>`;
+  if(S.newRepos.length)nt+=`<div class="notice letter"><span class="who">${SQUIRREL}</span><span>다람쥐 편지: <b>새로 배포된 저장소 ${S.newRepos.length}개</b>가 공사 중이에요 — ${S.newRepos.slice(0,3).map(r=>esc(prettyName(r.name))).join(", ")}${S.newRepos.length>3?" 외":""}</span><button class="linkish" data-act="import" type="button">마을에 들이기</button><button class="linkish" data-act="seen" type="button">넘어가기</button></div>`;
   const nf=folderCount(NONE);
-  if(nf&&fl.length&&S.tab!=="personal"&&!S.selecting)nt+=`<div class="notice"><span>${esc(catLabel("school"))}에 <b>폴더가 없는 링크 ${nf}개</b>가 있어요.</span><button class="linkish" data-act="sort-none" type="button">골라서 폴더에 넣기</button></div>`;
+  if(nf&&fl.length&&S.tab!=="personal"&&!S.selecting)nt+=`<div class="notice"><span>📍 <b>이름 없는 골목</b>에 가게 ${nf}곳이 있어요.</span><button class="linkish" data-act="sort-none" type="button">골라서 거리에 넣기</button></div>`;
   const letters=all.filter(hasLetterIcon).length;
-  if(letters>=3&&!lsGet("wd-iconhint-off",false)&&!S.selecting)nt+=`<div class="notice"><span>글자 아이콘인 링크가 <b>${letters}개</b> 있어요. 이름과 메모를 보고 어울리는 아이콘을 만들어 드릴까요?</span><button class="linkish" data-act="icons" type="button">아이콘 만들기</button><button class="linkish" data-act="iconhint-off" type="button">괜찮아요</button></div>`;
-  if(all.length&&!connected())nt+=`<div class="notice"><span>지금은 이 브라우저에만 저장돼요. 구글 시트를 연결하면 다른 기기에서도 같은 목록을 보고, 시트에도 정리돼요.</span><button class="linkish" data-act="settings" type="button">시트 연결하기</button></div>`;
+  if(letters>=3&&!lsGet("wd-iconhint-off",false)&&!S.selecting)nt+=`<div class="notice"><span class="who">${CHERRY}</span><span>간판이 글자뿐인 가게가 <b>${letters}곳</b> 있어요. 이름을 보고 어울리는 이모지 간판을 달아 드릴까요?</span><button class="linkish" data-act="icons" type="button">간판 달기</button><button class="linkish" data-act="iconhint-off" type="button">괜찮아요</button></div>`;
+  if(all.length&&!connected()&&!lsGet("wd-sheethint-off",false))nt+=`<div class="notice"><span>지금은 이 브라우저에만 저장돼요. 구글 시트를 연결하면 다른 기기에서도 같은 마을을 볼 수 있어요.</span><button class="linkish" data-act="settings" type="button">시트 연결하기</button><button class="linkish" data-act="sheethint-off" type="button">나중에</button></div>`;
+  const nCount=(nt.match(/class="notice/g)||[]).length;
+  if(isM()&&nCount>1&&!S.mnote)nt=`<button class="notice mnote" type="button" data-act="mnote"><span>📬 마을 소식 <b>${nCount}</b>개</span><span class="hint">눌러서 보기</span></button>`;
+  else if(isM()&&nCount>1)nt+=`<button class="linkish" type="button" data-act="mnote" style="justify-self:end">소식 접기</button>`;
   $("#notice").innerHTML=nt;
+  $("#tb-all").setAttribute("aria-current",S.tab==="all"&&!S.msearch);$("#tb-pin").setAttribute("aria-current",S.tab==="pinned"&&!S.msearch);$("#tb-search").setAttribute("aria-current",!!S.msearch);
+  const tc=$("#tb-cnt");tc.hidden=!S.newRepos.length;tc.textContent=S.newRepos.length;
 
+  /* 본문 */
   const main=$("#main");
-  if(!all.length){
-    main.innerHTML=`<div class="empty"><h2>${connected()&&S.sync==="syncing"?"시트에서 불러오는 중…":"아직 담긴 웹앱이 없어요"}</h2>
-    <ol class="steps">
-      <li><span><b>설정</b>에서 구글 시트 웹앱 주소와 연결 키, 두 GitHub 아이디를 넣어 주세요.</span></li>
-      <li><span><b>GitHub 동기화</b>로 배포 주소가 있는 저장소를 불러와요. 개인 계정은 ${esc(catLabel("personal"))}, 업무 계정은 ${esc(catLabel("school"))}에 들어가요.</span></li>
-      <li><span>${esc(catLabel("school"))} 탭에서 <b>폴더</b>를 만들고, <b>골라서 옮기기</b>로 카드를 폴더에 나눠 담아요.</span></li>
-    </ol>
-    <div class="acts"><button class="btn" data-act="settings" type="button">설정</button><button class="btn" data-act="import" type="button">GitHub 동기화</button><button class="btn primary" data-act="add" type="button">링크 추가</button></div></div>`;
-  }else{
-    const v=visible();
-    if(S.tab==="school"&&!S.folder&&!S.q){
-      let html="";
-      fl.forEach(f=>{html+=sectionHTML(f,v.filter(l=>l.folder===f))});
-      const none=v.filter(l=>!l.folder);
-      if(none.length||!fl.length)html+=sectionHTML(NONE,none);
-      if(!fl.length)html=`<div class="notice"><span>${esc(catLabel("school"))} 안에 폴더를 만들어 직접 나눠 담을 수 있어요.</span><button class="linkish" data-act="folders" type="button">폴더 만들기</button></div>`+html;
-      main.innerHTML=`<div class="sections">${html}</div>`;
-    }else if(!v.length){
-      main.innerHTML=S.q?`<p class="nomatch">“${esc(S.q)}”와 맞는 링크가 없어요.</p>`:`<p class="nomatch">여기에 아직 링크가 없어요. ${S.tab==="school"?'<b>골라서 옮기기</b>로 카드를 넣거나 ':""}<button class="linkish" data-act="add" type="button">링크 추가</button></p>`;
+  if(S.view==="map"&&overview){main.innerHTML=mapHTML(all,fl)}
+  else{
+    const ti=titleHTML();
+    const back=S.view==="map"&&!overview?`<button class="btn sm" type="button" data-tab="all">← 🗺️ 지도로</button>`:"";
+    let head=`<div class="placebar">${back}<span class="roadsign ${ti.cls}">${ti.t}</span><span class="n">${v.length}곳</span>${S.tab==="school"&&S.folder&&S.folder!==NONE?`<button class="linkish" type="button" data-act="folders">거리 이름 바꾸기</button>`:""}</div>`;
+    let body="";
+    const schoolRoot=S.tab==="school"&&!S.folder&&!S.q;
+    if(!all.length)body=emptyLot("아직 가게가 없어요. 위의 <b>⛵ 배 부르기</b>로 GitHub 웹앱을 불러와 보세요.");
+    else if(S.view==="map"){
+      if(schoolRoot){
+        let h="";fl.forEach(f=>{h+=streetSection(f,v.filter(l=>l.folder===f))});
+        const none=v.filter(l=>!l.folder);if(none.length||!fl.length)h+=streetSection(NONE,none);
+        if(!fl.length)h=`<div class="notice"><span>${esc(catLabel("school"))} 가게를 <b>거리(폴더)</b>로 나눠 담을 수 있어요. 예: 수업, 업무, 3학년 2반</span><button class="linkish" data-act="folders" type="button">거리 만들기</button></div>`+h;
+        body=`<div class="sections">${h}</div>`;
+      }else if(!v.length)body=nomatchHTML();
+      else body=streetHTML(v);
     }else{
-      const head=S.tab==="school"&&S.folder?`<div class="fsec-h" style="margin-bottom:12px">${FOLDER_SVG}<h2>${S.folder===NONE?"폴더 없음":esc(S.folder)}</h2><span class="n">${v.length}</span><button class="linkish" type="button" data-folder="">모든 폴더 보기</button></div>`:"";
-      main.innerHTML=head+listHTML(v);
+      if(!v.length&&!schoolRoot)body=nomatchHTML();
+      else if(S.tab==="all"&&!S.q)body=`<div class="groups">${CATS.map(c=>{const it=v.filter(l=>l.category===c);return it.length?grpHTML(`<i class="dot" style="--c:${CCOLOR[c]}"></i>${LAND_EMO[c]} ${LAND[c]}`,it,c==="school"?"folder":"none",`<button class="linkish" type="button" data-tab="${c}">이 동네만 →</button>`):""}).join("")}</div>`;
+      else if(schoolRoot){
+        let h="";fl.forEach(f=>{h+=grpHTML(`📍 ${esc(f)}`,v.filter(l=>l.folder===f),"none",`<button class="linkish" type="button" data-folder="${esc(f)}">이 거리만 →</button>`)});
+        const none=v.filter(l=>!l.folder);if(none.length||!fl.length)h+=grpHTML("📍 이름 없는 골목",none,"none");
+        body=`<div class="groups">${h}</div>`;
+      }else body=listHTML(v,ctxFor());
     }
+    main.innerHTML=head+body;
   }
   renderSelbar();
   renderStatus();
 }
+function nomatchHTML(){return `<div class="nomatch">${TIGER_SAD}<span>${S.q?`“${esc(S.q)}”와 맞는 가게가 없어요.`:"여기엔 아직 가게가 없어요."}</span>${S.q?"":`<button class="btn sm primary" data-act="add" type="button">🏗️ 가게 짓기</button>`}</div>`}
 function renderStatus(){
-  const el=$("#status"),pend=S.queue.length;
-  if(!connected()){el.innerHTML=`<i class="dot" style="--c:var(--star)"></i>이 브라우저에만 저장됨`;return}
-  if(S.sync==="syncing"){el.innerHTML=`<span class="spin" aria-hidden="true"></span>구글 시트에 저장하는 중…`;return}
-  if(S.sync==="error"){el.innerHTML=`<i class="dot" style="--c:var(--danger)"></i>${esc(S.syncErr)}${pend?` · 보내지 못한 변경 ${pend}개는 이 기기에 남아 있어요`:""} <button class="linkish" data-act="retry" type="button">다시 시도</button>`;return}
-  el.innerHTML=`<i class="dot" style="--c:var(--personal)"></i>구글 시트와 동기화됨${S.sheetUrl?` · <a href="${esc(S.sheetUrl)}" target="_blank" rel="noopener noreferrer">시트 열기 ↗</a>`:""}`;
+  let h;const pend=S.queue.length;
+  if(!connected())h=`<i class="dot" style="--c:var(--star)"></i>이 브라우저에만 저장됨`;
+  else if(S.sync==="syncing")h=`<span class="spin" aria-hidden="true"></span>구글 시트에 저장하는 중…`;
+  else if(S.sync==="error")h=`<i class="dot" style="--c:var(--danger)"></i>${esc(S.syncErr)}${pend?` · 보내지 못한 변경 ${pend}개는 이 기기에 남아 있어요`:""} <button class="linkish" data-act="retry" type="button">다시 시도</button>`;
+  else h=`<i class="dot" style="--c:#5DBB63"></i>구글 시트와 동기화됨${S.sheetUrl?` · <a href="${esc(S.sheetUrl)}" target="_blank" rel="noopener noreferrer">시트 열기 ↗</a>`:""}`;
+  document.querySelectorAll("[data-status]").forEach(el=>el.innerHTML=h);
 }
 
 /* ================= 골라서 옮기기 ================= */
 let selDest=null;
-function startSelect(){S.selecting=true;S.picked.clear();document.body.classList.add("selecting");if(selDest===null)selDest=S.folder&&S.folder!==NONE?"school|"+S.folder:(folderList()[0]?"school|"+folderList()[0]:"school|");render()}
+function startSelect(){if(S.tab==="all"&&!S.q&&S.view==="map")S.tab="school";S.selecting=true;S.picked.clear();document.body.classList.add("selecting");if(selDest===null)selDest=S.folder&&S.folder!==NONE?"school|"+S.folder:(folderList()[0]?"school|"+folderList()[0]:"school|");render()}
 function endSelect(){S.selecting=false;S.picked.clear();document.body.classList.remove("selecting");render()}
 function renderSelbar(){
   const bar=$("#selbar");bar.hidden=!S.selecting;if(!S.selecting)return;
   const n=S.picked.size;
   const cur=bar.querySelector("#sel-dest");const newVal=bar.querySelector("#sel-new")?.value||"";
   if(cur)selDest=cur.value;
-  bar.innerHTML=`<div class="in"><b id="sel-n">${n?`${n}개 골랐어요`:"카드를 눌러 고르세요"}</b>
+  bar.innerHTML=`<div class="in"><b id="sel-n">${n?`📦 ${n}곳 골랐어요`:"가게를 눌러 고르세요"}</b>
     <span class="hint">옮길 곳</span><select id="sel-dest" aria-label="옮길 곳">${destOptions(selDest,true)}</select>
-    <input class="inp" id="sel-new" type="text" placeholder="새 폴더 이름" ${selDest==="new"?"":"hidden"} value="${esc(newVal)}" maxlength="40">
+    <input class="inp" id="sel-new" type="text" placeholder="새 거리 이름" ${selDest==="new"?"":"hidden"} value="${esc(newVal)}" maxlength="40">
     <button class="btn primary sm" id="sel-move" type="button" ${n?"":"disabled"}>옮기기</button>
     <span class="grow"></span>
     <button class="btn sm" id="sel-all" type="button">보이는 것 모두 고르기</button>
@@ -779,51 +1215,56 @@ function renderSelbar(){
 function doMove(){
   const n=S.picked.size;if(!n)return;
   let v=$("#sel-dest").value;
-  if(v==="new"){const name=cleanFolder($("#sel-new").value);if(!name){toast("새 폴더 이름을 적어 주세요.");$("#sel-new").focus();return}v="school|"+name;addFolders([name])}
+  if(v==="new"){const name=cleanFolder($("#sel-new").value);if(!name){toast("새 거리 이름을 적어 주세요.");$("#sel-new").focus();return}v="school|"+name;addFolders([name])}
   const d=parseDest(v);
-  for(const id of S.picked){const l=S.links.get(id);if(l&&(l.category!==d.category||l.folder!==d.folder))putLink(Object.assign({},l,d),true)}
+  for(const id of S.picked){const l=S.links.get(id);if(l&&(l.category!==d.category||l.folder!==d.folder))patchLink(id,d,true)}
   selDest=v;S.picked.clear();render();
-  toast(`${n}개를 ${d.category==="school"?(d.folder?`${catLabel("school")} › ${d.folder}`:`${catLabel("school")} (폴더 없음)`):catLabel("personal")}(으)로 옮겼어요.`);
+  toast(`${n}곳을 ${d.category==="school"?(d.folder?`${catLabel("school")} › ${d.folder}`:`${catLabel("school")} (폴더 없음)`):catLabel("personal")}(으)로 옮겼어요.`);
 }
 
 /* ================= 이벤트 ================= */
 document.addEventListener("click",e=>{
   if(S.selecting){
-    const li=e.target.closest(".card,.tile");
-    if(li&&!e.target.closest(".c-links")){e.preventDefault();const id=li.dataset.id;S.picked.has(id)?S.picked.delete(id):S.picked.add(id);li.classList.toggle("picked");const nEl=$("#sel-n");if(nEl)nEl.textContent=S.picked.size?`${S.picked.size}개 골랐어요`:"카드를 눌러 고르세요";const mv=$("#sel-move");if(mv)mv.disabled=!S.picked.size;return}
+    const li=e.target.closest(".item,.bld");
+    if(li&&!e.target.closest(".i-links,.b-pop")){e.preventDefault();const id=li.dataset.id;S.picked.has(id)?S.picked.delete(id):S.picked.add(id);li.classList.toggle("picked");const nEl=$("#sel-n");if(nEl)nEl.textContent=S.picked.size?`📦 ${S.picked.size}곳 골랐어요`:"가게를 눌러 고르세요";const mv=$("#sel-move");if(mv)mv.disabled=!S.picked.size;return}
   }
-  const t=e.target.closest("[data-tab],[data-folder],[data-view],[data-pin],[data-edit],[data-open],[data-act],#b-add,#b-import,#b-settings,#b-select");
+  const t=e.target.closest("[data-tab],[data-folder],[data-view],[data-pin],[data-edit],[data-open],[data-act],#b-select");
   if(!t)return;
-  if(t.dataset.tab){S.tab=t.dataset.tab;S.folder="";render();return}
+  if(t.dataset.tab){S.tab=t.dataset.tab;S.folder="";render();window.scrollTo({top:0,behavior:"smooth"});return}
   if(t.dataset.folder!==undefined){S.tab="school";S.folder=t.dataset.folder;render();window.scrollTo({top:0,behavior:"smooth"});return}
   if(t.dataset.view){S.view=t.dataset.view;lsSet(LS.view,S.view);render();return}
-  if(t.dataset.pin){e.preventDefault();const l=S.links.get(t.dataset.pin);if(l)putLink(Object.assign({},l,{pinned:!l.pinned}));return}
+  if(t.dataset.pin){e.preventDefault();const l=S.links.get(t.dataset.pin);if(l){patchLink(l.id,{pinned:!l.pinned});toast(l.pinned?"고정을 풀었어요.":"⭐ 랜드마크 섬에 세웠어요!")}return}
   if(t.dataset.edit){e.preventDefault();openEditor(S.links.get(t.dataset.edit));return}
   if(t.dataset.open){const l=S.links.get(t.dataset.open);if(!l)return;
     if(safeHref(l.url)==="#"){e.preventDefault();toast("주소가 http:// 또는 https://로 시작해야 열 수 있어요.");return}
     const nx=Object.assign({},l,{opens:(l.opens||0)+1,lastOpenedAt:Date.now()});
-    S.links.set(l.id,nx);enqueue({op:"upsert",link:nx});setTimeout(render,300);return}
+    S.links.set(l.id,nx);enqueue({op:"open",id:l.id,at:nx.lastOpenedAt});setTimeout(render,300);return}
   if(t.id==="b-select"){S.selecting?endSelect():startSelect();return}
-  const act=t.dataset.act||{"b-add":"add","b-import":"import","b-settings":"settings"}[t.id];
+  const act=t.dataset.act;
   if(act==="add")openEditor(null);
   if(act==="import")openImport();
   if(act==="settings")openSettings();
   if(act==="folders")openFolders();
   if(act==="icons")openIconMaker();
   if(act==="iconhint-off"){lsSet("wd-iconhint-off",true);render()}
+  if(act==="sheethint-off"){lsSet("wd-sheethint-off",true);render()}
   if(act==="seen")markSeen();
   if(act==="retry")flush();
+  if(act==="more")openMore();
+  if(act==="msearch")setMsearch(!S.msearch);
+  if(act==="mnote"){S.mnote=!S.mnote;render()}
   if(act==="sort-none"){S.tab="school";S.folder=NONE;startSelect()}
 });
 $("#q").addEventListener("input",e=>{S.q=e.target.value;render()});
-$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&!S.selecting){const a=document.querySelector(".c-name,.tile-link");if(a)a.click()}if(e.key==="Escape"){e.target.value="";S.q="";render()}});
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&!S.selecting){const a=document.querySelector("#main [data-open]");if(a)a.click()}if(e.key==="Escape"){e.target.value="";S.q="";if(S.msearch)setMsearch(false);else render()}});
 $("#sort").value=S.sort;
 $("#sort").addEventListener("change",e=>{S.sort=e.target.value;lsSet(LS.sort,S.sort);render()});
 document.addEventListener("keydown",e=>{
   const typing=/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
-  if(e.key==="/"&&!$("#modal-root").firstChild&&!typing){e.preventDefault();$("#q").focus()}
+  if((e.key==="/"&&!typing||(e.key==="k"&&(e.metaKey||e.ctrlKey)))&&!$("#modal-root").firstChild){e.preventDefault();$("#q").focus()}
   if(e.key==="Escape"){if($("#modal-root").firstChild)closeModal();else if(S.selecting&&!typing)endSelect()}
 });
+$("#logo").innerHTML=`<span class="mascot" style="display:block">${TIGER}</span>`;
 
 /* ================= 모달 공통 ================= */
 let lastFocus=null;
@@ -847,7 +1288,7 @@ const DOWN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wi
 /* ================= 폴더 관리 ================= */
 function openFolders(){
   let rows=folderList().map(f=>({orig:f,name:f,del:false}));
-  const m=openModal(`<div class="m-head"><h3>${esc(catLabel("school"))} 폴더</h3>${XBTN}</div>
+  const m=openModal(`<div class="m-head"><h3>🏫 ${esc(catLabel("school"))} 거리(폴더)</h3>${XBTN}</div>
   <div class="m-body">
     <p class="hint">폴더 이름을 바꾸거나 순서를 정해요. 위에 있는 폴더가 화면과 시트에서 먼저 나와요.</p>
     <div class="fmgr" id="fm-list"></div>
@@ -883,8 +1324,8 @@ function openFolders(){
     keep.forEach(r=>{if(r.orig&&r.orig!==r.name)ren[r.orig]=r.name});
     let moved=0;
     for(const l of schoolLinks()){
-      if(ren[l.folder]){putLink(Object.assign({},l,{folder:ren[l.folder]}),true);moved++}
-      else if(gone.has(l.folder)){putLink(Object.assign({},l,{folder:""}),true);moved++}
+      if(ren[l.folder]){patchLink(l.id,{folder:ren[l.folder]},true);moved++}
+      else if(gone.has(l.folder)){patchLink(l.id,{folder:""},true);moved++}
     }
     if(ren[S.folder])S.folder=ren[S.folder];if(gone.has(S.folder))S.folder="";
     const st=clone(S.settings);st.folders=keep.map(r=>r.name);
@@ -897,7 +1338,7 @@ function openFolders(){
 function openIconMaker(){
   let redoAll=false;
   const state=new Map(); // id → {pick:index, on:bool, sug:[...]}
-  const m=openModal(`<div class="m-head"><h3>아이콘 만들기</h3>${XBTN}</div>
+  const m=openModal(`<div class="m-head"><h3>🍒 간판 한꺼번에 달기</h3>${XBTN}</div>
   <div class="m-body">
     <p class="hint">이름, 저장소 이름, 메모를 보고 어울리는 이모지와 바탕색을 골랐어요. 마음에 안 들면 옆의 다른 후보를 누르세요. 체크한 것만 바뀌어요.</p>
     <label class="checks"><span style="display:inline-flex;gap:6px;align-items:center"><input type="checkbox" id="ic-all">직접 고른 이모지·이미지 아이콘도 다시 만들기</span></label>
@@ -924,7 +1365,7 @@ function openIconMaker(){
   m.querySelector("#ic-all").addEventListener("change",e=>{redoAll=e.target.checked;draw()});
   m.querySelector("#ic-go").addEventListener("click",()=>{
     let n=0;
-    for(const l of targets()){const st=state.get(l.id);if(!st||!st.on)continue;const s=st.sug[st.pick];putLink(Object.assign({},l,{icon:{type:"emoji",value:s.emoji,color:s.color}}),true);n++}
+    for(const l of targets()){const st=state.get(l.id);if(!st||!st.on)continue;const s=st.sug[st.pick];patchLink(l.id,{icon:{type:"emoji",value:s.emoji,color:s.color}},true);n++}
     lsSet("wd-iconhint-off",true);closeModal();render();toast(`아이콘 ${n}개를 바꿨어요.`);
   });
   draw();
@@ -954,17 +1395,17 @@ async function fileToThumb(file,maxChars){
 function openEditor(link){
   const isNew=!link;
   const startFolder=S.tab==="school"&&S.folder&&S.folder!==NONE?S.folder:"";
-  const d=link?normLink(clone(link)):{id:newId(),name:"",url:"",memo:"",links:[],thumb:"",repo:"",category:S.tab==="personal"?"personal":"school",folder:startFolder,icon:{type:"auto"},pinned:false,opens:0,createdAt:Date.now()};
+  const d=link?normLink(clone(link)):{id:newId(),name:"",url:"",memo:"",links:[],thumb:"",repo:"",category:S.tab==="personal"?"personal":tabSlot()?ghCat(tabSlot()):"school",folder:startFolder,icon:{type:"auto"},pinned:false,opens:0,createdAt:Date.now()};
   let uploading=false,autoPick=isNew;
   if(isNew)d.icon={type:"emoji",value:"",color:""};
   const thumbMode=()=>!d.thumb?"none":d.thumb==="auto"?"auto":/^data:/.test(d.thumb)||/drive\.google\.com\/thumbnail/.test(d.thumb)?"image":"url";
   let tmode=thumbMode();
   const destVal=()=>d.category==="personal"?"personal":"school|"+d.folder;
-  const m=openModal(`<div class="m-head"><h3>${isNew?"링크 추가":"링크 편집"}</h3>${XBTN}</div>
+  const m=openModal(`<div class="m-head"><h3>${isNew?"🏗️ 새 가게 짓기":"🔧 가게 고치기"}</h3>${XBTN}</div>
   <form class="m-body" id="ed" novalidate>
     <div class="row"><label class="field"><span>이름</span><input id="ed-name" type="text" value="${esc(d.name)}" placeholder="예: 3학년 출석부"></label>
     <label class="field"><span>주소</span><input id="ed-url" type="url" class="mono" value="${esc(d.url)}" placeholder="https://…"></label></div>
-    <div class="row"><label class="field"><span>넣을 곳</span><select class="inp" id="ed-dest">${destOptions(destVal(),true)}</select></label>
+    <div class="row"><label class="field"><span>넣을 곳 (동네 › 거리)</span><select class="inp" id="ed-dest">${destOptions(destVal(),true)}</select></label>
     <label class="field" id="ed-fnew-w" hidden><span>새 폴더 이름</span><input id="ed-fnew" type="text" maxlength="40" placeholder="예: 3학년 2반"></label></div>
     <label class="field"><span>메모</span><textarea id="ed-memo" rows="3" placeholder="무엇에 쓰는 앱인지, 로그인 계정, 주의할 점 등">${esc(d.memo)}</textarea></label>
 
@@ -978,9 +1419,9 @@ function openEditor(link){
     <div class="field"><span>관련 링크</span>
       <div class="xlinks" id="ed-xl"></div>
       <div><button class="btn sm" type="button" id="ed-xadd">+ 링크 더하기</button></div>
-      <p class="hint">관리자 페이지, 수업 자료, 저장소처럼 이 앱과 같이 쓰는 주소를 카드 아래에 달아 둬요.</p></div>
+      <p class="hint">관리자 페이지, 수업 자료, 저장소처럼 이 앱과 같이 쓰는 주소를 가게 말풍선과 목록에 달아 둬요.</p></div>
 
-    <div class="field"><span>아이콘</span>
+    <div class="field"><span>간판 (아이콘) · 이름에 맞춰 건물 모양이 정해져요</span>
       <div class="iconed"><div id="ed-prev"></div>
         <div class="icopts">
           <div class="seg sm" id="ed-ictype">${[["emoji","이모지"],["auto","첫 글자"],["mono","직접 글자"],["site","사이트 아이콘"],["image","이미지"]].map(([k,n])=>`<button type="button" data-t="${k}" aria-pressed="${(d.icon.type||"auto")===k}">${n}</button>`).join("")}</div>
@@ -994,7 +1435,7 @@ function openEditor(link){
   const dsel=m.querySelector("#ed-dest");
   dsel.addEventListener("change",()=>{const nw=dsel.value==="new";m.querySelector("#ed-fnew-w").hidden=!nw;if(nw)m.querySelector("#ed-fnew").focus()});
   const readForm=()=>{d.name=m.querySelector("#ed-name").value;d.url=normUrl(m.querySelector("#ed-url").value)};
-  const prev=()=>{readForm();if(autoPick&&d.icon.type==="emoji"){const s0=suggestIcons(d)[0];d.icon.value=s0.emoji;d.icon.color=s0.color}m.querySelector("#ed-prev").innerHTML=icoHTML(d)};
+  const prev=()=>{readForm();if(autoPick&&d.icon.type==="emoji"){const s0=suggestIcons(d)[0];d.icon.value=s0.emoji;d.icon.color=s0.color}m.querySelector("#ed-prev").innerHTML=`<span class="ed-bld" title="거리에 이렇게 보여요">${buildingSVG(d,{})}</span>`};
 
   /* 썸네일 */
   function tprev(){
@@ -1006,7 +1447,7 @@ function openEditor(link){
   }
   function topts(){
     const box=m.querySelector("#ed-topt");
-    if(tmode==="none")box.innerHTML=`<p class="hint">카드 윗부분에 아이콘이 크게 보여요.</p>`;
+    if(tmode==="none")box.innerHTML=`<p class="hint">썸네일은 가게에 마우스를 올렸을 때 말풍선에 보여요.</p>`;
     if(tmode==="auto")box.innerHTML=`<p class="hint">주소의 첫 화면을 자동으로 찍어 와요. 처음엔 1분쯤 걸려서 “생성 중” 그림이 보일 수 있어요. 로그인이 필요한 앱은 로그인 화면이 찍혀요.</p>`;
     if(tmode==="image")box.innerHTML=`<div class="acts"><span class="btn sm filebtn">이미지 고르기<input type="file" id="ed-tfile" accept="image/*"></span></div><p class="hint">앱 화면을 캡처해서 이 창에 붙여넣어도(Ctrl/⌘+V) 돼요. 16:9로 잘라서 ${connected()?"구글 드라이브에 저장해요":"이 브라우저에 저장해요"}.</p>`;
     if(tmode==="url")box.innerHTML=`<input type="url" class="inp mono" id="ed-turl" value="${esc(/^https?:/.test(d.thumb)?d.thumb:"")}" placeholder="https://…/screenshot.png" aria-label="이미지 주소">`;
@@ -1106,7 +1547,7 @@ function openEditor(link){
 function openSettings(){
   const st=clone(S.settings);
   const catOpts=sel=>CATS.map(c=>`<option value="${c}" ${sel===c?"selected":""}>${esc(catLabel(c))}</option>`).join("");
-  const m=openModal(`<div class="m-head"><h3>설정</h3>${XBTN}</div>
+  const m=openModal(`<div class="m-head"><h3>⚙️ 설정</h3>${XBTN}</div>
   <div class="m-body">
     <section class="sec"><h4>분류 이름</h4>
       <div class="row">${CATS.map(c=>`<label class="field"><span><i class="dot" style="--c:${CCOLOR[c]};margin-right:6px"></i>${c==="school"?"폴더로 나누는 분류":"폴더 없는 분류"}</span><input type="text" id="st-cat-${c}" value="${esc(st.cats[c].label)}" maxlength="12"></label>`).join("")}</div>
@@ -1123,8 +1564,9 @@ function openSettings(){
     <section class="sec"><h4>구글 시트 연결</h4>
       <label class="field"><span>Apps Script 웹앱 주소</span><input type="url" id="st-url" class="mono" value="${esc(S.cfg.url)}" placeholder="https://script.google.com/macros/s/…/exec" spellcheck="false"></label>
       <label class="field"><span>연결 키</span><input type="password" id="st-key" class="mono" value="${esc(S.cfg.key)}" placeholder="setup 실행 후 나온 키" autocomplete="off"></label>
-      <p class="hint" id="st-conn">${connected()?(S.sync==="ok"?"연결되어 있어요.":"연결 정보가 들어 있어요."):"비워 두면 이 브라우저에만 저장해요."}</p>
+      <p class="hint" id="st-conn">${connected()?(S.sync==="ok"?"연결되어 있어요.":"연결 정보가 들어 있어요."):"비워 두면 이 브라우저에만 저장해요. 연결하면 휴대폰·PC 어디서 열든 같은 마을이 보여요."}</p>${connected()?`<div class="acts"><button class="btn sm" type="button" id="st-link">📱 다른 기기 연결 링크 복사</button></div><p class="hint">이 링크를 휴대폰에서 열면 주소와 키가 자동으로 들어가요. 연결 키가 들어 있으니 본인 기기에서만 여세요. GitHub 토큰은 들어가지 않아요.</p>`:""}
     </section>
+    <section class="sec"><h4>이 기기 화면</h4><div class="seg" id="st-layout">${[["auto","✨ 자동"],["mobile","📱 휴대폰"],["pc","🖥️ PC"]].map(([k,n])=>`<button type="button" data-l="${k}" aria-pressed="${layoutPref===k}">${n}</button>`).join("")}</div><p class="hint">이 기기에만 적용돼요. 자동은 화면 크기를 보고 골라요. 마을 내용은 모든 기기에서 같아요.</p></section>
     <section class="sec"><h4>백업</h4>
       <div class="acts"><button class="btn sm" type="button" id="st-export">백업 파일 내보내기</button><span class="btn sm filebtn">백업 파일 불러오기<input type="file" id="st-importfile" accept="application/json,.json"></span></div>
       <p class="hint">링크, 메모, 폴더, 썸네일 주소, 분류 이름이 JSON 파일로 저장돼요. 토큰과 연결 키는 넣지 않아요.</p>
@@ -1133,6 +1575,8 @@ function openSettings(){
   <div class="m-foot"><div class="r"><button class="btn" type="button" data-close>취소</button><button class="btn primary" type="button" id="st-save">저장</button></div></div>`,true);
 
   m.querySelector("#st-folders").addEventListener("click",()=>{closeModal();openFolders()});
+  m.querySelectorAll("#st-layout button").forEach(b=>b.addEventListener("click",()=>{layoutPref=b.dataset.l;lsSet(LAYOUT_KEY,layoutPref);m.querySelectorAll("#st-layout button").forEach(x=>x.setAttribute("aria-pressed",x===b));if(applyLayout())render()}));
+  const cl=m.querySelector("#st-link");if(cl)cl.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(connectLink());toast("📱 링크를 복사했어요. 휴대폰에서 열면 바로 연결돼요.")}catch{prompt("이 링크를 복사해서 다른 기기에서 여세요",connectLink())}});
   m.querySelector("#st-icons").addEventListener("click",()=>{closeModal();openIconMaker()});
   m.querySelector("#st-export").addEventListener("click",()=>{
     const blob=new Blob([JSON.stringify({app:"ongledongle",version:3,exportedAt:new Date().toISOString(),settings:S.settings,links:[...S.links.values()]},null,2)],{type:"application/json"});
@@ -1180,7 +1624,7 @@ function openSettings(){
 /* ================= GitHub 동기화 창 ================= */
 function openImport(){
   let groups=null,sel=new Set(),dest={},f={deployOnly:true,hideFork:true,hideArch:true};
-  const m=openModal(`<div class="m-head"><h3>GitHub 동기화</h3>${XBTN}</div>
+  const m=openModal(`<div class="m-head"><h3>⛵ GitHub 동기화</h3>${XBTN}</div>
   <div class="m-body" id="im-body"></div>
   <div class="m-foot"><button class="btn ghost" type="button" id="im-reload">다시 불러오기</button><p class="hint" id="im-sum"></p><div class="r"><button class="btn" type="button" data-close>닫기</button><button class="btn primary" type="button" id="im-go" disabled>가져오기</button></div></div>`,true);
   const body=m.querySelector("#im-body");
@@ -1232,7 +1676,7 @@ function openImport(){
     let made=0,upd2=0;
     for(const {k,r} of picked()){
       const url=r.deploy||r.repoUrl,ex=existing(r);
-      if(ex){if(ex.url!==url||(!ex.memo&&r.desc)){putLink(Object.assign({},ex,{url,memo:ex.memo||r.desc}),true);upd2++}}
+      if(ex){if(ex.url!==url||(!ex.memo&&r.desc)){patchLink(ex.id,{url,memo:ex.memo||r.desc},true);upd2++}}
       else{const nl=Object.assign({id:newId(),name:prettyName(r.name),url,memo:r.desc,links:[{label:"GitHub",url:r.repoUrl}],thumb:"",repo:r.full,pinned:false,opens:0,createdAt:Date.now()},parseDest(dest[k]));nl.icon=autoIcon(nl);putLink(nl,true);made++}
     }
     markSeen();closeModal();render();toast(made||upd2?`새로 ${made}개 추가${upd2?`, ${upd2}개 갱신`:""}했어요.`:"바뀐 게 없어요.");
@@ -1241,10 +1685,10 @@ function openImport(){
 }
 
 /* ================= 시작 ================= */
+readConnectHash();applyLayout();
 render();
 if(connected())flush().then(autoCheck);else autoCheck();
 })();
-
 </script>
 </body>
 </html>
