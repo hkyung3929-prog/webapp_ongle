@@ -3,19 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>🐯🐿️ONGLEDONGLE웹앱모음🍒</title>
-<meta name="theme-color" content="#CFEAFB">
+<title>ONGLE LAND</title>
+<meta name="theme-color" content="#FFF8DC">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="🐯🐿️ONGLEDONGLE웹앱모음🍒">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23CFEAFB'/%3E%3Cpath d='M12 50h40V30L32 14 12 30z' fill='%23FFC93C' stroke='%2323222B' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='27' y='36' width='10' height='14' fill='%23F28C38' stroke='%2323222B' stroke-width='3'/%3E%3C/svg%3E">
+<meta name="apple-mobile-web-app-title" content="ONGLE LAND">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23CFEAFB'/%3E%3Cpath d='M12 50h40V30L32 14 12 30z' fill='%23FFC93C' stroke='%231F1D2B' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='27' y='36' width='10' height='14' fill='%23F28C38' stroke='%231F1D2B' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 /* 옹글동글 마을: 동네 지도(전체) → 거리(폴더별 가게 줄) / 목록 보기 토글 */
 :root{
-  --ink:#23222B; --ink2:#45434F; --muted:#6E6B78; --faint:#9C98A6; --line:#E8DFCB; --line2:#F1EADB;
+  --ink:#1F1D2B; --ink2:#45434F; --muted:#6E6B78; --faint:#9C98A6; --line:#E8DFCB; --line2:#F1EADB;
   --paper:#FFFDF7; --cream:#FFF6E3; --sunk:#F4EDDC; --bg:#D4ECFB;
   --sky1:#BDE3FF; --sky2:#E6F5FF; --sea:#8ED2F5; --sea2:#6FC1EC; --grass:#BCE59B; --grass2:#A3D77E; --sand:#FBE7B0;
   --school:#5B7CFA; --personal:#F28C38; --star:#FFC93C; --pink:#FF9EBB; --danger:#E5484D; --focus:#5B7CFA; --green:#3E9A5B;
@@ -183,7 +182,7 @@ select:focus{border-color:var(--ink)}
 .sec-street .sh .linkish{margin-left:auto}
 .street{list-style:none;margin:0;padding:0 10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));grid-auto-rows:214px;
   border:3px solid var(--ink);border-radius:26px;box-shadow:4px 5px 0 var(--ink);
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='214'%3E%3Crect y='128' width='60' height='32' fill='%23CDEFB0'/%3E%3Crect y='160' width='60' height='19' fill='%23F3E5C4'/%3E%3Cpath d='M0 160.5h60' stroke='%2323222B' stroke-width='2.5'/%3E%3Crect y='179' width='60' height='35' fill='%239C9AAE'/%3E%3Cpath d='M0 179.5h60' stroke='%2323222B' stroke-width='2'/%3E%3Crect x='14' y='194' width='26' height='4' rx='2' fill='%23ffffff'/%3E%3C/svg%3E") 0 0/60px 214px,linear-gradient(#E6F5FF,#F4FBEB)}
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='214'%3E%3Crect y='128' width='60' height='32' fill='%23CDEFB0'/%3E%3Crect y='160' width='60' height='19' fill='%23F3E5C4'/%3E%3Cpath d='M0 160.5h60' stroke='%231F1D2B' stroke-width='2.5'/%3E%3Crect y='179' width='60' height='35' fill='%239C9AAE'/%3E%3Cpath d='M0 179.5h60' stroke='%231F1D2B' stroke-width='2'/%3E%3Crect x='14' y='194' width='26' height='4' rx='2' fill='%23ffffff'/%3E%3C/svg%3E") 0 0/60px 214px,linear-gradient(#E6F5FF,#F4FBEB)}
 .bld{position:relative;height:214px;min-width:0}
 .b-link{position:absolute;inset:0;display:block;text-decoration:none;color:inherit;border-radius:16px}
 .b-art{position:absolute;left:50%;top:26px;width:146px;height:136px;transform:translateX(-50%);transform-origin:50% 100%}
@@ -457,6 +456,238 @@ body.m .field input,body.m .field textarea,body.m .inp,body.m .modal select{font
 }
 @media (max-width:380px){.b-art{width:128px;height:119px;top:43px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ===================== 보드게임 × 그림지도 테마 ===================== */
+:root{--ink:#1F1D2B;--ink2:#3E3B4F;--muted:#6C6880;--faint:#A19DB3;--line:#E4E2EE;--line2:#EFEDF6;--paper:#FFFFFF;--cream:#FFF8E7;--sunk:#F2F0F8;--bg:#CFEBFF;
+  --sky1:#AEE1FF;--sky2:#E3F5FF;--sea:#8FD6F7;--sea2:#6CC6F2;--grass:#9FE07E;--grass2:#7CCB5E;--sand:#FFE7A8;
+  --school:#5B7CFA;--personal:#FF8A3D;--star:#FFD84D;--green:#3FB46A;--pink:#FF9EC4;
+  --t-pink:#FFB3CF;--t-yellow:#FFE45C;--t-cyan:#9BE7F7;--t-mint:#AEEDC4;--t-lav:#D6C4FF;--t-peach:#FFC79E;
+  --hs:4px 4px 0 var(--ink);--hs2:0 3px 0 var(--ink)}
+body{background:var(--bg) radial-gradient(circle,rgba(255,255,255,.7) 1.6px,transparent 2.1px) 0 0/24px 24px;color:var(--ink)}
+.btn{position:relative;background:#fff;border-width:2.5px;box-shadow:0 3px 0 var(--ink)}
+.btn:hover{background:#fff;transform:translateY(-1px);box-shadow:0 4px 0 var(--ink)}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.btn.primary{background:var(--t-yellow)}
+.btn[aria-pressed="true"]{background:var(--t-lav);color:var(--ink)}
+.btn .cnt,.mailcnt{font-style:normal;font-family:var(--f-mono);font-size:10.5px;background:#FF4D6D;color:#fff;border-radius:999px;padding:1px 6px;border:2px solid var(--ink);position:absolute;top:-8px;right:-8px;line-height:1.25}
+.mailbtn{font-size:18px}
+.mailcnt:not([hidden]){animation:wig 2.4s ease-in-out infinite}
+@keyframes wig{0%,85%,100%{transform:rotate(0)}90%{transform:rotate(-14deg)}95%{transform:rotate(12deg)}}
+/* 보드게임 상자 같은 제목 */
+.brand>div{position:relative;background:var(--t-yellow);border:3px solid var(--ink);border-radius:20px;padding:7px 18px 8px;box-shadow:4px 4px 0 var(--ink);transform:rotate(-1.2deg)}
+.brand h1{color:var(--ink);text-shadow:2px 2px 0 #fff}
+.brand .sub{color:var(--ink2)}
+.brand .sub .mono{color:var(--ink2)!important}
+/* 색깔 이름표(장소 표지) */
+.roadsign{background:var(--t-lav);color:var(--ink);text-shadow:none;border:3px solid var(--ink);border-radius:999px;box-shadow:3px 3px 0 var(--ink);padding:4px 18px}
+.roadsign::after{display:none}
+.roadsign.blue{background:#C9D6FF}.roadsign.orange{background:var(--t-peach)}.roadsign.gold{background:var(--t-yellow)}.roadsign.gray{background:#E9E6F2}
+.sec-street .roadsign{background:var(--t-cyan)}
+.sec-street:nth-of-type(4n+2) .roadsign{background:var(--t-pink)}
+.sec-street:nth-of-type(4n+3) .roadsign{background:var(--t-yellow)}
+.sec-street:nth-of-type(4n+4) .roadsign{background:var(--t-mint)}
+.roadsign .crumb{opacity:.6}
+.bar{background:#fff;border-width:3px;box-shadow:var(--hs);border-radius:26px}
+.bubble{background:#fff;border-width:2.5px}
+.search input{border-color:var(--line);background:#FBFAFF}
+.viewsw{border-width:2.5px;box-shadow:0 3px 0 var(--ink)}
+.viewsw button[aria-pressed="true"]{background:var(--t-yellow)}
+.chip-n{border-width:2.5px;box-shadow:0 3px 0 var(--ink);background:#fff}
+.chip-n[aria-pressed="true"]{background:var(--t-yellow);color:var(--ink)}
+.chip-n[aria-pressed="true"] .n{color:var(--ink2)}
+.chip-n.sub{box-shadow:none;background:rgba(255,255,255,.85)}
+.chip-n.sub[aria-pressed="true"]{background:var(--t-lav);color:var(--ink)}
+.notice{background:#fff;border-width:2.5px;box-shadow:3px 3px 0 var(--ink)}
+.notice.letter{background:#FFF6D1}
+/* 지도 */
+.map{border-width:3px;box-shadow:var(--hs)}
+.sky .hills{height:110px}
+.board{position:relative;max-width:1280px;margin:0 auto;background:#FFF8E7;border:3px solid var(--ink);border-radius:30px;box-shadow:6px 7px 0 var(--ink);overflow:hidden}
+.track{display:flex;gap:0;border-bottom:3px solid var(--ink);background:var(--ink);height:46px}
+.track.bottom{border-bottom:0;border-top:3px solid var(--ink)}
+.tile{flex:1 0 42px;display:grid;place-items:center;font-size:17px;border-right:3px solid var(--ink);position:relative;min-width:42px}
+.tile:last-child{border-right:0}
+.tile:nth-child(6n+1){background:var(--t-pink)}.tile:nth-child(6n+2){background:var(--t-yellow)}.tile:nth-child(6n+3){background:var(--t-cyan)}
+.tile:nth-child(6n+4){background:var(--t-mint)}.tile:nth-child(6n+5){background:var(--t-lav)}.tile:nth-child(6n){background:var(--t-peach)}
+.tile.start{flex:0 0 110px;background:#fff!important;font-family:var(--f-cute);font-size:16px;letter-spacing:.02em}
+.tile.start b{font-weight:400;display:flex;align-items:center;gap:4px}
+.tile .tok{position:absolute;bottom:4px;width:40px;height:40px;filter:drop-shadow(2px 3px 0 rgba(31,29,43,.35));animation:hop 2.6s ease-in-out infinite}
+.tile .tok svg{width:100%;height:100%}
+.tile .tok.sq{animation-delay:-1.3s}
+@keyframes hop{0%,70%,100%{transform:translateY(0)}80%{transform:translateY(-9px)}90%{transform:translateY(0)}}
+.board .lands{background:transparent}
+.land{background:var(--grass) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cg fill='none' stroke='%2364B848' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M12 30q2-6 4 0M15 30q1-4 3-1M70 78q2-6 4 0M73 78q1-4 3-1M52 14q2-5 4 0'/%3E%3C/g%3E%3Ccircle cx='80' cy='24' r='2.8' fill='%23fff'/%3E%3Ccircle cx='80' cy='24' r='1.2' fill='%23FFD84D'/%3E%3Ccircle cx='30' cy='70' r='2.8' fill='%23FF9EC4'/%3E%3Ccircle cx='30' cy='70' r='1.2' fill='%23fff'/%3E%3C/svg%3E") 0 0/96px 96px;
+  box-shadow:inset 0 -10px 0 rgba(31,29,43,.08),0 0 0 9px var(--sand),0 0 0 12px var(--ink)}
+.land.home{background-color:#B6E88F}
+.hood{background:#fff;border-width:3px;border-radius:18px;box-shadow:4px 4px 0 var(--ink);padding-top:22px;overflow:hidden}
+.hood::before{content:"";position:absolute;left:0;right:0;top:0;height:14px;background:var(--hc,var(--t-pink));border-bottom:3px solid var(--ink)}
+.hood:nth-child(6n+2){--hc:var(--t-cyan)}.hood:nth-child(6n+3){--hc:var(--t-yellow)}.hood:nth-child(6n+4){--hc:var(--t-mint)}.hood:nth-child(6n+5){--hc:var(--t-lav)}.hood:nth-child(6n){--hc:var(--t-peach)}
+.hood:hover{transform:translateY(-4px) rotate(-.8deg);box-shadow:5px 8px 0 var(--ink)}
+.hood.empty{background:#F7FCEF;box-shadow:4px 4px 0 var(--ink)}
+.hood.add{padding-top:10px;box-shadow:none}
+.hood.add::before{display:none}
+.hood .pill{background:var(--hc,var(--t-pink))}
+.pill{border-width:2.5px;box-shadow:3px 3px 0 var(--ink);background:#fff}
+.pill b{background:var(--ink);color:#fff}
+.pill.school{background:#C9D6FF}.pill.home{background:var(--t-peach)}.pill.star{background:var(--t-lav)}
+.isle-land{background:var(--grass) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='12' cy='14' r='2.6' fill='%23fff'/%3E%3Ccircle cx='12' cy='14' r='1.1' fill='%23FFD84D'/%3E%3Ccircle cx='44' cy='40' r='2.6' fill='%23FF9EC4'/%3E%3C/svg%3E") 0 0/60px 60px}
+.boat .pill{background:#fff}
+.lot{background:var(--t-yellow);box-shadow:3px 3px 0 var(--ink);border-width:3px}
+.dice{border:0;background:none;cursor:pointer;display:grid;justify-items:center;gap:6px;padding:0}
+.dice .dd{display:flex;gap:6px}
+.dice svg{width:42px;height:42px;filter:drop-shadow(3px 3px 0 var(--ink))}
+.dice svg:nth-child(2){transform:rotate(14deg) translateY(4px)}
+.dice:hover svg{animation:roll .6s ease}
+.dice:hover svg:nth-child(2){animation-delay:.08s}
+@keyframes roll{0%{transform:rotate(0)}50%{transform:rotate(200deg) translateY(-12px)}100%{transform:rotate(360deg)}}
+.dice .pill{font-size:14px;background:var(--t-pink)}
+/* 거리: 분홍 벽돌 광장 + 회색 도로 */
+.street{border-width:3px;box-shadow:var(--hs);border-radius:28px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='214'%3E%3Crect y='124' width='60' height='36' fill='%23A8E58A'/%3E%3Cpath d='M8 158q2-6 4 0M11 158q1-4 3-1M40 150q2-5 4 0' fill='none' stroke='%2370C254' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='28' cy='146' r='2.4' fill='%23fff'/%3E%3Ccircle cx='28' cy='146' r='1' fill='%23FFD84D'/%3E%3Crect y='160' width='60' height='19' fill='%23FFB9B0'/%3E%3Cpath d='M0 169.5h60M15 160v9.5M45 160v9.5M30 169.5v9.5' stroke='%23F08F86' stroke-width='1.5'/%3E%3Cpath d='M0 160.5h60' stroke='%231F1D2B' stroke-width='2.5'/%3E%3Crect y='179' width='60' height='35' fill='%23A6A8BE'/%3E%3Cpath d='M0 179.5h60' stroke='%231F1D2B' stroke-width='2.5'/%3E%3Crect x='14' y='195' width='26' height='4' rx='2' fill='%23fff'/%3E%3C/svg%3E") 0 0/60px 214px,linear-gradient(#DDF2FF,#F1FBFF)}
+.b-name{border-width:2.5px;box-shadow:3px 3px 0 var(--ink);background:var(--nc,#fff)}
+.bld:nth-child(6n+1){--nc:var(--t-lav)}.bld:nth-child(6n+2){--nc:var(--t-yellow)}.bld:nth-child(6n+3){--nc:var(--t-cyan)}
+.bld:nth-child(6n+4){--nc:var(--t-pink)}.bld:nth-child(6n+5){--nc:var(--t-mint)}.bld:nth-child(6n){--nc:var(--t-peach)}
+.bld.pin .b-name{background:var(--t-yellow)}
+.bld:hover .b-name{background:var(--nc,#fff);transform:translateX(-50%) translateY(-2px);box-shadow:3px 5px 0 var(--ink)}
+.bld[draggable="true"]{cursor:grab}
+.bld.dragging{opacity:.3}
+.bld.lucky .b-art{animation:lucky .7s ease 4}
+.bld.lucky::before{content:"🎲";position:absolute;left:50%;top:-6px;transform:translateX(-50%);font-size:26px;z-index:7;animation:hop 1s ease infinite}
+@keyframes lucky{0%,100%{transform:translateX(-50%) translateY(0)}40%{transform:translateX(-50%) translateY(-14px) rotate(-3deg)}70%{transform:translateX(-50%) translateY(0) rotate(2deg)}}
+/* 말풍선: 정보 + 버튼 */
+.b-pop{background:#fff;border-width:3px;border-radius:18px;padding:10px 12px 9px;width:244px;gap:7px;box-shadow:4px 4px 0 var(--ink)}
+.b-pop::after{border-width:3px}
+.pop-h{display:grid;gap:1px;min-width:0}
+.pop-h b{font-family:var(--f-cute);font-weight:400;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pop-acts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:2px}
+.pa{border:2.5px solid var(--ink);background:#fff;border-radius:999px;padding:4px 8px;font-family:var(--f-cute);font-size:14px;cursor:pointer;box-shadow:0 2px 0 var(--ink);color:var(--ink);white-space:nowrap}
+.pa:hover{background:var(--t-yellow)}
+.pa.on{background:var(--t-yellow)}
+.pop-tip{font-size:11.5px;color:var(--faint);text-align:center}
+@media (hover:hover){.bld .b-acts{display:none}}
+body.m .bld .b-acts{display:flex}
+body.dragging .b-pop{display:none!important}
+.item.dragging{opacity:.35}
+/* 옮길 곳 도크 */
+.dock{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translate(-50%,170%);z-index:45;background:#fff;border:3px solid var(--ink);border-radius:26px;box-shadow:5px 5px 0 var(--ink);
+  padding:10px 12px;display:flex;gap:8px;align-items:center;max-width:calc(100% - 32px);flex-wrap:wrap;justify-content:center;transition:transform .28s cubic-bezier(.2,1.3,.4,1);pointer-events:none}
+.dock.on{transform:translate(-50%,0);pointer-events:auto}
+.dock .t{font-family:var(--f-cute);font-size:16px;margin-right:2px}
+.dz{border:2.5px dashed var(--ink2);background:#fff;border-radius:16px;padding:9px 14px;font-family:var(--f-cute);font-size:15px;min-width:92px;text-align:center;transition:transform .12s,background .12s}
+.dz:nth-of-type(6n+1){background:#FFF0F6}.dz:nth-of-type(6n+2){background:#FFFBE0}.dz:nth-of-type(6n+3){background:#EBFAFD}
+.dz.over,.chip-n.over{border-style:solid;background:var(--t-yellow)!important;transform:scale(1.08) rotate(-1deg)}
+.sec-street.over .street,.grp.over .list{outline:4px dashed var(--ink);outline-offset:5px}
+.sec-street.over .roadsign{transform:rotate(-3deg) scale(1.05)}
+/* 모달 · 기타 */
+.modal{background:#fff;border-width:3px;box-shadow:6px 7px 0 var(--ink)}
+.m-foot{background:#fff}
+.toast{background:var(--ink);color:#fff}
+.list{background:#fff;border-width:3px;box-shadow:var(--hs)}
+.item:hover{background:#F6F3FF}
+.tabbar{border-width:3px;box-shadow:var(--hs)}
+.tabbar button[aria-current="true"]{background:var(--t-yellow);box-shadow:inset 0 0 0 2.5px var(--ink)}
+#notice{display:none}
+body.m #logo{display:none}
+body.m .brand>div{padding:6px 14px 7px}
+body.m .brand h1{font-size:17px}
+
+.ico.fav{background:#fff}
+.ico.fav img{width:80%;height:80%;object-fit:contain}
+.bk-tools{display:flex;gap:8px;flex-wrap:wrap}
+.bk-tools #bk-q{flex:1 1 220px;width:auto}
+.bk-new{display:flex;gap:6px;flex:1 1 280px}
+.bk-new .inp{flex:1;width:auto}
+.bk-list{display:grid;gap:6px;max-height:58vh;overflow:auto;border:2.5px solid var(--ink);border-radius:16px;padding:8px;background:#F7F5FF}
+.bk-h{font-family:var(--f-cute);font-size:15px;padding:8px 4px 2px;color:var(--ink2)}
+.bk-h:first-child{padding-top:2px}
+.bk-row{display:grid;grid-template-columns:auto minmax(0,1.3fr) minmax(0,1fr) auto minmax(0,.75fr);gap:8px;align-items:center;padding:6px 8px;border-radius:12px;background:#fff;border:2px solid var(--line)}
+.bk-row .inp{padding:7px 10px}
+.bk-row.ch{background:#FFF6C2;border-color:var(--ink)}
+.bk-url{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:640px){.bk-row{grid-template-columns:auto minmax(0,1fr) auto}.bk-dest{grid-column:2/4}.bk-url{display:none}}
+
+/* ===================== 첫 화면: 표지 지도 (한 장면) ===================== */
+.cvonly{display:none}
+body.cover .cvonly{display:inline-flex}
+body.cover{padding:0;background:#8FD6F7}
+body.cover .wrap{max-width:none;gap:0}
+body.cover .hd{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:0;right:0;z-index:20;padding:0 18px;pointer-events:none;flex-wrap:nowrap}
+body.cover .hd>*{pointer-events:auto}
+body.cover .brand .sub,body.cover #logo{display:none}
+body.cover .brand>div{padding:5px 14px 6px}
+body.cover .brand h1{font-size:clamp(15px,1.5vw,21px);white-space:nowrap}
+body.cover .hd .tx{display:none}
+body.cover .hd .acts{gap:6px}
+body.cover .bar,body.cover .chips,body.cover [data-status]{display:none}
+body.cover.csearch .bar{display:flex;position:absolute;top:calc(68px + env(safe-area-inset-top,0px));left:0;right:0;margin:0 auto;width:min(720px,calc(100% - 32px));z-index:21}
+body.cover.csearch .bar .guide,body.cover.csearch .bar .viewsw,body.cover.csearch .bar #b-select{display:none}
+.cv{position:relative;width:100%;height:calc(100dvh - var(--tb,0px));min-height:420px;overflow:hidden;background:#A4E282}
+body.m .cv{--tb:100px}
+.cv-stage{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:max(100vw,calc(max(100dvh - var(--tb,0px),420px) * var(--arn)));container-type:inline-size;overflow:hidden}
+.cv-bg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cv-cloud{animation:cvdrift var(--d) ease-in-out infinite alternate}
+@keyframes cvdrift{from{transform:translateX(-30px)}to{transform:translateX(40px)}}
+.mb{position:absolute;display:block;aspect-ratio:140/130;text-decoration:none;color:inherit;transition:transform .15s;transform-origin:50% 100%;z-index:2}
+.mb svg{width:100%;height:100%;display:block;overflow:visible}
+.mb:hover,.mb:focus-visible{transform:translateY(-5%) scale(1.08);z-index:9;outline:none}
+.mb .tip{position:absolute;left:50%;bottom:100%;transform:translate(-50%,4px);background:#fff;border:2.5px solid var(--ink);border-radius:999px;padding:.15em .75em;font-family:var(--f-cute);font-size:calc(var(--fs)*1cqw);white-space:nowrap;box-shadow:2px 2px 0 var(--ink);opacity:0;pointer-events:none;transition:opacity .12s,transform .12s;color:var(--ink)}
+.mb:hover .tip,.mb:focus-visible .tip{opacity:1;transform:translate(-50%,-3px)}
+.mb.pin .tip{background:var(--t-yellow)}
+@media (hover:none){.mb .tip{opacity:1;bottom:auto;top:97%;transform:translateX(-50%);font-size:calc(var(--fs)*.6cqw);padding:0 .45em;border-width:1.5px;box-shadow:none;max-width:150%;overflow:hidden;text-overflow:ellipsis}.mb:hover .tip{transform:translateX(-50%)}}
+.cv-lab,.cv-sign,.cv-more{position:absolute;z-index:5;border:2.5px solid var(--ink);border-radius:999px;background:#fff;font-family:var(--f-cute);font-size:calc(var(--fs)*.95cqw);padding:.18em .75em;box-shadow:2px 3px 0 var(--ink);cursor:pointer;white-space:nowrap;display:inline-flex;gap:.4em;align-items:center;color:var(--ink);transition:transform .12s;line-height:1.3}
+.cv-lab b,.cv-sign b{font-family:var(--f-mono);font-weight:500;font-size:.72em;background:var(--ink);color:#fff;border-radius:999px;padding:.05em .55em}
+.cv-lab:hover{transform:translateY(-2px)}
+.cv-lab .nm{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.cv-lab b{flex:none}
+.cv-sun{animation:sp 30s linear infinite;transform-box:fill-box;transform-origin:center}
+.cv-sign{transform:translate(-50%,-50%);font-size:calc(var(--fs)*1.15cqw);z-index:6;box-shadow:3px 3px 0 var(--ink)}
+.cv-sign:hover{transform:translate(-50%,calc(-50% - 2px))}
+.cv-sign.school{background:#C9D6FF}.cv-sign.home{background:var(--t-peach)}.cv-sign.star{background:var(--t-yellow)}
+.cv-more{transform:translate(-50%,-50%)}
+.cv-boat,.cv-lot{position:absolute;border:0;background:none;padding:0;cursor:pointer;z-index:4}
+.cv-boat{animation:bob 3.4s ease-in-out infinite}
+.cv-boat:nth-of-type(2n){animation-delay:-1.7s}
+.cv-boat svg,.cv-lot svg{width:100%;height:auto;display:block}
+.cv-lot b{position:absolute;top:-6%;right:-6%;font-family:var(--f-mono);font-weight:500;font-size:calc(var(--fs)*.8cqw);background:#FF4D6D;color:#fff;border:2px solid var(--ink);border-radius:999px;padding:0 .45em}
+.cv-lh{position:absolute;z-index:3}
+.cv-lh svg{width:100%;height:auto;display:block}
+.cv-empty{position:absolute;transform:translate(-50%,-50%);z-index:8}
+body.m.cover .hd{top:calc(10px + env(safe-area-inset-top,0px));padding:0 10px}
+body.m.cover .brand h1{font-size:15px}
+
+/* ===================== ONGLE LAND 다듬기 (참고: 그림지도 이벤트 페이지) ===================== */
+:root{--f-cute:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;--bg:#FFF8DC}
+body{background:#FFF8DC}
+body:not(.cover){background:#FFF8DC}
+.btn,.pill,.cv-lab,.cv-sign,.cv-more,.roadsign,.b-name,.mb .tip,.chip-n,.m-head h3,.bubble,.pa,.tabbar span,.viewsw button,.linkish,.lk,.i-name,.grp-h .t,.pop-h b,.dz,.dock .t,.toast,.selbar b,.notice .linkish,.sec h4,.bk-h,.mi{font-weight:800!important;letter-spacing:-.02em}
+.btn{border-width:2.5px;box-shadow:3px 3px 0 var(--ink);font-size:15px;padding:7px 16px}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.icon{padding:0}
+.btn.primary{background:#FFE14D}
+/* 로고: 호랑이 + ONGLE LAND */
+.brand{gap:10px}
+.brand>div{background:none;border:0;box-shadow:none;transform:none;padding:0}
+.brand>div::before,.brand>div::after{display:none}
+.brand h1{word-spacing:.18em;font-family:var(--f-cute);font-weight:900;font-size:clamp(26px,3.6vw,40px);letter-spacing:-.03em;line-height:1;color:#FFE14D;-webkit-text-stroke:6px var(--ink);paint-order:stroke fill;text-shadow:3px 4px 0 var(--ink);white-space:nowrap}
+.brand .sub{color:var(--ink2);font-weight:700;margin-top:6px}
+.brand .mascot{width:54px;height:54px}
+body.m #logo{display:block}
+body.m .brand .mascot{width:40px;height:40px}
+body.m .brand h1{font-size:24px;-webkit-text-stroke-width:5px}
+/* 표지 위 메뉴: 흰 알약 + 노란 버튼 */
+body.cover #logo{display:block}
+body.cover .brand h1{font-size:clamp(24px,2.4vw,34px)}
+body.cover .hd{top:calc(16px + env(safe-area-inset-top,0px));padding:0 22px}
+body.cover .hd .tx{display:inline}
+body.m.cover .brand h1{font-size:22px}
+.cv-castle{position:absolute;z-index:3;overflow:visible}
+.cv-plane{animation:fly 7s ease-in-out infinite}
+@keyframes fly{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.cv-lab,.cv-sign,.cv-more{box-shadow:3px 3px 0 var(--ink)}
+.cv-sign{padding:.25em .95em}
+.mb .tip{box-shadow:3px 3px 0 var(--ink)}
+.roadsign{font-weight:900!important}
 </style>
 </head>
 <body>
@@ -464,10 +695,13 @@ body.m .field input,body.m .field textarea,body.m .inp,body.m .modal select{font
   <header class="hd">
     <div class="brand">
       <span id="logo"></span>
-      <div><h1>🐯🐿️ONGLEDONGLE웹앱모음🍒</h1><div class="sub" id="sub"></div></div>
+      <div><h1>ONGLE LAND</h1><div class="sub" id="sub"></div></div>
     </div>
-    <div class="macts"><div class="viewsw mini" role="group" aria-label="보기 방식"><button type="button" data-view="map" title="지도">🗺️</button><button type="button" data-view="list" title="목록">📋</button></div></div>
+    <div class="macts"><button class="btn icon mailbtn" type="button" data-act="mail" aria-label="우편함" title="우편함">📮<i class="mailcnt" hidden></i></button><div class="viewsw mini" role="group" aria-label="보기 방식"><button type="button" data-view="map" title="지도">🗺️</button><button type="button" data-view="list" title="목록">📋</button></div></div>
     <div class="acts">
+      <button class="btn" type="button" data-act="bulk" title="이름과 자리를 한 번에 고치기">✏️ <span class="tx">전체 편집</span></button>
+      <button class="btn icon cvonly" type="button" data-act="csearch" aria-label="찾기" title="가게 찾기 ( / )">🔎</button>
+      <button class="btn icon mailbtn" type="button" data-act="mail" aria-label="우편함" title="우편함 · 마을 소식">📮<i class="mailcnt" hidden></i></button>
       <button class="btn icon" type="button" data-act="settings" aria-label="설정" title="설정"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button>
       <button class="btn" type="button" data-act="import" title="두 GitHub 계정에서 배포된 웹앱 불러오기">⛵ <span class="tx">GitHub 동기화</span><span class="cnt" id="newcnt" hidden></span></button>
       <button class="btn primary" type="button" data-act="add" title="링크 추가">🏗️ <span class="tx">가게 짓기</span></button>
@@ -497,6 +731,7 @@ body.m .field input,body.m .field textarea,body.m .inp,body.m .modal select{font
   <div class="status" data-status></div>
 </div>
 <div class="selbar" id="selbar" hidden></div>
+<div class="dock" id="dock" aria-hidden="true"></div>
 <nav class="tabbar" id="tabbar" aria-label="아래 메뉴">
   <button type="button" data-tab="all" id="tb-all"><b>🗺️</b><span>마을</span></button>
   <button type="button" data-tab="pinned" id="tb-pin"><b>⭐</b><span>랜드마크</span></button>
@@ -868,20 +1103,68 @@ async function autoCheck(){
 function prettyName(n){const p=n.replace(/\.github\.io$/i,"").replace(/[-_]+/g," ").trim().replace(/\b[a-z]/g,c=>c.toUpperCase());return p||n}
 
 /* ================= 그림 ================= */
-const INK="#23222B";
+const INK="#1F1D2B";
 function hexRgb(h){h=String(h||"").replace("#","");if(h.length===3)h=h.split("").map(c=>c+c).join("");const n=parseInt(h,16);return (h.length!==6||isNaN(n))?[120,120,140]:[n>>16&255,n>>8&255,n&255]}
 function mix(a,b,t){const x=hexRgb(a),y=hexRgb(b);return "#"+x.map((v,i)=>Math.round(v+(y[i]-v)*t).toString(16).padStart(2,"0")).join("")}
-const TIGER='<svg viewBox="0 0 64 64" aria-hidden="true"><g stroke="#23222B" stroke-width="2.5" stroke-linejoin="round"><circle cx="14" cy="17" r="8" fill="#F7A43B"/><circle cx="50" cy="17" r="8" fill="#F7A43B"/><circle cx="14" cy="17" r="3.5" fill="#FFE1C2" stroke="none"/><circle cx="50" cy="17" r="3.5" fill="#FFE1C2" stroke="none"/><ellipse cx="32" cy="36" rx="24" ry="21" fill="#F7A43B"/><ellipse cx="32" cy="45" rx="12.5" ry="8.5" fill="#FFF6E8"/></g><path d="M32 16v7M25 17l2 6M39 17l-2 6M8.5 32h6M9.5 39h5M55.5 32h-6M54.5 39h-5" stroke="#23222B" stroke-width="2.5" stroke-linecap="round"/><circle cx="23" cy="34" r="2.7" fill="#23222B"/><circle cx="41" cy="34" r="2.7" fill="#23222B"/><circle cx="24" cy="33" r=".9" fill="#fff"/><circle cx="42" cy="33" r=".9" fill="#fff"/><path d="M29 41h6l-3 3.2z" fill="#23222B" stroke="#23222B" stroke-width="1.5" stroke-linejoin="round"/><path d="M32 44q-2.5 3.5-5.5 1.2M32 44q2.5 3.5 5.5 1.2" fill="none" stroke="#23222B" stroke-width="2" stroke-linecap="round"/><circle cx="16.5" cy="42" r="3" fill="#FF9EBB" opacity=".85"/><circle cx="47.5" cy="42" r="3" fill="#FF9EBB" opacity=".85"/></svg>';
+const TIGER='<svg viewBox="0 0 64 64" aria-hidden="true"><g stroke="#1F1D2B" stroke-width="2.5" stroke-linejoin="round"><circle cx="14" cy="17" r="8" fill="#F7A43B"/><circle cx="50" cy="17" r="8" fill="#F7A43B"/><circle cx="14" cy="17" r="3.5" fill="#FFE1C2" stroke="none"/><circle cx="50" cy="17" r="3.5" fill="#FFE1C2" stroke="none"/><ellipse cx="32" cy="36" rx="24" ry="21" fill="#F7A43B"/><ellipse cx="32" cy="45" rx="12.5" ry="8.5" fill="#FFF6E8"/></g><path d="M32 16v7M25 17l2 6M39 17l-2 6M8.5 32h6M9.5 39h5M55.5 32h-6M54.5 39h-5" stroke="#1F1D2B" stroke-width="2.5" stroke-linecap="round"/><circle cx="23" cy="34" r="2.7" fill="#1F1D2B"/><circle cx="41" cy="34" r="2.7" fill="#1F1D2B"/><circle cx="24" cy="33" r=".9" fill="#fff"/><circle cx="42" cy="33" r=".9" fill="#fff"/><path d="M29 41h6l-3 3.2z" fill="#1F1D2B" stroke="#1F1D2B" stroke-width="1.5" stroke-linejoin="round"/><path d="M32 44q-2.5 3.5-5.5 1.2M32 44q2.5 3.5 5.5 1.2" fill="none" stroke="#1F1D2B" stroke-width="2" stroke-linecap="round"/><circle cx="16.5" cy="42" r="3" fill="#FF9EBB" opacity=".85"/><circle cx="47.5" cy="42" r="3" fill="#FF9EBB" opacity=".85"/></svg>';
 const TIGER_SAD=TIGER.replace('M32 44q-2.5 3.5-5.5 1.2M32 44q2.5 3.5 5.5 1.2','M27 47q5-4 10 0');
-const SQUIRREL='<svg viewBox="0 0 64 64" aria-hidden="true"><g stroke="#23222B" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"><path d="M40 54c16-2 21-20 13-31-6-8-18-7-18 3 0 6 6 9 10 5" fill="#C9874A"/><ellipse cx="28" cy="45" rx="14" ry="14" fill="#DE9D5E"/><path d="M19 15l2-9 7 7z" fill="#DE9D5E"/><circle cx="26" cy="25" r="12" fill="#DE9D5E"/><ellipse cx="27" cy="47" rx="7" ry="9" fill="#FCE6C8" stroke="none"/><rect x="12" y="39" width="20" height="14" rx="2.5" fill="#fff"/><path d="m12.5 40 9.5 7 9.5-7" fill="none"/></g><path d="M22 47.5c-1.6-1.4-3.6.4-2 2l2 1.8 2-1.8c1.6-1.6-.4-3.4-2-2z" fill="#EE4B5B"/><circle cx="21" cy="24" r="2.4" fill="#23222B"/><circle cx="21.7" cy="23.2" r=".8" fill="#fff"/><circle cx="14.8" cy="28" r="1.8" fill="#23222B"/><circle cx="23" cy="30" r="2.6" fill="#FF9EBB" opacity=".85"/></svg>';
-const CHERRY='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M21 40C25 24 34 13 46 8M43 42c-1-15 1-25 3-34" fill="none" stroke="#3E8E4B" stroke-width="3" stroke-linecap="round"/><path d="M46 8c6-6 14-5 16 0-6 4-12 4-16 0z" fill="#7CC56B" stroke="#23222B" stroke-width="2.5" stroke-linejoin="round"/><g stroke="#23222B" stroke-width="2.5"><circle cx="21" cy="45" r="13" fill="#EE4B5B"/><circle cx="44" cy="47" r="12" fill="#EE4B5B"/></g><ellipse cx="15" cy="40" rx="3" ry="2" fill="#fff" opacity=".7"/><ellipse cx="39" cy="42" rx="2.6" ry="1.8" fill="#fff" opacity=".7"/><circle cx="17" cy="46" r="1.6" fill="#23222B"/><circle cx="25" cy="46" r="1.6" fill="#23222B"/><path d="M19 50q2 2 4 0" fill="none" stroke="#23222B" stroke-width="1.8" stroke-linecap="round"/><circle cx="40" cy="48" r="1.5" fill="#23222B"/><circle cx="48" cy="48" r="1.5" fill="#23222B"/><path d="M42 52q2 2 4 0" fill="none" stroke="#23222B" stroke-width="1.8" stroke-linecap="round"/></svg>';
-const TREE='<svg class="tree" viewBox="0 0 30 36" aria-hidden="true"><rect x="12.5" y="22" width="5" height="12" rx="1.5" fill="#A9743F" stroke="#23222B" stroke-width="2"/><path d="M15 2C6 2 3 10 4.5 16 2 20 5 26 11 25h8c6 1 9-5 6.5-9C27 10 24 2 15 2z" fill="#5DBB63" stroke="#23222B" stroke-width="2.2" stroke-linejoin="round"/><path d="M10 11q2-3 5-3" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2" stroke-linecap="round"/></svg>';
-const SUN='<svg class="sun" viewBox="0 0 64 64" aria-hidden="true"><g stroke="#23222B" stroke-width="2.5" stroke-linecap="round"><path d="M32 3v8M32 53v8M3 32h8M53 32h8M11.5 11.5l5.5 5.5M47 47l5.5 5.5M52.5 11.5 47 17M17 47l-5.5 5.5"/><circle cx="32" cy="32" r="15" fill="#FFD84D"/></g><circle cx="27" cy="31" r="1.8" fill="#23222B"/><circle cx="37" cy="31" r="1.8" fill="#23222B"/><path d="M28 36q4 3 8 0" fill="none" stroke="#23222B" stroke-width="2" stroke-linecap="round"/></svg>';
-const CLOUD=c=>`<svg class="cloud ${c}" viewBox="0 0 110 50" aria-hidden="true"><path d="M20 44h70c11 0 16-14 6-20 0-10-12-16-21-10C71 4 54 2 47 12 38 6 26 12 27 22 14 21 8 40 20 44z" fill="#fff" stroke="#23222B" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
-const HILLS='<svg class="hills" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 92V60C80 30 150 26 230 52 300 14 400 4 480 44 540 22 600 20 660 48 760 6 860 10 950 46 1020 28 1100 30 1200 50V92z" fill="#66C46E" stroke="#23222B" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 92V74C120 58 260 60 380 72 520 54 660 58 800 72 940 56 1080 58 1200 70V92z" fill="#8ED67F" stroke="#23222B" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>';
-const LIGHTHOUSE='<svg class="lh" viewBox="0 0 60 70" aria-hidden="true"><g stroke="#23222B" stroke-width="2.5" stroke-linejoin="round"><path d="M22 66l4-44h8l4 44z" fill="#fff"/><path d="M24.5 50h11l1 8h-13zM25.8 34h8.4l.8 8h-10z" fill="#EE4B5B"/><rect x="23" y="12" width="14" height="10" rx="2" fill="#FFE27A"/><path d="M21 12h18l-9-8z" fill="#EE4B5B"/></g><path d="M40 16l14-5M40 18h15M40 20l14 5" stroke="#FFC93C" stroke-width="2.5" stroke-linecap="round"/></svg>';
-const CRANE='<svg viewBox="0 0 86 62" aria-hidden="true"><g stroke="#23222B" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"><path d="M20 58V10M28 58V10M20 18l8 8M28 18l-8 8M20 34l8 8M28 34l-8 8" fill="none"/><path d="M12 10h68" /><path d="M24 10l-2-6h4z" fill="#FFC93C"/><path d="M68 10v18" /><path d="M64 28h8v6h-8z" fill="#FFC93C"/><path d="M42 58V44h30v14z" fill="#F3E5C4"/><path d="M42 44h30l-15-10z" fill="#FF9EBB"/></g><path d="M4 58h80" stroke="#23222B" stroke-width="3"/><path d="M8 52l6 6M14 52l6 6M60 54h4M66 54h4" stroke="#E9A800" stroke-width="3"/></svg>';
-const boatSVG=col=>`<svg viewBox="0 0 104 72" aria-hidden="true"><path d="M6 62q8-5 16 0t16 0 16 0 16 0 16 0 16 0" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".85"/><g stroke="#23222B" stroke-width="2.6" stroke-linejoin="round"><path d="M50 34V6" fill="none"/><path d="M50 6l20 7-20 7z" fill="${col}"/><rect x="30" y="30" width="38" height="18" rx="4" fill="#fff"/><path d="M8 46h88l-12 14H20z" fill="${col}"/><path d="M14 50h76" stroke="#fff" stroke-width="2.5"/></g><circle cx="40" cy="39" r="3.4" fill="#BFE6FF" stroke="#23222B" stroke-width="2"/><circle cx="51" cy="39" r="3.4" fill="#BFE6FF" stroke="#23222B" stroke-width="2"/><circle cx="62" cy="39" r="3.4" fill="#BFE6FF" stroke="#23222B" stroke-width="2"/></svg>`;
+const SQUIRREL='<svg viewBox="0 0 64 64" aria-hidden="true"><g stroke="#1F1D2B" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"><path d="M40 54c16-2 21-20 13-31-6-8-18-7-18 3 0 6 6 9 10 5" fill="#C9874A"/><ellipse cx="28" cy="45" rx="14" ry="14" fill="#DE9D5E"/><path d="M19 15l2-9 7 7z" fill="#DE9D5E"/><circle cx="26" cy="25" r="12" fill="#DE9D5E"/><ellipse cx="27" cy="47" rx="7" ry="9" fill="#FCE6C8" stroke="none"/><rect x="12" y="39" width="20" height="14" rx="2.5" fill="#fff"/><path d="m12.5 40 9.5 7 9.5-7" fill="none"/></g><path d="M22 47.5c-1.6-1.4-3.6.4-2 2l2 1.8 2-1.8c1.6-1.6-.4-3.4-2-2z" fill="#EE4B5B"/><circle cx="21" cy="24" r="2.4" fill="#1F1D2B"/><circle cx="21.7" cy="23.2" r=".8" fill="#fff"/><circle cx="14.8" cy="28" r="1.8" fill="#1F1D2B"/><circle cx="23" cy="30" r="2.6" fill="#FF9EBB" opacity=".85"/></svg>';
+const CHERRY='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M21 40C25 24 34 13 46 8M43 42c-1-15 1-25 3-34" fill="none" stroke="#3E8E4B" stroke-width="3" stroke-linecap="round"/><path d="M46 8c6-6 14-5 16 0-6 4-12 4-16 0z" fill="#7CC56B" stroke="#1F1D2B" stroke-width="2.5" stroke-linejoin="round"/><g stroke="#1F1D2B" stroke-width="2.5"><circle cx="21" cy="45" r="13" fill="#EE4B5B"/><circle cx="44" cy="47" r="12" fill="#EE4B5B"/></g><ellipse cx="15" cy="40" rx="3" ry="2" fill="#fff" opacity=".7"/><ellipse cx="39" cy="42" rx="2.6" ry="1.8" fill="#fff" opacity=".7"/><circle cx="17" cy="46" r="1.6" fill="#1F1D2B"/><circle cx="25" cy="46" r="1.6" fill="#1F1D2B"/><path d="M19 50q2 2 4 0" fill="none" stroke="#1F1D2B" stroke-width="1.8" stroke-linecap="round"/><circle cx="40" cy="48" r="1.5" fill="#1F1D2B"/><circle cx="48" cy="48" r="1.5" fill="#1F1D2B"/><path d="M42 52q2 2 4 0" fill="none" stroke="#1F1D2B" stroke-width="1.8" stroke-linecap="round"/></svg>';
+const TREE='<svg class="tree" viewBox="0 0 30 36" aria-hidden="true"><ellipse cx="15" cy="34.5" rx="8" ry="1.8" fill="#1F1D2B" opacity=".14"/><rect x="12.6" y="21" width="4.8" height="13" rx="2" fill="#B57D45" stroke="#1F1D2B" stroke-width="2"/><circle cx="15" cy="13.5" r="11.2" fill="#6DC274" stroke="#1F1D2B" stroke-width="2.2"/><path d="M7.5 12a7.5 7.5 0 0 1 7-6.6" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/><path d="M9 20.5q6 3 12 0" fill="none" stroke="#4FA35B" stroke-width="2" stroke-linecap="round"/><g stroke="#1F1D2B" stroke-width="1.2"><circle cx="9.5" cy="15.5" r="2.1" fill="#F2605E"/><circle cx="19.5" cy="9.5" r="2.1" fill="#F2605E"/><circle cx="20" cy="17" r="2.1" fill="#F2605E"/></g></svg>';
+const SUN='<svg class="sun" viewBox="0 0 64 64" aria-hidden="true"><g stroke="#1F1D2B" stroke-width="2.5" stroke-linecap="round"><path d="M32 3v8M32 53v8M3 32h8M53 32h8M11.5 11.5l5.5 5.5M47 47l5.5 5.5M52.5 11.5 47 17M17 47l-5.5 5.5"/><circle cx="32" cy="32" r="15" fill="#FFD84D"/></g><circle cx="27" cy="31" r="1.8" fill="#1F1D2B"/><circle cx="37" cy="31" r="1.8" fill="#1F1D2B"/><path d="M28 36q4 3 8 0" fill="none" stroke="#1F1D2B" stroke-width="2" stroke-linecap="round"/></svg>';
+const CLOUD=c=>`<svg class="cloud ${c}" viewBox="0 0 110 50" aria-hidden="true"><path d="M20 44h70c11 0 16-14 6-20 0-10-12-16-21-10C71 4 54 2 47 12 38 6 26 12 27 22 14 21 8 40 20 44z" fill="#fff" stroke="#1F1D2B" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
+const HILLS='<svg class="hills" viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true"><path d="M0 112V70L120 30L200 62L330 12L450 64L560 26L660 60L800 8L930 62L1040 28L1200 66V112z" fill="#5FC36A" stroke="#1F1D2B" stroke-width="3" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M96 50L120 30l24 20l-10 -4l-6 6l-8 -7l-7 6z" fill="#fff" stroke="#1F1D2B" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M306 32L330 12l24 20l-10 -4l-6 6l-8 -7l-7 6z" fill="#fff" stroke="#1F1D2B" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M536 46L560 26l24 20l-10 -4l-6 6l-8 -7l-7 6z" fill="#fff" stroke="#1F1D2B" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M776 28L800 8l24 20l-10 -4l-6 6l-8 -7l-7 6z" fill="#fff" stroke="#1F1D2B" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M1016 48L1040 28l24 20l-10 -4l-6 6l-8 -7l-7 6z" fill="#fff" stroke="#1F1D2B" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M0 112V84C150 62 260 64 380 82 520 60 660 62 800 82 940 62 1080 64 1200 80V112z" fill="#8EDB7A" stroke="#1F1D2B" stroke-width="3" vector-effect="non-scaling-stroke"/></svg>';
+const LIGHTHOUSE='<svg class="lh" viewBox="0 0 60 70" aria-hidden="true"><g stroke="#1F1D2B" stroke-width="2.5" stroke-linejoin="round"><path d="M22 66l4-44h8l4 44z" fill="#fff"/><path d="M24.5 50h11l1 8h-13zM25.8 34h8.4l.8 8h-10z" fill="#EE4B5B"/><rect x="23" y="12" width="14" height="10" rx="2" fill="#FFE27A"/><path d="M21 12h18l-9-8z" fill="#EE4B5B"/></g><path d="M40 16l14-5M40 18h15M40 20l14 5" stroke="#FFC93C" stroke-width="2.5" stroke-linecap="round"/></svg>';
+const CRANE='<svg viewBox="0 0 86 62" aria-hidden="true"><g stroke="#1F1D2B" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"><path d="M20 58V10M28 58V10M20 18l8 8M28 18l-8 8M20 34l8 8M28 34l-8 8" fill="none"/><path d="M12 10h68" /><path d="M24 10l-2-6h4z" fill="#FFC93C"/><path d="M68 10v18" /><path d="M64 28h8v6h-8z" fill="#FFC93C"/><path d="M42 58V44h30v14z" fill="#F3E5C4"/><path d="M42 44h30l-15-10z" fill="#FF9EBB"/></g><path d="M4 58h80" stroke="#1F1D2B" stroke-width="3"/><path d="M8 52l6 6M14 52l6 6M60 54h4M66 54h4" stroke="#E9A800" stroke-width="3"/></svg>';
+const boatSVG=col=>`<svg viewBox="0 0 104 72" aria-hidden="true"><path d="M6 62q8-5 16 0t16 0 16 0 16 0 16 0 16 0" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".85"/><g stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"><path d="M50 34V6" fill="none"/><path d="M50 6l20 7-20 7z" fill="${col}"/><rect x="30" y="30" width="38" height="18" rx="4" fill="#fff"/><path d="M8 46h88l-12 14H20z" fill="${col}"/><path d="M14 50h76" stroke="#fff" stroke-width="2.5"/></g><circle cx="40" cy="39" r="3.4" fill="#BFE6FF" stroke="#1F1D2B" stroke-width="2"/><circle cx="51" cy="39" r="3.4" fill="#BFE6FF" stroke="#1F1D2B" stroke-width="2"/><circle cx="62" cy="39" r="3.4" fill="#BFE6FF" stroke="#1F1D2B" stroke-width="2"/></svg>`;
+
+/* ---- 사이트 아이콘(파비콘) 찾기 ----
+   각 앱 주소의 HTML에서 <link rel="icon">을 읽어 와요. 이 기기에 일주일 동안 기억해요. */
+const FAVK="wd-favs";let favs=lsGet(FAVK,{}),favBusy=false;
+function favOf(l){const f=favs[l.url];return f&&f.h||""}
+function needFav(u){if(!/^https?:\/\//i.test(u||""))return false;const f=favs[u];if(!f)return true;return Date.now()-f.t>(f.e?864e5:7*864e5)}
+async function detectFav(url){
+  const ac=new AbortController(),to=setTimeout(()=>ac.abort(),7000);
+  try{
+    const r=await fetch(url,{signal:ac.signal});if(!r.ok)return null;
+    const doc=new DOMParser().parseFromString(await r.text(),"text/html");
+    const ls=[...doc.querySelectorAll('link[rel~="icon"],link[rel="shortcut icon"],link[rel~="apple-touch-icon"]')].filter(x=>x.getAttribute("href"));
+    const pick=ls.find(x=>/svg/.test(x.getAttribute("type")||x.getAttribute("href")))||ls.sort((a,b)=>(parseInt((b.getAttribute("sizes")||"0").split("x")[0])||0)-(parseInt((a.getAttribute("sizes")||"0").split("x")[0])||0))[0];
+    if(!pick)return "";
+    const h=pick.getAttribute("href").trim();
+    return /^data:image\//i.test(h)?h:new URL(h,r.url||url).href;
+  }catch{return null}finally{clearTimeout(to)}
+}
+async function scanFavs(){
+  if(favBusy)return;
+  const todo=[...new Set([...S.links.values()].map(l=>l.url))].filter(needFav);if(!todo.length)return;
+  favBusy=true;let changed=false;
+  const work=async()=>{while(todo.length){const u=todo.shift(),h=await detectFav(u),prev=(favs[u]&&favs[u].h)||"";favs[u]={h:h||"",t:Date.now(),e:h===null?1:0};if((h||"")!==prev)changed=true}};
+  await Promise.all([work(),work(),work()]);
+  lsSet(FAVK,favs);favBusy=false;if(changed)render();
+}
+
+/* ---- 보드게임 소품 ---- */
+const PAL=[["#FFE9A8","#F25F5C"],["#FFD6E3","#4D9DE0"],["#D3ECFF","#FF8A3D"],["#DDF5CC","#F25F5C"],["#FFE2CC","#7C6BE0"],["#EDE3FF","#2EC4B6"],["#FFF3C4","#FF6FA5"],["#D8F6EF","#FFB238"]];
+function die(pips){const P={1:[[20,20]],2:[[12,12],[28,28]],3:[[11,11],[20,20],[29,29]],4:[[12,12],[28,12],[12,28],[28,28]],5:[[12,12],[28,12],[20,20],[12,28],[28,28]],6:[[12,11],[28,11],[12,20],[28,20],[12,29],[28,29]]};
+  return `<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="9" fill="#fff" stroke="#1F1D2B" stroke-width="3"/>${P[pips].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3.6" fill="${pips===1?"#FF4D6D":"#1F1D2B"}"/>`).join("")}</svg>`}
+function trackHTML(pos){
+  const icons=["","⭐","","❓","","🍒","","🎲","","🐾","","💎"];
+  let h=`<div class="track ${pos}" aria-hidden="true">`+(pos==="top"?`<div class="tile start"><b>🏁 출발</b></div>`:`<div class="tile start"><b>🎁 보너스</b></div>`);
+  for(let i=0;i<30;i++){const tok=pos==="top"&&i===0?`<span class="tok">${TIGER}</span>`:pos==="bottom"&&i===3?`<span class="tok sq">${SQUIRREL}</span>`:"";h+=`<div class="tile">${tok||icons[i%icons.length]}</div>`}
+  return h+"</div>";
+}
+function rollDice(){
+  const all=[...S.links.values()];if(!all.length){toast("아직 마을에 가게가 없어요!");return}
+  const l=all[Math.floor(Math.random()*all.length)],n=1+Math.floor(Math.random()*6);
+  S.q="";$("#q").value="";
+  if(S.view!=="map"){S.view="map";lsSet(LS.view,"map")}
+  if(l.category==="school"){S.tab="school";S.folder=l.folder||NONE}else{S.tab="personal";S.folder=""}
+  render();
+  const el=document.querySelector(`.bld[data-id="${CSS.escape(l.id)}"]`);
+  if(el){el.classList.add("lucky");el.scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>el.classList.remove("lucky"),3400)}
+  toast(`🎲 ${n}칸 이동! 오늘은 「${displayName(l)}」 어때요?`);
+}
 
 /* ---- 가게 건물 ---- */
 function bInfo(l){
@@ -896,48 +1179,51 @@ function bState(l){
   const sleepy=!l.pinned&&!lit&&(l.lastOpenedAt?now-l.lastOpenedAt>30*d:(l.createdAt&&now-l.createdAt>21*d));
   return {lit:!!lit,sleepy:!!sleepy};
 }
-function signContent(l,cx,cy,size){
-  const ic=l.icon||{};
-  if(ic.type==="emoji"&&ic.value)return `<text x="${cx}" y="${cy}" font-size="${size}" text-anchor="middle" dominant-baseline="central">${esc(ic.value)}</text>`;
-  if(ic.type==="image"&&ic.value){const r=size*.62;return `<image href="${esc(ic.value)}" x="${cx-r}" y="${cy-r}" width="${2*r}" height="${2*r}" preserveAspectRatio="xMidYMid slice" style="clip-path:inset(0 round 5px)"/>`}
-  const t=(ic.type==="mono"&&ic.value)?ic.value:mono(displayName(l));
-  return `<text x="${cx}" y="${cy+1}" font-size="${size*(t.length>2?.5:.68)}" font-family="Jua,sans-serif" fill="${INK}" text-anchor="middle" dominant-baseline="central">${esc(t)}</text>`;
+/* 간판 내용: 앱에 사이트 아이콘(파비콘)이 있으면 그걸, 없으면 이모지/글자 */
+function signContent(l,cx,cy,s){
+  const ic=l.icon||{},fav=ic.type!=="image"?favOf(l):"";
+  const img=(src,k)=>`<image href="${esc(src)}" x="${cx-s*k/2}" y="${cy-s*k/2}" width="${s*k}" height="${s*k}" preserveAspectRatio="xMidYMid meet" style="clip-path:inset(0 round ${s*.12}px)"/>`;
+  if(fav)return img(fav,.74);
+  if(ic.type==="image"&&ic.value)return img(ic.value,.8);
+  if(ic.type==="emoji"&&ic.value)return `<text x="${cx}" y="${cy+s*.04}" font-size="${s*.62}" text-anchor="middle" dominant-baseline="central">${esc(ic.value)}</text>`;
+  const tx=(ic.type==="mono"&&ic.value)?ic.value:mono(displayName(l));
+  return `<text x="${cx}" y="${cy+s*.04}" font-size="${s*(tx.length>2?.34:.48)}" font-family="Jua,sans-serif" fill="${INK}" text-anchor="middle" dominant-baseline="central">${esc(tx)}</text>`;
 }
 function buildingSVG(l,st){
   st=st||{};
   const {type,base}=bInfo(l);
-  const W=mix(base,"#FFFFFF",.74),R=mix(base,"#FFFFFF",.18),D=mix(base,INK,.22);
-  const G=st.sleepy?"#A9B4C6":st.lit?"#FFE27A":"#CFEFFF";
+  const pal=PAL[hashNum(l.id||displayName(l))%PAL.length];const W=pal[0],R=pal[1],D=mix(R,INK,.28);
+  const G=st.sleepy?"#B5BCCB":st.lit?"#FFE45C":"#BFE9FF";
   const K=`stroke="${INK}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"`;
   const win=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${G}" ${K}/><path d="M${x+w/2} ${y}v${h}M${x} ${y+h/2}h${w}" stroke="${INK}" stroke-width="2"/>`;
   const door=(x,y,w,h)=>`<path d="M${x} ${y+h}V${y+w/2}a${w/2} ${w/2} 0 0 1 ${w} 0V${y+h}Z" fill="${D}" ${K}/><circle cx="${x+w*.75}" cy="${y+h*.6}" r="1.6" fill="#FFE27A"/>`;
-  const sign=(cx,cy,r)=>`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" ${K}/>${signContent(l,cx,cy+1,r*1.45)}`;
-  const board=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="#fff" ${K}/>${signContent(l,x+w/2,y+h/2+1,h*.78)}`;
+  const sq=(cx,cy,s)=>`<rect x="${cx-s/2}" y="${cy-s/2}" width="${s}" height="${s}" rx="${s*.24}" fill="#fff" ${K}/>${signContent(l,cx,cy,s)}`;
   let s="",smoke=null;
+  const fbox=(x,y,w)=>`<rect x="${x}" y="${y}" width="${w}" height="6" rx="2" fill="#B57D45" stroke="${INK}" stroke-width="2"/><g stroke="${INK}" stroke-width="1.2"><circle cx="${x+5}" cy="${y-1}" r="2.6" fill="#F6A3B6"/><circle cx="${x+w/2}" cy="${y-1.5}" r="2.6" fill="#FFD35C"/><circle cx="${x+w-5}" cy="${y-1}" r="2.6" fill="#F6A3B6"/></g>`;
   if(type==="house"){
-    s=`<rect x="90" y="26" width="13" height="28" fill="${D}" ${K}/><rect x="28" y="60" width="84" height="68" fill="${W}" ${K}/><path d="M18 64L70 20l52 44z" fill="${R}" ${K}/>${sign(70,48,11)}${win(38,74,24,20)}${door(78,88,22,40)}`;smoke=[96,20];
+    s=`<rect x="90" y="26" width="13" height="28" fill="${D}" ${K}/><rect x="28" y="60" width="84" height="68" fill="${W}" ${K}/><path d="M18 64L70 20l52 44z" fill="${R}" ${K}/><path d="M32 52h76M44 42h52M56 32h28" stroke="${INK}" stroke-opacity=".22" stroke-width="2" stroke-linecap="round"/>${sq(70,46,26)}${win(38,74,24,20)}${fbox(35,96,30)}${door(78,88,22,40)}<path d="M74 128h30" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>`;smoke=[96,20];
   }else if(type==="shop"){
     let aw="";for(let i=0;i<5;i++)aw+=`<rect x="${18+i*20}" y="58" width="20" height="14" fill="${i%2?"#fff":R}"/>`;
     let sc="M18 72";for(let i=0;i<10;i++)sc+="q5 8 10 0";
-    s=`<rect x="18" y="48" width="104" height="80" fill="${W}" ${K}/><rect x="14" y="42" width="112" height="10" rx="2" fill="${R}" ${K}/>${board(28,12,84,28)}${aw}<rect x="18" y="58" width="104" height="14" fill="none" ${K}/><path d="${sc}" fill="${R}" ${K}/>${win(26,88,46,28)}${door(84,86,26,42)}`;
+    s=`<rect x="18" y="48" width="104" height="80" fill="${W}" ${K}/><rect x="14" y="42" width="112" height="10" rx="2" fill="${R}" ${K}/>${sq(70,25,32)}${aw}<rect x="18" y="58" width="104" height="14" fill="none" ${K}/><path d="${sc}" fill="${R}" ${K}/>${win(26,88,46,28)}${fbox(24,118,50)}${door(84,86,26,42)}`;
   }else if(type==="school"){
-    s=`<rect x="14" y="62" width="112" height="66" fill="${W}" ${K}/><rect x="10" y="56" width="120" height="10" rx="2" fill="${R}" ${K}/><rect x="50" y="28" width="40" height="34" fill="${W}" ${K}/><path d="M44 30L70 6l26 24z" fill="${R}" ${K}/><path d="M70 6V-6" ${K}/><path d="M70 -6l12 4-12 4z" fill="#EE4B5B" ${K}/>${sign(70,45,12)}${win(22,76,18,16)}${win(100,76,18,16)}${win(22,100,18,16)}${win(100,100,18,16)}${door(58,92,24,36)}`;
+    s=`<rect x="14" y="62" width="112" height="66" fill="${W}" ${K}/><rect x="10" y="56" width="120" height="10" rx="2" fill="${R}" ${K}/><rect x="50" y="28" width="40" height="34" fill="${W}" ${K}/><path d="M44 30L70 6l26 24z" fill="${R}" ${K}/><path d="M70 6V-6" ${K}/><path d="M70 -6l12 4-12 4z" fill="#EE4B5B" ${K}/>${sq(70,45,30)}${win(22,76,18,16)}${win(100,76,18,16)}${win(22,100,18,16)}${win(100,100,18,16)}${door(58,92,24,36)}`;
   }else if(type==="tower"){
-    s=`<rect x="18" y="80" width="30" height="48" fill="${W}" ${K}/><rect x="92" y="80" width="30" height="48" fill="${W}" ${K}/><rect x="44" y="30" width="52" height="98" fill="${W}" ${K}/><path d="M38 32L70 4l32 28z" fill="${R}" ${K}/>${sign(70,52,14)}${win(53,76,14,12)}${win(73,76,14,12)}${win(53,94,14,12)}${win(73,94,14,12)}${win(26,92,14,12)}${win(100,92,14,12)}${door(61,108,18,20)}`;
+    s=`<rect x="18" y="80" width="30" height="48" fill="${W}" ${K}/><rect x="92" y="80" width="30" height="48" fill="${W}" ${K}/><rect x="44" y="30" width="52" height="98" fill="${W}" ${K}/><path d="M38 32L70 4l32 28z" fill="${R}" ${K}/>${sq(70,54,34)}${win(53,76,14,12)}${win(73,76,14,12)}${win(53,94,14,12)}${win(73,94,14,12)}${win(26,92,14,12)}${win(100,92,14,12)}${door(61,108,18,20)}`;
   }else if(type==="dome"){
-    s=`<path d="M70 32V14" ${K}/><circle cx="70" cy="12" r="4" fill="#EE4B5B" ${K}/><rect x="24" y="72" width="92" height="56" fill="${W}" ${K}/><path d="M28 74a42 42 0 0 1 84 0z" fill="${R}" ${K}/><rect x="65" y="40" width="10" height="34" rx="3" fill="${G}" ${K}/>${board(48,80,44,20)}<circle cx="38" cy="100" r="8" fill="${G}" ${K}/><circle cx="102" cy="100" r="8" fill="${G}" ${K}/>${door(61,104,18,24)}`;
+    s=`<path d="M70 32V14" ${K}/><circle cx="70" cy="12" r="4" fill="#EE4B5B" ${K}/><rect x="24" y="72" width="92" height="56" fill="${W}" ${K}/><path d="M28 74a42 42 0 0 1 84 0z" fill="${R}" ${K}/>${sq(70,56,30)}<circle cx="38" cy="100" r="8" fill="${G}" ${K}/><circle cx="102" cy="100" r="8" fill="${G}" ${K}/>${door(61,104,18,24)}`;
   }else if(type==="arcade"){
     let bulbs="";for(let x=24;x<=118;x+=13)bulbs+=`<circle cx="${x}" cy="16" r="3" fill="${st.sleepy?"#ccc":"#FFE27A"}" stroke="${INK}" stroke-width="1.6"/>`;
-    s=`<rect x="20" y="44" width="100" height="84" fill="${W}" ${K}/><rect x="12" y="16" width="116" height="32" rx="10" fill="${R}" ${K}/>${bulbs}${board(46,21,48,24)}${win(28,58,84,28)}<path d="M40 66l2 4 4 .5-3 3 .8 4-3.8-2-3.8 2 .8-4-3-3 4-.5z" fill="#fff" stroke="${INK}" stroke-width="1.5"/>${door(54,96,32,32)}`;
+    s=`<rect x="20" y="44" width="100" height="84" fill="${W}" ${K}/><rect x="12" y="16" width="116" height="32" rx="10" fill="${R}" ${K}/>${bulbs}${sq(70,32,30)}${win(28,58,84,28)}<path d="M40 66l2 4 4 .5-3 3 .8 4-3.8-2-3.8 2 .8-4-3-3 4-.5z" fill="#fff" stroke="${INK}" stroke-width="1.5"/>${door(54,96,32,32)}`;
   }else if(type==="library"){
     let cols="";[28,50,80,102].forEach(x=>cols+=`<rect x="${x}" y="64" width="10" height="52" fill="#fff" ${K}/>`);
-    s=`<rect x="22" y="62" width="96" height="56" fill="${W}" ${K}/>${cols}<rect x="18" y="52" width="104" height="12" fill="${W}" ${K}/><path d="M14 54L70 22l56 32z" fill="${R}" ${K}/>${sign(70,42,9)}${door(62,86,16,32)}<rect x="12" y="116" width="116" height="12" rx="2" fill="#EDE3CF" ${K}/>`;
+    s=`<rect x="22" y="62" width="96" height="56" fill="${W}" ${K}/>${cols}<rect x="18" y="52" width="104" height="12" fill="${W}" ${K}/><path d="M14 54L70 22l56 32z" fill="${R}" ${K}/>${sq(70,41,20)}${door(62,86,16,32)}<rect x="12" y="116" width="116" height="12" rx="2" fill="#EDE3CF" ${K}/>`;
   }else{ /* factory */
-    s=`<rect x="98" y="18" width="14" height="50" fill="${D}" ${K}/><path d="M98 30h14" stroke="#fff" stroke-width="3"/><rect x="14" y="66" width="112" height="62" fill="${W}" ${K}/><path d="M14 66V44l26 22V44l26 22V44l26 22z" fill="${R}" ${K}/>${board(24,80,52,24)}${win(24,108,22,14)}${win(52,108,22,14)}${door(88,92,26,36)}`;smoke=[105,12];
+    s=`<rect x="98" y="18" width="14" height="50" fill="${D}" ${K}/><path d="M98 30h14" stroke="#fff" stroke-width="3"/><rect x="14" y="66" width="112" height="62" fill="${W}" ${K}/><path d="M14 66V44l26 22V44l26 22V44l26 22z" fill="${R}" ${K}/>${sq(48,92,28)}${win(24,108,22,14)}${win(52,108,22,14)}${door(88,92,26,36)}`;smoke=[105,12];
   }
   const sm=st.lit&&smoke?`<g class="smoke" fill="#fff" stroke="${INK}" stroke-width="2"><circle cx="${smoke[0]}" cy="${smoke[1]}" r="5"/><circle cx="${smoke[0]+4}" cy="${smoke[1]-6}" r="6"/><circle cx="${smoke[0]}" cy="${smoke[1]-12}" r="4"/></g>`:"";
   const zz=st.sleepy?`<text class="zz" x="116" y="20" font-family="Jua,sans-serif" font-size="17" fill="#6E6B78">Zz</text>`:"";
-  return `<svg viewBox="0 0 140 130" aria-hidden="true"${st.sleepy?' style="filter:saturate(.55)"':""}>${s}${sm}${zz}</svg>`;
+  return `<svg viewBox="0 0 140 130" aria-hidden="true"${st.sleepy?' style="filter:saturate(.55)"':""}><ellipse cx="70" cy="128.5" rx="60" ry="5" fill="${INK}" opacity=".13"/>${s}${sm}${zz}</svg>`;
 }
 function miniB(l){return `<span class="mini" title="${esc(displayName(l))}">${buildingSVG(l,bState(l))}</span>`}
 
@@ -952,6 +1238,7 @@ function setMsearch(on){S.msearch=on;document.body.classList.toggle("msearch",on
 function openMore(){
   const m=openModal(`<div class="m-head"><h3>☰ 더보기</h3>${XBTN}</div><div class="m-body more">
     <button class="mi" type="button" data-mact="import">⛵ GitHub 동기화${S.newRepos.length?` <span class="cnt">${S.newRepos.length}</span>`:""}<small>@${esc(ghHandle("a"))} · @${esc(ghHandle("b"))} 의 새 웹앱 불러오기</small></button>
+    <button class="mi" type="button" data-mact="bulk">✏️ 전체 편집<small>모든 가게의 이름과 자리를 한 번에 고치기</small></button>
     <button class="mi" type="button" data-mact="select">📦 골라서 옮기기<small>여러 가게를 한 번에 다른 거리로</small></button>
     <div class="row"><button class="mi" type="button" data-mact="folders">✏️ 거리 관리</button><button class="mi" type="button" data-mact="icons">🍒 간판 달기</button></div>
     <div class="row"><label class="field"><span>정렬</span><select id="mo-sort">${$("#sort").innerHTML}</select></label>
@@ -963,9 +1250,279 @@ function openMore(){
   ms.addEventListener("change",()=>{S.sort=ms.value;$("#sort").value=S.sort;lsSet(LS.sort,S.sort);render()});
   m.querySelectorAll("#mo-view button").forEach(b=>b.addEventListener("click",()=>{S.view=b.dataset.v;lsSet(LS.view,S.view);m.querySelectorAll("#mo-view button").forEach(x=>x.setAttribute("aria-pressed",x===b));render()}));
   m.querySelectorAll("[data-mact]").forEach(b=>b.addEventListener("click",()=>{const a=b.dataset.mact;closeModal();
-    if(a==="import")openImport();if(a==="select")startSelect();if(a==="folders")openFolders();if(a==="icons")openIconMaker();if(a==="settings")openSettings();
+    if(a==="import")openImport();if(a==="bulk")openBulk();if(a==="dice")rollDice();if(a==="select")startSelect();if(a==="folders")openFolders();if(a==="icons")openIconMaker();if(a==="settings")openSettings();
     if(a==="pc"){layoutPref="pc";lsSet(LAYOUT_KEY,"pc");applyLayout();render();toast("🖥️ PC 화면으로 바꿨어요.")}}));
   renderStatus();
+}
+
+/* ================= 전체 편집 ================= */
+function openBulk(){
+  const fl=folderList(),ord=l=>l.category==="personal"?1e4:(l.folder?(fl.indexOf(l.folder)>=0?fl.indexOf(l.folder):500):9e3);
+  const list=[...S.links.values()].sort((a,b)=>ord(a)-ord(b)||(a.name||"").localeCompare(b.name||"","ko"));
+  const destOf=l=>l.category==="personal"?"personal":"school|"+(l.folder||"");
+  const draft=new Map(list.map(l=>[l.id,{name:l.name||"",dest:destOf(l),pinned:!!l.pinned}]));
+  const m=openModal(`<div class="m-head"><h3>✏️ 전체 편집</h3>${XBTN}</div>
+  <div class="m-body">
+    <p class="hint">가게 이름과 자리(동네 › 거리)를 한 번에 고쳐요. 고친 줄은 노랗게 표시되고, 저장을 눌러야 반영돼요.</p>
+    <div class="bk-tools"><input class="inp" id="bk-q" type="search" placeholder="이름·주소로 찾기" autocomplete="off"><span class="bk-new"><input class="inp" id="bk-nf" type="text" maxlength="40" placeholder="새 거리 이름"><button class="btn sm" id="bk-add" type="button">＋ 거리 추가</button></span></div>
+    <div class="bk-list" id="bk-list"></div>
+  </div>
+  <div class="m-foot"><p class="hint" id="bk-sum"></p><div class="r"><button class="btn" type="button" data-close>취소</button><button class="btn primary" type="button" id="bk-save">저장</button></div></div>`,true);
+  const box=m.querySelector("#bk-list");
+  const changed=l=>{const d=draft.get(l.id);return d.name.trim()!==(l.name||"").trim()||d.dest!==destOf(l)||d.pinned!==!!l.pinned};
+  function draw(){
+    let last="";
+    box.innerHTML=list.map(l=>{const d=draft.get(l.id),place=l.category==="personal"?`🏡 ${LAND.personal}`:`📍 ${l.folder||"이름 없는 골목"}`;
+      const head=place!==last?`<div class="bk-h">${esc(place)}</div>`:"";last=place;
+      return head+`<div class="bk-row${changed(l)?" ch":""}" data-id="${esc(l.id)}" data-s="${esc(((l.name||"")+" "+l.url+" "+(l.repo||"")).toLowerCase())}">
+        ${icoHTML(l,"sm")}<input class="inp bk-name" type="text" value="${esc(d.name)}" placeholder="${esc(displayName(l))}" aria-label="가게 이름">
+        <select class="inp bk-dest" aria-label="자리">${destOptions(d.dest,false)}</select>
+        <button class="rb bk-pin${d.pinned?" on":""}" type="button" title="랜드마크로 고정" aria-pressed="${d.pinned}">${STAR}</button>
+        <span class="bk-url mono" title="${esc(l.url)}">${esc(hostOf(l.url))}</span></div>`}).join("");
+    filter();upd();
+  }
+  function filter(){const q=m.querySelector("#bk-q").value.trim().toLowerCase();box.querySelectorAll(".bk-row").forEach(r=>r.hidden=!!q&&!r.dataset.s.includes(q));box.querySelectorAll(".bk-h").forEach(h=>h.hidden=!!q)}
+  function upd(){const n=list.filter(changed).length;m.querySelector("#bk-sum").textContent=n?`${n}곳을 고쳤어요`:"";const b=m.querySelector("#bk-save");b.disabled=!n;b.textContent=n?`${n}곳 저장`:"저장"}
+  const rowOf=e=>{const r=e.target.closest(".bk-row");return r&&[r,S.links.get(r.dataset.id)]};
+  box.addEventListener("input",e=>{const x=rowOf(e);if(!x)return;const [r,l]=x;if(e.target.classList.contains("bk-name"))draft.get(l.id).name=e.target.value;r.classList.toggle("ch",changed(l));upd()});
+  box.addEventListener("change",e=>{const x=rowOf(e);if(!x||!e.target.classList.contains("bk-dest"))return;const [r,l]=x;draft.get(l.id).dest=e.target.value;r.classList.toggle("ch",changed(l));upd()});
+  box.addEventListener("click",e=>{const b=e.target.closest(".bk-pin");if(!b)return;const [r,l]=rowOf(e);const d=draft.get(l.id);d.pinned=!d.pinned;b.classList.toggle("on",d.pinned);b.setAttribute("aria-pressed",d.pinned);r.classList.toggle("ch",changed(l));upd()});
+  m.querySelector("#bk-q").addEventListener("input",filter);
+  const addF=()=>{const inp=m.querySelector("#bk-nf"),v=cleanFolder(inp.value);if(!v)return;if(folderList().includes(v)){toast("같은 이름의 거리가 있어요.");return}addFolders([v]);inp.value="";draw();toast(`📍 ‘${v}’ 거리를 만들었어요. 가게의 자리에서 고를 수 있어요.`)};
+  m.querySelector("#bk-add").addEventListener("click",addF);
+  m.querySelector("#bk-nf").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();addF()}});
+  m.querySelector("#bk-save").addEventListener("click",()=>{
+    let n=0;
+    list.forEach(l=>{if(!changed(l))return;const d=draft.get(l.id),f={};
+      if(d.name.trim()!==(l.name||"").trim())f.name=d.name.trim();
+      if(d.dest!==destOf(l))Object.assign(f,parseDest(d.dest));
+      if(d.pinned!==!!l.pinned)f.pinned=d.pinned;
+      patchLink(l.id,f,true);n++});
+    closeModal();render();toast(`✏️ ${n}곳을 고쳤어요.`);
+  });
+  draw();
+}
+
+/* ================= 우편함 ================= */
+function openMail(){
+  const n=(S.mailHTML.match(/class="notice/g)||[]).length;
+  const m=openModal(`<div class="m-head"><h3>📮 우편함</h3>${XBTN}</div><div class="m-body"><div class="notices">${n?S.mailHTML:`<div class="emptylot">${SQUIRREL}<span>새 소식이 없어요. 오늘도 평화로운 옹글동글 마을이에요!</span></div>`}</div></div>`);
+  m.addEventListener("click",e=>{if(e.target.closest("[data-act]"))closeModal()});
+}
+
+/* ================= 끌어서 옮기기 (PC) ================= */
+let drag=null;
+function dockHTML(){
+  const fl=folderList();
+  const z=(v,label)=>`<span class="dz" data-drop="${esc(v)}" data-dname="${esc(label.replace(/^\S+\s/,""))}">${label}</span>`;
+  return `<span class="t">🚚 여기로 옮기기</span>${fl.map(f=>z("school|"+f,"📍 "+f)).join("")}${z("school|","🚧 이름 없는 골목")}${z("personal","🏡 우리집 동네")}${z("new","＋ 새 거리")}`;
+}
+function clearOver(){document.querySelectorAll(".over").forEach(x=>x.classList.remove("over"))}
+document.addEventListener("dragstart",e=>{
+  const li=e.target.closest&&e.target.closest(".bld[data-id],.item[data-id]");
+  if(!li||isM()){return}
+  const id=li.dataset.id;
+  const ids=S.selecting&&S.picked.has(id)?[...S.picked]:[id];
+  drag={ids};
+  e.dataTransfer.effectAllowed="move";
+  try{e.dataTransfer.setData("text/plain",ids.join(","))}catch{}
+  const art=li.querySelector(".b-art")||li.querySelector(".ico");
+  if(art&&e.dataTransfer.setDragImage){const r=art.getBoundingClientRect();e.dataTransfer.setDragImage(art,r.width/2,r.height*.75)}
+  li.classList.add("dragging");document.body.classList.add("dragging");
+  const dk=$("#dock");dk.innerHTML=dockHTML();setTimeout(()=>dk.classList.add("on"),0);
+});
+document.addEventListener("dragend",()=>{
+  document.querySelectorAll(".dragging").forEach(x=>x.classList.remove("dragging"));document.body.classList.remove("dragging");
+  drag=null;clearOver();$("#dock").classList.remove("on");
+});
+document.addEventListener("dragover",e=>{
+  if(!drag)return;const z=e.target.closest&&e.target.closest("[data-drop]");if(!z)return;
+  e.preventDefault();e.dataTransfer.dropEffect="move";
+  if(!z.classList.contains("over")){clearOver();z.classList.add("over")}
+});
+document.addEventListener("dragleave",e=>{const z=e.target.closest&&e.target.closest("[data-drop]");if(z&&!z.contains(e.relatedTarget))z.classList.remove("over")});
+document.addEventListener("drop",e=>{
+  if(!drag)return;const z=e.target.closest&&e.target.closest("[data-drop]");if(!z)return;
+  e.preventDefault();const ids=drag.ids;dropTo(z.dataset.drop,ids);
+});
+function dropTo(v,ids){
+  if(v==="new"){openNewStreet(ids);return}
+  const d=parseDest(v);let n=0;
+  ids.forEach(id=>{const l=S.links.get(id);if(l&&(l.category!==d.category||l.folder!==d.folder)){patchLink(id,d,true);n++}});
+  if(S.selecting)S.picked.clear();
+  render();
+  toast(n?`🚚 ${n}곳을 ${d.category==="school"?(d.folder||"이름 없는 골목"):LAND.personal}(으)로 옮겼어요!`:"이미 그 거리에 있어요.");
+}
+function openNewStreet(ids){
+  const m=openModal(`<div class="m-head"><h3>🏗️ 새 거리 만들기</h3>${XBTN}</div><div class="m-body"><label class="field"><span>거리(폴더) 이름</span><input type="text" id="ns-name" maxlength="40" placeholder="예: 3학년 2반, 평가, 학급 경영"></label><p class="hint">끌어 온 가게 ${ids.length}곳이 새 거리로 이사해요.</p></div>
+  <div class="m-foot"><div class="r"><button class="btn" type="button" data-close>취소</button><button class="btn primary" type="button" id="ns-go">만들고 옮기기</button></div></div>`);
+  const go=()=>{const name=cleanFolder(m.querySelector("#ns-name").value);if(!name){m.querySelector("#ns-name").focus();return}addFolders([name]);closeModal();dropTo("school|"+name,ids)};
+  m.querySelector("#ns-go").addEventListener("click",go);
+  m.querySelector("#ns-name").addEventListener("keydown",e=>{if(e.key==="Enter")go()});
+}
+
+/* ================= 표지: 한 장면 그림 지도 =================
+   뒤에서 앞으로: 눈 덮인 산 → 바다(왼쪽 우리집 섬, 오른쪽 랜드마크 섬, 배) → 앞쪽 육지의 학교 동네와 해변.
+   좌표는 장면 크기(W×H) 기준이고, HTML 요소는 %로 올려서 화면 크기에 맞춰 같이 줄고 늘어요. */
+const LABC=["var(--t-lav)","var(--t-cyan)","var(--t-yellow)","var(--t-pink)","var(--t-mint)","var(--t-peach)"];
+const pct=(v,T)=>(v/T*100).toFixed(3)+"%";
+function sceneWide(W){
+  const H=900,X=f=>Math.round(W*f);
+  return {W,H,wide:true,fs:1600/W,sMax:104,sMin:24,lab:34,
+    seaTop:250,
+    mounts:[[X(.05),196,150],[X(.17),140,190],[X(.30),206,150],[X(.43),156,200],[X(.565),214,150],[X(.70),170,180],[X(.86),132,200],[X(.98),200,140]],mBase:300,
+    coast:`M-60 ${H+60}V500C${X(.08)} 478 ${X(.18)} 506 ${X(.30)} 488S${X(.52)} 474 ${X(.66)} 492S${X(.88)} 478 ${W+60} 494V${H+60}Z`,
+    beach:`M${X(.735)} ${H+60}C${X(.715)} 790 ${X(.765)} 660 ${X(.73)} 506L${W+60} 494V${H+60}Z`,
+    region:{x:46,y:548,w:X(.70)-46,h:322,gap:24},
+    home:{cx:X(.165),cy:398,rx:200,ry:64},
+    isle:{cx:X(.80),cy:396,rx:176,ry:62},
+    boats:[[X(.40),372],[X(.58),420]],plane:[X(.56),96],lot:[X(.79),560],
+    deco:{umb:[X(.86),650],castle:[X(.93),790],ring:[X(.80),800],star:[X(.95),600]},
+    clouds:[[X(.05),62,1],[X(.27),104,.75],[X(.43),46,1.05],[X(.73),112,.8],[X(.90),58,.9]],sun:[X(.335),70]};
+}
+function sceneTall(H){
+  const W=900;
+  return {W,H,wide:false,fs:2.2,sMax:124,sMin:40,lab:56,
+    seaTop:300,
+    mounts:[[60,250,140],[230,190,170],[420,250,140],[600,180,180],[800,232,150]],mBase:350,
+    coast:`M-60 ${H+60}V690C150 670 300 700 450 682S750 668 960 690V${H+60}Z`,
+    beach:"",
+    region:{x:36,y:744,w:828,h:H-744-150,gap:28},
+    home:{cx:245,cy:560,rx:205,ry:66},
+    isle:{cx:665,cy:430,rx:185,ry:60},
+    boats:[[440,600],[160,410]],plane:[520,120],lot:[820,724],
+    deco:null,
+    clouds:[[30,90,1.1],[380,60,.9],[660,150,.8]],sun:[150,200]};
+}
+function pickScene(){
+  const vw=Math.max(320,innerWidth),vh=Math.max(420,innerHeight-(isM()?100:0));
+  if(isM())return sceneTall(Math.round(Math.min(1900,Math.max(1400,900*vh/vw))));
+  return sceneWide(Math.round(Math.min(2200,Math.max(1450,900*vw/vh))));
+}
+let cvKey="";
+addEventListener("resize",()=>{clearTimeout(window.__cvT);window.__cvT=setTimeout(()=>{if(document.body.classList.contains("cover")){const c=pickScene(),k=c.W+"x"+c.H;if(k!==cvKey)render()}},160)});
+
+/* ---- 풍경 조각 ---- */
+const SK='stroke="#1F1D2B" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"';
+function mountain(cx,py,hw,b){
+  const h=b-py,cw=hw*.26,ch=h*.24;
+  const body=`M${cx-hw} ${b+40}L${cx-hw} ${b}C${cx-hw*.52} ${b-h*.55} ${cx-hw*.2} ${py} ${cx} ${py}C${cx+hw*.2} ${py} ${cx+hw*.52} ${b-h*.55} ${cx+hw} ${b}L${cx+hw} ${b+40}Z`;
+  const cap=`M${cx-cw} ${py+ch}C${cx-cw*.55} ${py+ch*.35} ${cx-cw*.25} ${py} ${cx} ${py}C${cx+cw*.25} ${py} ${cx+cw*.55} ${py+ch*.35} ${cx+cw} ${py+ch}l${-cw*.36} ${-ch*.22}l${-cw*.3} ${ch*.34}l${-cw*.34} ${-ch*.3}l${-cw*.34} ${ch*.3}l${-cw*.3} ${-ch*.34}z`;
+  const shade=`M${cx} ${py}C${cx+hw*.2} ${py} ${cx+hw*.52} ${b-h*.55} ${cx+hw} ${b}L${cx+hw*.3} ${b}C${cx+hw*.25} ${b-h*.4} ${cx+hw*.1} ${py+h*.3} ${cx} ${py}z`;
+  return `<path d="${body}" fill="#5CC56B" ${SK}/><path d="${shade}" fill="#3FA956" opacity=".55"/><path d="${cap}" fill="#fff" ${SK} stroke-width="2.6"/>`;
+}
+function pine(x,y,k){return `<g transform="translate(${x} ${y}) scale(${k})"><rect x="-2.5" y="-6" width="5" height="8" fill="#9A6A3C" stroke="#1F1D2B" stroke-width="1.6"/><path d="M0-34L11-14H6L13-4H-13L-6-14H-11Z" fill="#2E9E57" stroke="#1F1D2B" stroke-width="2" stroke-linejoin="round"/></g>`}
+function treeAt(x,y,k){return `<g transform="translate(${x-15*k} ${y-36*k}) scale(${k})"><ellipse cx="15" cy="34.5" rx="8" ry="1.8" fill="#1F1D2B" opacity=".14"/><rect x="12.6" y="21" width="4.8" height="13" rx="2" fill="#B57D45" stroke="#1F1D2B" stroke-width="2"/><circle cx="15" cy="13.5" r="11.2" fill="#6DC274" stroke="#1F1D2B" stroke-width="2.2"/><path d="M7.5 12a7.5 7.5 0 0 1 7-6.6" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/><g stroke="#1F1D2B" stroke-width="1.2"><circle cx="9.5" cy="15.5" r="2.1" fill="#F2605E"/><circle cx="19.5" cy="9.5" r="2.1" fill="#F2605E"/><circle cx="20" cy="17" r="2.1" fill="#F2605E"/></g></g>`}
+function islandSVG(cx,cy,rx,ry){
+  return `<ellipse cx="${cx}" cy="${cy+12}" rx="${rx+26}" ry="${ry+14}" fill="#6CC6F2" opacity=".55"/><path d="M${cx-rx-14} ${cy}C${cx-rx-14} ${cy+ry*1.15} ${cx+rx+14} ${cy+ry*1.15} ${cx+rx+14} ${cy}S${cx-rx-14} ${cy-ry*1.2} ${cx-rx-14} ${cy}z" fill="#FFE7A8" ${SK}/><path d="M${cx-rx} ${cy-6}C${cx-rx} ${cy+ry*.8} ${cx+rx} ${cy+ry*.8} ${cx+rx} ${cy-6}S${cx-rx} ${cy-ry*1.15} ${cx-rx} ${cy-6}z" fill="#9FE07E" ${SK}/><path d="M${cx-rx} ${cy-6}C${cx-rx} ${cy+ry*.8} ${cx+rx} ${cy+ry*.8} ${cx+rx} ${cy-6}S${cx-rx} ${cy-ry*1.15} ${cx-rx} ${cy-6}z" fill="url(#cvgrass)"/><path d="M${cx-rx+8} ${cy+ry*.42}C${cx-rx*.4} ${cy+ry*.78} ${cx+rx*.4} ${cy+ry*.78} ${cx+rx-8} ${cy+ry*.42}" fill="none" stroke="#5FB646" stroke-width="5" stroke-linecap="round" opacity=".6"/>`;
+}
+function cloudSVG(x,y,k){return `<g class="cv-cloud" style="--d:${(38+x%23)}s"><path transform="translate(${x} ${y}) scale(${k})" d="M20 44h70c11 0 16-14 6-20 0-10-12-16-21-10C71 4 54 2 47 12 38 6 26 12 27 22 14 21 8 40 20 44z" fill="#fff" stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"/></g>`}
+const CASTLE='<g><g fill="#FFF1D6" stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"><rect x="-46" y="-40" width="92" height="44"/><rect x="-62" y="-58" width="24" height="62"/><rect x="38" y="-58" width="24" height="62"/><rect x="-14" y="-78" width="28" height="40"/></g><g fill="#5B8DE6" stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"><path d="M-66-58L-50-90-34-58Z"/><path d="M34-58L50-90 66-58Z"/><path d="M-18-78L0-116 18-78Z"/></g><path d="M0-116V-132" stroke="#1F1D2B" stroke-width="2.4"/><path d="M0-132l14 5-14 5z" fill="#FF6FA5" stroke="#1F1D2B" stroke-width="2"/><path d="M-10 4v-18a10 10 0 0 1 20 0v18z" fill="#B57D45" stroke="#1F1D2B" stroke-width="2.6"/><g fill="#9BE7F7" stroke="#1F1D2B" stroke-width="2"><rect x="-56" y="-44" width="12" height="14" rx="6"/><rect x="44" y="-44" width="12" height="14" rx="6"/><rect x="-6" y="-66" width="12" height="16" rx="6"/></g></g>';
+function beachDeco(d){
+  if(!d)return "";
+  const [ux,uy]=d.umb,[cx,cy]=d.castle,[rx,ry]=d.ring,[sx,sy]=d.star;
+  return `<g transform="translate(${ux} ${uy})"><path d="M0 0V64" stroke="#1F1D2B" stroke-width="3"/><path d="M-50 2Q0-40 50 2Q38-6 25 2Q12-6 0 2Q-12-6-25 2Q-38-6-50 2Z" fill="#FF6FA5" stroke="#1F1D2B" stroke-width="2.8" stroke-linejoin="round"/><path d="M-25 2Q-12-30 0-36M25 2Q12-30 0-36" fill="none" stroke="#1F1D2B" stroke-width="2"/><path d="M-12-30Q0-38 12-30Q6-12 0 2Q-6-12-12-30Z" fill="#FFE45C"/><rect x="-34" y="60" width="54" height="10" rx="5" fill="#9BE7F7" stroke="#1F1D2B" stroke-width="2.4"/></g>
+  <g transform="translate(${cx} ${cy})" fill="#F6D68A" stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"><path d="M-34 0V-26H-22V-20H-12V-26H0V-20H10V-26H22V0Z"/><path d="M-12-26V-46H10V-26"/><path d="M-12-46h22l-11-14z" fill="#FF8A3D"/></g>
+  <g transform="translate(${rx} ${ry})"><ellipse rx="30" ry="14" fill="#FF8A3D" stroke="#1F1D2B" stroke-width="2.8"/><ellipse rx="13" ry="5.5" fill="#FFE7A8" stroke="#1F1D2B" stroke-width="2.4"/><path d="M-22-8l6 9M14 8l6-9" stroke="#fff" stroke-width="5"/></g>
+  <path transform="translate(${sx} ${sy})" d="M0-14L4-4 14-3 6 4 9 14 0 8-9 14-6 4-14-3-4-4Z" fill="#FFB238" stroke="#1F1D2B" stroke-width="2.2" stroke-linejoin="round"/>`;
+}
+function planeSVG(x,y){return `<g transform="translate(${x} ${y})"><g class="cv-plane"><path d="M-178-10H-30L-20 0-30 10H-178L-168 0Z" fill="#FFE45C" stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"/><text x="-104" y="6" text-anchor="middle" font-family="Pretendard Variable,Pretendard,sans-serif" font-weight="900" font-size="16" fill="#1F1D2B">ONGLE LAND</text><path d="M-30 0H-10" stroke="#1F1D2B" stroke-width="2"/><path d="M-10-6H40Q54-6 54 0Q54 6 40 6H-10Z" fill="#FF8A3D" stroke="#1F1D2B" stroke-width="2.6"/><path d="M10-6L22-24H30L26-6M10 6L22 22H30L26 6" fill="#FFB238" stroke="#1F1D2B" stroke-width="2.4" stroke-linejoin="round"/><path d="M-6-6L-12-18H-4L4-6" fill="#FFB238" stroke="#1F1D2B" stroke-width="2.2" stroke-linejoin="round"/><circle cx="40" cy="-1" r="3" fill="#9BE7F7" stroke="#1F1D2B" stroke-width="1.6"/></g></g>`}
+/* 거리(폴더)마다 땅을 나눠 줘요: 가게가 많은 거리일수록 넓게 */
+function packDistricts(R,ds){
+  const n=ds.length;if(!n)return {cells:[],rows:[]};
+  const g=R.gap,mk=Math.max(...ds.map(d=>d.list.length)),wts=ds.map(d=>Math.max(d.list.length,4,mk*(R.h>R.w?.2:.3))),total=wts.reduce((a,b)=>a+b,0);
+  let best=null;
+  for(let r=1;r<=n;r++){
+    const rows=[];let cur=[],acc=0;
+    ds.forEach((d,i)=>{cur.push(i);acc+=wts[i];if(rows.length<r-1&&acc>=total/r*(rows.length+1)-1e-9){rows.push(cur);cur=[]}});
+    if(cur.length)rows.push(cur);
+    const rw=rows.map(rr=>rr.reduce((a,i)=>a+wts[i],0)),Hh=R.h-g*(rows.length-1);
+    let y=R.y,cells=[],score=0;
+    rows.forEach((rr,ri)=>{const h=Hh*rw[ri]/total,Ww=R.w-g*(rr.length-1);let x=R.x;
+      rr.forEach(i=>{const w=Ww*wts[i]/rw[ri];cells[i]={x,y,w,h};score+=Math.abs(Math.log(w/h/1.7))*wts[i];x+=w+g});y+=h+g});
+    if(!best||score<best.score)best={score,cells,rows};
+  }
+  return best;
+}
+function fitSize(aw,ah,k,sMin,sMax){
+  if(!k)return sMax;
+  for(let s=sMax;s>=sMin;s-=2){const cols=Math.floor(aw/s),rows=Math.floor(ah/(s*.93+6));if(cols*rows>=k)return s}
+  return sMin;
+}
+function placeIn(box,list,s,seed){
+  const bh=s*.93,cols=Math.max(1,Math.floor(box.w/s)),maxRows=Math.max(1,Math.floor(box.h/(bh+6)));
+  const cap=cols*maxRows,show=list.length>cap?list.slice(0,cap-1):list,more=list.length-show.length;
+  const tot=show.length+(more?1:0),rows=Math.ceil(tot/cols)||1,gapY=Math.max(4,Math.min(18,(box.h-rows*bh)/(rows+1)));
+  const out=[];
+  show.forEach((l,i)=>{const r=Math.floor(i/cols),c=i%cols,inRow=Math.min(cols,tot-r*cols);
+    const x0=box.x+(box.w-inRow*s)/2,j=((hashNum(l.id+seed)%9)-4)*s*.012;
+    out.push({l,x:x0+c*s+j,y:box.y+gapY+r*(bh+gapY)+bh,s})});
+  let plus=null;if(more){const i=show.length,r=Math.floor(i/cols),c=i%cols,inRow=Math.min(cols,tot-r*cols),x0=box.x+(box.w-inRow*s)/2;plus={x:x0+c*s+s/2,y:box.y+gapY+r*(bh+gapY)+bh/2,n:more}}
+  return {out,plus};
+}
+function coverHTML(all,fl){
+  const c=pickScene(),{W,H}=c;cvKey=W+"x"+H;
+  const sch=sortLinks(all.filter(l=>l.category==="school")),per=sortLinks(all.filter(l=>l.category==="personal")),pins=sortLinks(all.filter(l=>l.pinned)).slice(0,4);
+  const ds=fl.map(f=>({key:f,label:f,list:sch.filter(l=>l.folder===f)}));
+  const none=sch.filter(l=>!l.folder);if(none.length||!ds.length)ds.push({key:NONE,label:"이름 없는 골목",list:none});
+  const R=c.region,pk=packDistricts(R,ds),pad=10;
+  const boxes=pk.cells.map(b=>({x:b.x+pad,y:b.y+c.lab+4,w:b.w-pad*2,h:b.h-c.lab-pad-4}));
+  let s=c.sMax;ds.forEach((d,i)=>{if(d.list.length)s=Math.min(s,fitSize(boxes[i].w,boxes[i].h,d.list.length,c.sMin,c.sMax))});
+  const tk=c.wide?1.1:1.5;
+  /* 배경 */
+  let bg=`<svg class="cv-bg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><defs>
+    <pattern id="cvwave" width="110" height="52" patternUnits="userSpaceOnUse"><path d="M10 16q7-7 14 0t14 0M64 42q7-7 14 0t14 0" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="2.6" stroke-linecap="round"/></pattern>
+    <pattern id="cvgrass" width="96" height="96" patternUnits="userSpaceOnUse"><path d="M12 30q2-6 4 0M15 30q1-4 3-1M70 78q2-6 4 0M73 78q1-4 3-1M52 14q2-5 4 0" fill="none" stroke="#6BBF4E" stroke-width="2" stroke-linecap="round"/><circle cx="80" cy="24" r="2.8" fill="#fff"/><circle cx="80" cy="24" r="1.2" fill="#FFD84D"/><circle cx="30" cy="70" r="2.8" fill="#FF9EC4"/><circle cx="30" cy="70" r="1.2" fill="#fff"/></pattern>
+    <pattern id="cvsand" width="70" height="70" patternUnits="userSpaceOnUse"><circle cx="12" cy="18" r="1.6" fill="#E9C77B"/><circle cx="48" cy="40" r="1.4" fill="#E9C77B"/><circle cx="30" cy="62" r="1.2" fill="#E9C77B"/></pattern>
+    <pattern id="cvbrick" width="26" height="16" patternUnits="userSpaceOnUse"><rect width="26" height="16" fill="#FFC6BC"/><path d="M0 8h26M9 0v8M22 8v8" stroke="#F2A193" stroke-width="1.5"/></pattern>
+  </defs><rect width="${W}" height="${H}" fill="#C9ECFF"/>
+  <g transform="translate(${c.sun[0]} ${c.sun[1]}) scale(${c.wide?1.2:1.6})"><g class="cv-sun"><path d="M0-40v9M0 31v9M-40 0h9M31 0h9M-28-28l6 6M22 22l6 6M28-28l-6 6M-22 22l-6 6" stroke="#1F1D2B" stroke-width="3" stroke-linecap="round"/></g><circle r="20" fill="#FFD84D" stroke="#1F1D2B" stroke-width="3"/><circle cx="-6" cy="-2" r="2.2" fill="#1F1D2B"/><circle cx="6" cy="-2" r="2.2" fill="#1F1D2B"/><path d="M-5 5q5 4 10 0" fill="none" stroke="#1F1D2B" stroke-width="2.4" stroke-linecap="round"/><circle cx="-11" cy="4" r="2.6" fill="#FF9EC4" opacity=".8"/><circle cx="11" cy="4" r="2.6" fill="#FF9EC4" opacity=".8"/></g>
+  ${c.clouds.map(([x,y,k])=>cloudSVG(x,y,k)).join("")}
+  ${planeSVG(c.plane[0],c.plane[1])}
+  ${[...c.mounts].sort((a,b)=>a[1]-b[1]).map(([x,py,hw])=>mountain(x,py,hw,c.mBase)).join("")}
+  <rect y="${c.seaTop+40}" width="${W}" height="${H}" fill="#8ED3F6"/><path d="M-20 ${c.seaTop+42}H${W+20}" ${SK}/><rect y="${c.seaTop+40}" width="${W}" height="${H}" fill="url(#cvwave)"/>`;
+  /* 산자락 소나무 */
+  for(let x=20;x<W;x+=c.wide?46:58){const h=hashNum("pn"+x);if(h%3===0)continue;bg+=pine(x+(h%13)-6,c.seaTop+42-(h%6),(c.wide?.9:1.2)*(.8+(h%5)*.08))}
+  bg+=islandSVG(c.home.cx,c.home.cy,c.home.rx,c.home.ry)+islandSVG(c.isle.cx,c.isle.cy,c.isle.rx,c.isle.ry);
+  /* 앞쪽 육지 + 해변 */
+  bg+=`<path d="${c.coast}" fill="none" stroke="#1F1D2B" stroke-width="40" stroke-linejoin="round"/><path d="${c.coast}" fill="#FFE7A8" stroke="#FFE7A8" stroke-width="34" stroke-linejoin="round"/><path d="${c.coast}" fill="#A4E282" ${SK}/><path d="${c.coast}" fill="url(#cvgrass)"/>`;
+  if(c.beach)bg+=`<path d="${c.beach}" fill="#FFE3A0" ${SK}/><path d="${c.beach}" fill="url(#cvsand)"/>`+beachDeco(c.deco);
+  /* 학교 동네: 길 + 광장 */
+  bg+=`<rect x="${R.x-14}" y="${R.y-14}" width="${R.w+28}" height="${R.h+28}" rx="30" fill="#A9ABC0" ${SK}/>`;
+  pk.rows.forEach((rr,ri)=>{const cl=pk.cells[rr[0]];if(ri>0)bg+=`<line x1="${R.x}" y1="${cl.y-R.gap/2}" x2="${R.x+R.w}" y2="${cl.y-R.gap/2}" stroke="#fff" stroke-width="3" stroke-dasharray="18 14"/>`;
+    rr.forEach((i,k)=>{if(k>0){const b=pk.cells[i];bg+=`<line x1="${b.x-R.gap/2}" y1="${b.y}" x2="${b.x-R.gap/2}" y2="${b.y+b.h}" stroke="#fff" stroke-width="3" stroke-dasharray="18 14"/>`}})});
+  pk.cells.forEach((b,i)=>{bg+=`<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="18" fill="${ds[i].list.length?"url(#cvbrick)":"#B6E69A"}" ${SK}/>`;
+    if(!ds[i].list.length)bg+=treeAt(b.x+b.w/2-18,b.y+b.h*.72,tk*1.1)+treeAt(b.x+b.w/2+20,b.y+b.h*.82,tk)});
+  /* 나무: 동네 둘레 */
+  let trees="";
+  for(let x=R.x+16;x<R.x+R.w;x+=c.wide?70:96)trees+=treeAt(x+(hashNum("t"+x)%17)-8,R.y-16,tk*(.85+(hashNum("k"+x)%4)*.07));
+  (c.wide?[[16,640],[20,860],[R.x+R.w+30,600],[R.x+R.w+24,860]]:[[18,R.y+R.h*.4],[882,R.y+R.h*.55],[20,R.y+R.h+40],[880,R.y+R.h+50]]).forEach(([x,y])=>trees+=treeAt(x,y,tk));
+  trees+=treeAt(c.home.cx-c.home.rx+28,c.home.cy+12,tk*.85)+treeAt(c.home.cx+c.home.rx-26,c.home.cy+16,tk*.85)+treeAt(c.isle.cx+c.isle.rx-30,c.isle.cy+12,tk*.8);
+  bg+=trees+`</svg>`;
+  /* 건물(앱) */
+  let fg="";const marks=[];
+  ds.forEach((d,i)=>{const b=pk.cells[i];
+    fg+=`<button class="cv-lab" type="button" data-folder="${esc(d.key)}" style="left:${pct(b.x+10,W)};top:${pct(b.y+8,H)};max-width:${pct(b.w-20,W)};background:${LABC[i%LABC.length]}" title="${esc(d.label)} 거리 보기"><span class="nm">${esc(d.label)}</span><b>${d.list.length}</b></button>`;
+    if(d.list.length){const r=placeIn(boxes[i],d.list,s,"s");marks.push(...r.out);if(r.plus)fg+=`<button class="cv-more" type="button" data-folder="${esc(d.key)}" style="left:${pct(r.plus.x,W)};top:${pct(r.plus.y,H)}">+${r.plus.n}</button>`}});
+  /* 섬 위 건물: 첫 줄 바닥이 섬 윗면에 닿도록 상자를 잡아요 */
+  const onIsle=(I,list,sMax)=>{const w=I.rx*1.5;let sz=sMax;for(;sz>c.sMin*.7;sz-=2){const cols=Math.floor(w/sz),rows=Math.ceil(list.length/Math.max(1,cols));if(cols>0&&(rows===1||rows*(sz*.93+6)<=I.ry*.9+sz*.93))break}
+    const bh=sz*.93,y=I.cy-I.ry*.38-bh-4;return {box:{x:I.cx-w/2,y,w,h:I.cy+I.ry*.45-y},s:sz}};
+  const hb0=onIsle(c.home,per,c.sMax*.78),hb=hb0.box;
+  if(per.length){const r=placeIn(hb,per,hb0.s,"p");marks.push(...r.out);if(r.plus)fg+=`<button class="cv-more" type="button" data-tab="personal" style="left:${pct(r.plus.x,W)};top:${pct(r.plus.y,H)}">+${r.plus.n}</button>`}
+  const ib0=onIsle(c.isle,pins,c.sMax*.9);
+  if(pins.length){const r=placeIn(ib0.box,pins,ib0.s,"i");marks.push(...r.out)}
+  else fg+=`<svg class="cv-castle" viewBox="-70 -136 140 144" style="left:${pct(c.isle.cx-50,W)};top:${pct(c.isle.cy-110,H)};width:${pct(100,W)}" aria-hidden="true">${CASTLE}</svg>`;
+  marks.sort((a,b)=>a.y-b.y).forEach(m=>{const l=m.l,st=bState(l);
+    fg+=`<a class="mb${l.pinned?" pin":""}" href="${esc(safeHref(l.url))}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" style="left:${pct(m.x,W)};top:${pct(m.y-m.s*.93,H)};width:${pct(m.s,W)}" aria-label="${esc(displayName(l))} 열기">${buildingSVG(l,st)}<span class="tip">${esc(displayName(l))} ↗</span></a>`});
+  /* 이름표 · 배 · 공사장 */
+  fg+=`<button class="cv-sign school" type="button" data-tab="school" style="left:${pct(R.x+R.w/2,W)};top:${pct(R.y-14,H)}">${LAND.school} <b>${sch.length}</b></button>`;
+  fg+=`<button class="cv-sign home" type="button" data-tab="personal" style="left:${pct(c.home.cx,W)};top:${pct(c.home.cy+c.home.ry+8,H)}">${LAND.personal} <b>${per.length}</b></button>`;
+  fg+=`<button class="cv-sign star" type="button" data-tab="pinned" style="left:${pct(c.isle.cx,W)};top:${pct(c.isle.cy+c.isle.ry+8,H)}">랜드마크 <b>${all.filter(l=>l.pinned).length}</b></button>`;
+  SLOTS.filter(k=>ghHandle(k)).forEach((k,i)=>{const p=c.boats[i];if(!p)return;
+    fg+=`<button class="cv-boat" type="button" data-tab="gh:${k}" title="@${esc(ghHandle(k))} 가게만 보기 (→ ${LAND[ghCat(k)]})" style="left:${pct(p[0]-50,W)};top:${pct(p[1]-50,H)};width:${pct(100,W)}">${boatSVG(ghCat(k)==="personal"?"#FF8A3D":"#5B7CFA")}</button>`});
+  if(S.newRepos.length)fg+=`<button class="cv-lot" type="button" data-act="import" title="새로 배포된 저장소 ${S.newRepos.length}개 들이기" style="left:${pct(c.lot[0]-43,W)};top:${pct(c.lot[1]-60,H)};width:${pct(86,W)}">${CRANE}<b>${S.newRepos.length}</b></button>`;
+  if(!all.length)fg+=`<button class="cv-empty btn primary" type="button" data-act="import" style="left:${pct(R.x+R.w/2,W)};top:${pct(R.y+R.h/2,H)}">⛵ 배 불러서 마을 채우기</button>`;
+  return `<div class="cv"><div class="cv-stage" style="--arn:${W/H};aspect-ratio:${W}/${H};--fs:${c.fs}">${bg}${fg}</div></div>`;
 }
 
 /* ================= 화면 ================= */
@@ -997,6 +1554,7 @@ function visible(){
 function icoHTML(l,cls){
   const ic=l.icon||{},m=mono(displayName(l)),col=ic.color||hashColor(displayName(l)),k=cls?" "+cls:"";
   if(ic.type==="image"&&ic.value)return `<span class="ico image${k}"><img alt="" src="${esc(ic.value)}"></span>`;
+  const fv=l.url?favOf(l):"";if(fv)return `<span class="ico fav${k}"><img alt="" src="${esc(fv)}"></span>`;
   if(ic.type==="emoji"&&ic.value)return `<span class="ico emoji${k}"${ic.color?` style="--eb:${esc(ic.color)}"`:""}>${esc(ic.value)}</span>`;
   if(ic.type==="site"&&domainOf(l.url))return `<span class="ico site${k}"><img class="fav" alt="" loading="lazy" referrerpolicy="no-referrer" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(domainOf(l.url))}&sz=128" data-m="${esc(m)}" data-c="${esc(col)}"></span>`;
   const txt=(ic.type==="mono"&&ic.value)?ic.value:m;
@@ -1023,9 +1581,11 @@ function ctxFor(){if(S.q)return "full";return S.tab==="personal"||(S.tab==="scho
 /* 거리 위 가게 하나 */
 function bldHTML(l){
   const href=esc(safeHref(l.url)),st=bState(l),ts=thumbSrc(l),xl=xlinks(l),pk=S.picked.has(l.id);
-  const pop=(l.memo||ts||xl.length)?`<span class="b-pop">${ts?`<img class="pthumb" alt="" loading="lazy" referrerpolicy="no-referrer" src="${esc(ts)}">`:""}${l.memo?`<span class="memo">${esc(l.memo)}</span>`:""}<span class="host">${esc(hostOf(l.url))}</span>${xl.length?`<span class="lks">${xl.map(lkHTML).join("")}</span>`:""}</span>`:"";
-  return `<li class="bld${l.pinned?" pin":""}${pk?" picked":""}" data-id="${esc(l.id)}">${pickHTML}
-    <a class="b-link" href="${href}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" title="${esc(displayName(l)+(l.memo?" · "+l.memo.split("\n")[0]:""))}">
+  const pop=`<span class="b-pop"><span class="pop-h"><b>${esc(displayName(l))}</b><span class="host">${esc(hostOf(l.url))}</span></span>${ts?`<img class="pthumb" alt="" loading="lazy" referrerpolicy="no-referrer" src="${esc(ts)}">`:""}${l.memo?`<span class="memo">${esc(l.memo)}</span>`:""}${xl.length?`<span class="lks">${xl.map(lkHTML).join("")}</span>`:""}
+    <span class="pop-acts"><button class="pa${l.pinned?" on":""}" type="button" data-pin="${esc(l.id)}">${l.pinned?"⭐ 고정 풀기":"☆ 랜드마크로"}</button><button class="pa" type="button" data-edit="${esc(l.id)}">✏️ 고치기</button></span>
+    <span class="pop-tip">✋ 끌어서 다른 거리로 옮겨요</span></span>`;
+  return `<li class="bld${l.pinned?" pin":""}${pk?" picked":""}" data-id="${esc(l.id)}" draggable="true">${pickHTML}
+    <a class="b-link" href="${href}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" draggable="false">
       <span class="b-art">${buildingSVG(l,st)}</span>
       <span class="b-name"><span class="nm">${esc(displayName(l))}</span><span class="ar">↗</span></span>
     </a>${l.pinned?'<span class="b-flag" aria-hidden="true">⭐</span>':""}${pop}${actsHTML(l,"b-acts")}</li>`;
@@ -1034,15 +1594,15 @@ function streetHTML(items){return `<ul class="street">${items.map(bldHTML).join(
 function emptyLot(msg){return `<div class="emptylot">${TREE}${TREE}<span>${msg}</span></div>`}
 function streetSection(f,items){
   const none=f===NONE;
-  return `<section class="sec-street"><div class="sh"><span class="roadsign${none?" gray":""}">📍 ${none?"이름 없는 골목":esc(f)}</span><span class="n cute">${items.length}곳</span><button class="linkish" type="button" data-folder="${esc(f)}">이 거리만 보기 →</button></div>
+  return `<section class="sec-street" data-drop="school|${esc(none?"":f)}" data-dname="${esc(none?"이름 없는 골목":f)}"><div class="sh"><span class="roadsign${none?" gray":""}">📍 ${none?"이름 없는 골목":esc(f)}</span><span class="n cute">${items.length}곳</span><button class="linkish" type="button" data-folder="${esc(f)}">이 거리만 보기 →</button></div>
     ${items.length?streetHTML(items):emptyLot(`아직 빈 땅이에요. <b>골라서 옮기기</b>로 가게를 이 거리에 옮겨 보세요.`)}</section>`;
 }
 
 /* 목록 한 줄 */
 function itemHTML(l,ctx){
   const href=esc(safeHref(l.url)),xl=xlinks(l),own=ownerOf(l),memo=(l.memo||"").split("\n")[0];
-  return `<li class="item${S.picked.has(l.id)?" picked":""}" data-id="${esc(l.id)}">${pickHTML}
-    <a class="i-main" href="${href}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" title="${esc(l.memo||"")}">
+  return `<li class="item${S.picked.has(l.id)?" picked":""}" data-id="${esc(l.id)}" draggable="true">${pickHTML}
+    <a class="i-main" href="${href}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" draggable="false" title="${esc(l.memo||"")}">
       ${icoHTML(l)}<span class="i-text"><span class="i-name"><span class="nm">${esc(displayName(l))}</span>${l.pinned?'<span class="pinmark">⭐</span>':""}</span>
       <span class="i-sub${memo?" hasmemo":""}"><span class="i-host">${esc(hostOf(l.url))}</span>${memo?`<span class="i-memo">${esc(memo)}</span>`:""}</span></span></a>
     <span class="i-meta">${placeTag(l,ctx)}${own&&!tabSlot()?`<span class="owner">@${esc(own)}</span>`:""}</span>
@@ -1050,7 +1610,7 @@ function itemHTML(l,ctx){
     ${actsHTML(l,"i-acts")}</li>`;
 }
 function listHTML(items,ctx){return `<ul class="list">${items.map(l=>itemHTML(l,ctx)).join("")}</ul>`}
-function grpHTML(title,items,ctx,extra){return `<section class="grp"><div class="grp-h"><span class="t">${title}</span><span class="n">${items.length}</span>${extra||""}</div>${items.length?listHTML(items,ctx):`<p class="hint" style="padding:0 6px">비어 있어요.</p>`}</section>`}
+function grpHTML(title,items,ctx,extra,drop){return `<section class="grp"${drop!=null?` data-drop="${esc(drop)}" data-dname="${esc(drop==="school|"?"이름 없는 골목":drop.replace(/^school\|/,""))}"`:""}><div class="grp-h"><span class="t">${title}</span><span class="n">${items.length}</span>${extra||""}</div>${items.length?listHTML(items,ctx):`<p class="hint" style="padding:0 6px">비어 있어요.</p>`}</section>`}
 
 /* ---- 지도 ---- */
 function hoodHTML(f,items){
@@ -1071,17 +1631,19 @@ function mapHTML(all,fl){
   const harbor=`<div class="harbor">
     ${S.newRepos.length?`<button class="lot" type="button" data-act="import">${CRANE}<span>🏗️ 공사 중 ${S.newRepos.length}곳</span><span class="hint">눌러서 마을에 들이기</span></button>`:""}
     ${slots.map(k=>`<button class="boat" type="button" data-tab="gh:${k}" aria-pressed="${S.tab==="gh:"+k}" title="@${esc(ghHandle(k))} 계정 가게만 보기"><span>${boatSVG(ghCat(k)==="personal"?"#F28C38":"#5B7CFA")}</span><span class="pill">@${esc(ghHandle(k))}</span><span class="to">→ ${LAND[ghCat(k)]}</span></button>`).join("")}
-    <button class="btn sm callboat" type="button" data-act="import">⛵ 배 부르기</button></div>`;
+    <button class="btn sm callboat" type="button" data-act="import">⛵ 배 부르기</button>
+    <button class="dice" type="button" data-act="dice" title="아무 앱이나 하나 골라 줘요"><span class="dd">${die(3)}${die(5)}</span><span class="pill">🎲 오늘의 앱</span></button></div>`;
   const perBlds=per.slice(0,8);
   return `<div class="map">
     <div class="sky">${SUN}${CLOUD("c1")}${CLOUD("c2")}${CLOUD("c3")}${HILLS}</div>
     <div class="isle-row">${island}</div>
-    <div class="lands">
+    <div class="cover-hint"><i>▼</i> 동네를 눌러 거리 구경하기 <i>▼</i></div>
+    <div class="board-wrap"><div class="board">${trackHTML("top")}<div class="lands">
       <section class="land school"><div class="land-h"><button class="pill school" type="button" data-tab="school">🏫 ${LAND.school} <b>${sch.length}</b></button><span class="hint cute" style="color:var(--ink2)">거리를 누르면 가게들이 보여요</span>${TREE}</div><div class="hoods">${hoods}</div></section>
       ${harbor}
       <section class="land home"><div class="land-h"><button class="pill home" type="button" data-tab="personal">🏡 ${LAND.personal} <b>${per.length}</b></button>${TREE}</div>
         <div class="hoods"><button class="hood big${per.length?"":" empty"}" type="button" data-tab="personal"><span class="blds">${perBlds.length?perBlds.map(miniB).join(""):`${TREE}<span>🌱 빈 땅</span>`}</span><span class="pill"><span>🏠 ${esc(catLabel("personal"))} 거리</span><b>${per.length}</b></span></button></div></section>
-    </div></div>`;
+    </div>${trackHTML("bottom")}</div></div></div>`;
 }
 
 function titleHTML(){
@@ -1108,11 +1670,12 @@ function render(){
   if(tabSlot()&&!ghHandle(tabSlot()))S.tab="all";
   const slots=SLOTS.filter(k=>ghHandle(k));
 
-  $("#sub").innerHTML=`<span>옹글동글 마을 · 가게 ${all.length}곳</span>${slots.map(k=>`<span class="mono" style="font-size:12px;font-family:var(--f-mono)">⛵ @${esc(ghHandle(k))}</span>`).join("")}`;
+  $("#sub").innerHTML=`<span>웹앱 ${all.length}곳</span>${slots.map(k=>`<span class="mono" style="font-size:12px;font-family:var(--f-mono)">⛵ @${esc(ghHandle(k))}</span>`).join("")}`;
   document.querySelectorAll("[data-view]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.view===S.view));
   $("#b-select").setAttribute("aria-pressed",S.selecting);
   const nc=$("#newcnt");nc.hidden=!S.newRepos.length;nc.textContent=S.newRepos.length;
   const v=visible(),overview=S.tab==="all"&&!S.q;
+  document.body.classList.toggle("cover",S.view==="map"&&overview&&!S.selecting);
   $("#bubble").textContent=bubbleText();
   $("#guide-tiger").innerHTML=S.q&&!v.length?TIGER_SAD:TIGER;
 
@@ -1120,12 +1683,12 @@ function render(){
   const ch=(attrs,on,label,n,cls)=>`<button class="chip-n${cls?" "+cls:""}" type="button" ${attrs} aria-pressed="${on}">${label}${n!=null?`<span class="n">${n}</span>`:""}</button>`;
   let r1=ch('data-tab="all"',S.tab==="all",S.view==="map"?"🗺️ 마을 지도":"📋 전체",all.length)
     +ch('data-tab="pinned"',S.tab==="pinned","⭐ 랜드마크",all.filter(l=>l.pinned).length)
-    +CATS.map(c=>ch(`data-tab="${c}"`,S.tab===c,`${LAND_EMO[c]} ${LAND[c]}`,cnt[c])).join("")
+    +CATS.map(c=>ch(`data-tab="${c}" data-drop="${c==="school"?"school|":"personal"}" data-dname="${LAND[c]}"`,S.tab===c,`${LAND_EMO[c]} ${LAND[c]}`,cnt[c])).join("")
     +slots.map(k=>ch(`data-tab="gh:${k}"`,S.tab==="gh:"+k,`⛵ <span style="font-family:var(--f-mono);font-size:12.5px">@${esc(ghHandle(k))}</span>`,slotLinks(k).length)).join("");
   let r2="";
   if(S.tab==="school"){
     const nn=folderCount(NONE);
-    r2=ch('data-folder=""',!S.folder,"모든 거리",cnt.school,"sub")+fl.map(f=>ch(`data-folder="${esc(f)}"`,S.folder===f,`📍 ${esc(f)}`,folderCount(f),"sub")).join("")
+    r2=ch('data-folder=""',!S.folder,"모든 거리",cnt.school,"sub")+fl.map(f=>ch(`data-folder="${esc(f)}" data-drop="school|${esc(f)}" data-dname="${esc(f)}"`,S.folder===f,`📍 ${esc(f)}`,folderCount(f),"sub")).join("")
       +(nn?ch(`data-folder="${NONE}"`,S.folder===NONE,"이름 없는 골목",nn,"sub"):"")
       +`<button class="chip-n sub add" type="button" data-act="folders">${fl.length?"✏️ 거리 관리":"＋ 거리 만들기"}</button>`;
   }
@@ -1141,15 +1704,15 @@ function render(){
   if(letters>=3&&!lsGet("wd-iconhint-off",false)&&!S.selecting)nt+=`<div class="notice"><span class="who">${CHERRY}</span><span>간판이 글자뿐인 가게가 <b>${letters}곳</b> 있어요. 이름을 보고 어울리는 이모지 간판을 달아 드릴까요?</span><button class="linkish" data-act="icons" type="button">간판 달기</button><button class="linkish" data-act="iconhint-off" type="button">괜찮아요</button></div>`;
   if(all.length&&!connected()&&!lsGet("wd-sheethint-off",false))nt+=`<div class="notice"><span>지금은 이 브라우저에만 저장돼요. 구글 시트를 연결하면 다른 기기에서도 같은 마을을 볼 수 있어요.</span><button class="linkish" data-act="settings" type="button">시트 연결하기</button><button class="linkish" data-act="sheethint-off" type="button">나중에</button></div>`;
   const nCount=(nt.match(/class="notice/g)||[]).length;
-  if(isM()&&nCount>1&&!S.mnote)nt=`<button class="notice mnote" type="button" data-act="mnote"><span>📬 마을 소식 <b>${nCount}</b>개</span><span class="hint">눌러서 보기</span></button>`;
-  else if(isM()&&nCount>1)nt+=`<button class="linkish" type="button" data-act="mnote" style="justify-self:end">소식 접기</button>`;
-  $("#notice").innerHTML=nt;
+  S.mailHTML=nt;
+  document.querySelectorAll(".mailcnt").forEach(el=>{el.hidden=!nCount;el.textContent=nCount});
+  $("#notice").innerHTML=nt;$("#notice").classList.toggle("show",!!nt);
   $("#tb-all").setAttribute("aria-current",S.tab==="all"&&!S.msearch);$("#tb-pin").setAttribute("aria-current",S.tab==="pinned"&&!S.msearch);$("#tb-search").setAttribute("aria-current",!!S.msearch);
   const tc=$("#tb-cnt");tc.hidden=!S.newRepos.length;tc.textContent=S.newRepos.length;
 
   /* 본문 */
   const main=$("#main");
-  if(S.view==="map"&&overview){main.innerHTML=mapHTML(all,fl)}
+  if(S.view==="map"&&overview){main.innerHTML=coverHTML(all,fl)}
   else{
     const ti=titleHTML();
     const back=S.view==="map"&&!overview?`<button class="btn sm" type="button" data-tab="all">← 🗺️ 지도로</button>`:"";
@@ -1169,8 +1732,8 @@ function render(){
       if(!v.length&&!schoolRoot)body=nomatchHTML();
       else if(S.tab==="all"&&!S.q)body=`<div class="groups">${CATS.map(c=>{const it=v.filter(l=>l.category===c);return it.length?grpHTML(`<i class="dot" style="--c:${CCOLOR[c]}"></i>${LAND_EMO[c]} ${LAND[c]}`,it,c==="school"?"folder":"none",`<button class="linkish" type="button" data-tab="${c}">이 동네만 →</button>`):""}).join("")}</div>`;
       else if(schoolRoot){
-        let h="";fl.forEach(f=>{h+=grpHTML(`📍 ${esc(f)}`,v.filter(l=>l.folder===f),"none",`<button class="linkish" type="button" data-folder="${esc(f)}">이 거리만 →</button>`)});
-        const none=v.filter(l=>!l.folder);if(none.length||!fl.length)h+=grpHTML("📍 이름 없는 골목",none,"none");
+        let h="";fl.forEach(f=>{h+=grpHTML(`📍 ${esc(f)}`,v.filter(l=>l.folder===f),"none",`<button class="linkish" type="button" data-folder="${esc(f)}">이 거리만 →</button>`,"school|"+f)});
+        const none=v.filter(l=>!l.folder);if(none.length||!fl.length)h+=grpHTML("📍 이름 없는 골목",none,"none","","school|");
         body=`<div class="groups">${h}</div>`;
       }else body=listHTML(v,ctxFor());
     }
@@ -1178,6 +1741,7 @@ function render(){
   }
   renderSelbar();
   renderStatus();
+  clearTimeout(window.__favT);window.__favT=setTimeout(scanFavs,900);
 }
 function nomatchHTML(){return `<div class="nomatch">${TIGER_SAD}<span>${S.q?`“${esc(S.q)}”와 맞는 가게가 없어요.`:"여기엔 아직 가게가 없어요."}</span>${S.q?"":`<button class="btn sm primary" data-act="add" type="button">🏗️ 가게 짓기</button>`}</div>`}
 function renderStatus(){
@@ -1252,16 +1816,20 @@ document.addEventListener("click",e=>{
   if(act==="retry")flush();
   if(act==="more")openMore();
   if(act==="msearch")setMsearch(!S.msearch);
-  if(act==="mnote"){S.mnote=!S.mnote;render()}
+  if(act==="mail")openMail();
+  if(act==="bulk")openBulk();
+  if(act==="csearch"){document.body.classList.add("csearch");setTimeout(()=>$("#q").focus(),30)}
+  if(act==="dice")rollDice();
   if(act==="sort-none"){S.tab="school";S.folder=NONE;startSelect()}
 });
 $("#q").addEventListener("input",e=>{S.q=e.target.value;render()});
+$("#q").addEventListener("blur",()=>{if(!S.q)setTimeout(()=>document.body.classList.remove("csearch"),150)});
 $("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&!S.selecting){const a=document.querySelector("#main [data-open]");if(a)a.click()}if(e.key==="Escape"){e.target.value="";S.q="";if(S.msearch)setMsearch(false);else render()}});
 $("#sort").value=S.sort;
 $("#sort").addEventListener("change",e=>{S.sort=e.target.value;lsSet(LS.sort,S.sort);render()});
 document.addEventListener("keydown",e=>{
   const typing=/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
-  if((e.key==="/"&&!typing||(e.key==="k"&&(e.metaKey||e.ctrlKey)))&&!$("#modal-root").firstChild){e.preventDefault();$("#q").focus()}
+  if((e.key==="/"&&!typing||(e.key==="k"&&(e.metaKey||e.ctrlKey)))&&!$("#modal-root").firstChild){e.preventDefault();document.body.classList.add("csearch");$("#q").focus()}
   if(e.key==="Escape"){if($("#modal-root").firstChild)closeModal();else if(S.selecting&&!typing)endSelect()}
 });
 $("#logo").innerHTML=`<span class="mascot" style="display:block">${TIGER}</span>`;
