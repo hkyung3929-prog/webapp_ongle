@@ -682,6 +682,29 @@ body.cover .hd{top:calc(16px + env(safe-area-inset-top,0px));padding:0 22px}
 body.cover .hd .tx{display:inline}
 body.m.cover .brand h1{font-size:22px}
 .cv-castle{position:absolute;z-index:3;overflow:visible}
+.mb .mb-link{display:block;width:100%;height:100%;color:inherit;text-decoration:none}
+.mb-acts{position:absolute;top:-4%;right:-10%;display:flex;gap:3px;opacity:0;transition:opacity .12s;z-index:3}
+.mb-acts .rb{width:calc(var(--fs)*1.9cqw);height:calc(var(--fs)*1.9cqw);min-width:24px;min-height:24px;box-shadow:2px 2px 0 var(--ink)}
+.mb-acts .rb svg{width:55%;height:55%}
+.mb:hover .mb-acts,.mb:focus-within .mb-acts{opacity:1}
+@media (hover:none){.mb-acts{display:none}}
+body.m .mb-acts{display:none}
+.dock:not(.on){visibility:hidden}
+body.m .tw-stage .mb .tip{font-size:calc(var(--fs)*.6cqw);padding:0 .45em;border-width:1.5px;box-shadow:1px 1px 0 var(--ink)}
+body.selecting .mb-acts,body.dragging .mb .tip{display:none}
+.mb[draggable="true"]{cursor:grab}
+.mb.dragging{opacity:.3}
+.mb.picked{outline:3px dashed var(--school);outline-offset:4px;border-radius:10px}
+.blk-drop{position:absolute;z-index:1;pointer-events:none;border-radius:2.4cqw;transition:background .12s}
+body.dragging .blk-drop{pointer-events:auto;z-index:8}
+.blk-drop.over{background:rgba(255,225,77,.35);outline:4px dashed var(--ink);outline-offset:-4px}
+.tw{width:100%}
+.tw-stage .mb .tip{opacity:1;bottom:auto;top:97%;transform:translateX(-50%);font-size:calc(var(--fs)*.78cqw);padding:.08em .6em;box-shadow:2px 2px 0 var(--ink);max-width:132%;overflow:hidden;text-overflow:ellipsis;z-index:2}
+.tw-stage .mb:hover .tip{transform:translateX(-50%) translateY(-1px)}
+.tw-stage .mb:nth-child(6n+1) .tip{background:var(--t-lav)}.tw-stage .mb:nth-child(6n+2) .tip{background:var(--t-yellow)}.tw-stage .mb:nth-child(6n+3) .tip{background:var(--t-cyan)}
+.tw-stage .mb:nth-child(6n+4) .tip{background:var(--t-pink)}.tw-stage .mb:nth-child(6n+5) .tip{background:var(--t-mint)}.tw-stage .mb:nth-child(6n) .tip{background:var(--t-peach)}
+.tw-stage{position:relative;width:100%;container-type:inline-size}
+.tw-stage .cv-bg{position:absolute;inset:0;width:100%;height:100%;display:block;filter:drop-shadow(4px 5px 0 var(--ink))}
 .cv-plane{animation:fly 7s ease-in-out infinite}
 @keyframes fly{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .cv-lab,.cv-sign,.cv-more{box-shadow:3px 3px 0 var(--ink)}
@@ -1176,7 +1199,7 @@ function bInfo(l){
 function bState(l){
   const now=Date.now(),d=864e5;
   const lit=(l.opens||0)>=3&&l.lastOpenedAt&&now-l.lastOpenedAt<14*d;
-  const sleepy=!l.pinned&&!lit&&(l.lastOpenedAt?now-l.lastOpenedAt>30*d:(l.createdAt&&now-l.createdAt>21*d));
+  const sleepy=!l.pinned&&!lit&&!!l.lastOpenedAt&&now-l.lastOpenedAt>30*d;
   return {lit:!!lit,sleepy:!!sleepy};
 }
 /* 간판 내용: 앱에 사이트 아이콘(파비콘)이 있으면 그걸, 없으면 이모지/글자 */
@@ -1319,14 +1342,14 @@ function dockHTML(){
 }
 function clearOver(){document.querySelectorAll(".over").forEach(x=>x.classList.remove("over"))}
 document.addEventListener("dragstart",e=>{
-  const li=e.target.closest&&e.target.closest(".bld[data-id],.item[data-id]");
+  const li=e.target.closest&&e.target.closest(".bld[data-id],.item[data-id],.mb[data-id]");
   if(!li||isM()){return}
   const id=li.dataset.id;
   const ids=S.selecting&&S.picked.has(id)?[...S.picked]:[id];
   drag={ids};
   e.dataTransfer.effectAllowed="move";
   try{e.dataTransfer.setData("text/plain",ids.join(","))}catch{}
-  const art=li.querySelector(".b-art")||li.querySelector(".ico");
+  const art=li.querySelector(".b-art")||li.querySelector(".mb-link svg")||li.querySelector(".ico");
   if(art&&e.dataTransfer.setDragImage){const r=art.getBoundingClientRect();e.dataTransfer.setDragImage(art,r.width/2,r.height*.75)}
   li.classList.add("dragging");document.body.classList.add("dragging");
   const dk=$("#dock");dk.innerHTML=dockHTML();setTimeout(()=>dk.classList.add("on"),0);
@@ -1465,10 +1488,8 @@ function coverHTML(all,fl){
   const sch=sortLinks(all.filter(l=>l.category==="school")),per=sortLinks(all.filter(l=>l.category==="personal")),pins=sortLinks(all.filter(l=>l.pinned)).slice(0,4);
   const ds=fl.map(f=>({key:f,label:f,list:sch.filter(l=>l.folder===f)}));
   const none=sch.filter(l=>!l.folder);if(none.length||!ds.length)ds.push({key:NONE,label:"이름 없는 골목",list:none});
-  const R=c.region,pk=packDistricts(R,ds),pad=10;
-  const boxes=pk.cells.map(b=>({x:b.x+pad,y:b.y+c.lab+4,w:b.w-pad*2,h:b.h-c.lab-pad-4}));
-  let s=c.sMax;ds.forEach((d,i)=>{if(d.list.length)s=Math.min(s,fitSize(boxes[i].w,boxes[i].h,d.list.length,c.sMin,c.sMax))});
-  const tk=c.wide?1.1:1.5;
+  const tk=c.wide?1.1:1.5,road=c.wide?34:48,W2=road*.82,R0=c.region,R={x:R0.x+W2,y:R0.y+W2,w:R0.w-W2*2,h:R0.h-W2*2};
+  const tw=drawTown(R,ds.map(d=>({...d,drop:d.key===NONE?"school|":"school|"+d.key})),{W,H,sMax:c.sMax,sMin:c.sMin,lab:c.wide?30:50,road,sw:c.wide?9:13,tk:tk*.9});
   /* 배경 */
   let bg=`<svg class="cv-bg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><defs>
     <pattern id="cvwave" width="110" height="52" patternUnits="userSpaceOnUse"><path d="M10 16q7-7 14 0t14 0M64 42q7-7 14 0t14 0" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="2.6" stroke-linecap="round"/></pattern>
@@ -1487,23 +1508,17 @@ function coverHTML(all,fl){
   /* 앞쪽 육지 + 해변 */
   bg+=`<path d="${c.coast}" fill="none" stroke="#1F1D2B" stroke-width="40" stroke-linejoin="round"/><path d="${c.coast}" fill="#FFE7A8" stroke="#FFE7A8" stroke-width="34" stroke-linejoin="round"/><path d="${c.coast}" fill="#A4E282" ${SK}/><path d="${c.coast}" fill="url(#cvgrass)"/>`;
   if(c.beach)bg+=`<path d="${c.beach}" fill="#FFE3A0" ${SK}/><path d="${c.beach}" fill="url(#cvsand)"/>`+beachDeco(c.deco);
-  /* 학교 동네: 길 + 광장 */
-  bg+=`<rect x="${R.x-14}" y="${R.y-14}" width="${R.w+28}" height="${R.h+28}" rx="30" fill="#A9ABC0" ${SK}/>`;
-  pk.rows.forEach((rr,ri)=>{const cl=pk.cells[rr[0]];if(ri>0)bg+=`<line x1="${R.x}" y1="${cl.y-R.gap/2}" x2="${R.x+R.w}" y2="${cl.y-R.gap/2}" stroke="#fff" stroke-width="3" stroke-dasharray="18 14"/>`;
-    rr.forEach((i,k)=>{if(k>0){const b=pk.cells[i];bg+=`<line x1="${b.x-R.gap/2}" y1="${b.y}" x2="${b.x-R.gap/2}" y2="${b.y+b.h}" stroke="#fff" stroke-width="3" stroke-dasharray="18 14"/>`}})});
-  pk.cells.forEach((b,i)=>{bg+=`<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="18" fill="${ds[i].list.length?"url(#cvbrick)":"#B6E69A"}" ${SK}/>`;
-    if(!ds[i].list.length)bg+=treeAt(b.x+b.w/2-18,b.y+b.h*.72,tk*1.1)+treeAt(b.x+b.w/2+20,b.y+b.h*.82,tk)});
+  /* 학교 동네: 블록과 도로 */
+  bg+=tw.bg;
   /* 나무: 동네 둘레 */
   let trees="";
-  for(let x=R.x+16;x<R.x+R.w;x+=c.wide?70:96)trees+=treeAt(x+(hashNum("t"+x)%17)-8,R.y-16,tk*(.85+(hashNum("k"+x)%4)*.07));
-  (c.wide?[[16,640],[20,860],[R.x+R.w+30,600],[R.x+R.w+24,860]]:[[18,R.y+R.h*.4],[882,R.y+R.h*.55],[20,R.y+R.h+40],[880,R.y+R.h+50]]).forEach(([x,y])=>trees+=treeAt(x,y,tk));
+  for(let x=R.x+16;x<R.x+R.w;x+=c.wide?70:96)trees+=treeAt(x+(hashNum("t"+x)%17)-8,R.y-W2-4,tk*(.85+(hashNum("k"+x)%4)*.07));
+  (c.wide?[[22,640],[24,860],[R.x+R.w+W2+26,600],[R.x+R.w+W2+22,860]]:[[18,R.y+R.h*.4],[882,R.y+R.h*.55],[20,R.y+R.h+40],[880,R.y+R.h+50]]).forEach(([x,y])=>trees+=treeAt(x,y,tk));
   trees+=treeAt(c.home.cx-c.home.rx+28,c.home.cy+12,tk*.85)+treeAt(c.home.cx+c.home.rx-26,c.home.cy+16,tk*.85)+treeAt(c.isle.cx+c.isle.rx-30,c.isle.cy+12,tk*.8);
   bg+=trees+`</svg>`;
   /* 건물(앱) */
   let fg="";const marks=[];
-  ds.forEach((d,i)=>{const b=pk.cells[i];
-    fg+=`<button class="cv-lab" type="button" data-folder="${esc(d.key)}" style="left:${pct(b.x+10,W)};top:${pct(b.y+8,H)};max-width:${pct(b.w-20,W)};background:${LABC[i%LABC.length]}" title="${esc(d.label)} 거리 보기"><span class="nm">${esc(d.label)}</span><b>${d.list.length}</b></button>`;
-    if(d.list.length){const r=placeIn(boxes[i],d.list,s,"s");marks.push(...r.out);if(r.plus)fg+=`<button class="cv-more" type="button" data-folder="${esc(d.key)}" style="left:${pct(r.plus.x,W)};top:${pct(r.plus.y,H)}">+${r.plus.n}</button>`}});
+  fg+=tw.fg;marks.push(...tw.marks);
   /* 섬 위 건물: 첫 줄 바닥이 섬 윗면에 닿도록 상자를 잡아요 */
   const onIsle=(I,list,sMax)=>{const w=I.rx*1.5;let sz=sMax;for(;sz>c.sMin*.7;sz-=2){const cols=Math.floor(w/sz),rows=Math.ceil(list.length/Math.max(1,cols));if(cols>0&&(rows===1||rows*(sz*.93+6)<=I.ry*.9+sz*.93))break}
     const bh=sz*.93,y=I.cy-I.ry*.38-bh-4;return {box:{x:I.cx-w/2,y,w,h:I.cy+I.ry*.45-y},s:sz}};
@@ -1512,10 +1527,9 @@ function coverHTML(all,fl){
   const ib0=onIsle(c.isle,pins,c.sMax*.9);
   if(pins.length){const r=placeIn(ib0.box,pins,ib0.s,"i");marks.push(...r.out)}
   else fg+=`<svg class="cv-castle" viewBox="-70 -136 140 144" style="left:${pct(c.isle.cx-50,W)};top:${pct(c.isle.cy-110,H)};width:${pct(100,W)}" aria-hidden="true">${CASTLE}</svg>`;
-  marks.sort((a,b)=>a.y-b.y).forEach(m=>{const l=m.l,st=bState(l);
-    fg+=`<a class="mb${l.pinned?" pin":""}" href="${esc(safeHref(l.url))}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" style="left:${pct(m.x,W)};top:${pct(m.y-m.s*.93,H)};width:${pct(m.s,W)}" aria-label="${esc(displayName(l))} 열기">${buildingSVG(l,st)}<span class="tip">${esc(displayName(l))} ↗</span></a>`});
+  fg+=marksHTML(marks,W,H,false);
   /* 이름표 · 배 · 공사장 */
-  fg+=`<button class="cv-sign school" type="button" data-tab="school" style="left:${pct(R.x+R.w/2,W)};top:${pct(R.y-14,H)}">${LAND.school} <b>${sch.length}</b></button>`;
+  fg+=`<button class="cv-sign school" type="button" data-tab="school" style="left:${pct(R.x+R.w/2,W)};top:${pct(R.y-W2,H)}">${LAND.school} <b>${sch.length}</b></button>`;
   fg+=`<button class="cv-sign home" type="button" data-tab="personal" style="left:${pct(c.home.cx,W)};top:${pct(c.home.cy+c.home.ry+8,H)}">${LAND.personal} <b>${per.length}</b></button>`;
   fg+=`<button class="cv-sign star" type="button" data-tab="pinned" style="left:${pct(c.isle.cx,W)};top:${pct(c.isle.cy+c.isle.ry+8,H)}">랜드마크 <b>${all.filter(l=>l.pinned).length}</b></button>`;
   SLOTS.filter(k=>ghHandle(k)).forEach((k,i)=>{const p=c.boats[i];if(!p)return;
@@ -1523,6 +1537,68 @@ function coverHTML(all,fl){
   if(S.newRepos.length)fg+=`<button class="cv-lot" type="button" data-act="import" title="새로 배포된 저장소 ${S.newRepos.length}개 들이기" style="left:${pct(c.lot[0]-43,W)};top:${pct(c.lot[1]-60,H)};width:${pct(86,W)}">${CRANE}<b>${S.newRepos.length}</b></button>`;
   if(!all.length)fg+=`<button class="cv-empty btn primary" type="button" data-act="import" style="left:${pct(R.x+R.w/2,W)};top:${pct(R.y+R.h/2,H)}">⛵ 배 불러서 마을 채우기</button>`;
   return `<div class="cv"><div class="cv-stage" style="--arn:${W/H};aspect-ratio:${W}/${H};--fs:${c.fs}">${bg}${fg}</div></div>`;
+}
+
+/* ================= 동네 블록 그리기 (표지와 거리 화면이 같이 써요) =================
+   거리(폴더) 하나 = 블록 하나. 블록 사이는 차도(차선·횡단보도·자동차), 블록 테두리는 보도와 가로등,
+   블록 안 건물들은 보도를 따라 줄지어 서요. */
+function lampSVG(x,y,k){return `<g transform="translate(${x} ${y}) scale(${k})"><path d="M0 0V-34" stroke="#1F1D2B" stroke-width="3"/><path d="M0-34h-7" stroke="#1F1D2B" stroke-width="3" stroke-linecap="round"/><circle cx="-8" cy="-31" r="5" fill="#FFE45C" stroke="#1F1D2B" stroke-width="2.4"/><rect x="-5" y="-2" width="10" height="5" rx="2" fill="#1F1D2B"/></g>`}
+function carSVG(x,y,col,k,flip){return `<g transform="translate(${x} ${y}) scale(${flip?-k:k} ${k})"><rect x="-24" y="-15" width="48" height="17" rx="7" fill="${col}" stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"/><path d="M-13-15l5-10h17l7 10z" fill="#BFE9FF" stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"/><path d="M0-25v10" stroke="#1F1D2B" stroke-width="2"/><circle cx="-13" cy="3" r="5.5" fill="#1F1D2B"/><circle cx="13" cy="3" r="5.5" fill="#1F1D2B"/><circle cx="-13" cy="3" r="2" fill="#fff"/><circle cx="13" cy="3" r="2" fill="#fff"/><rect x="18" y="-11" width="5" height="4" rx="1.5" fill="#FFE45C" stroke="#1F1D2B" stroke-width="1.4"/></g>`}
+function saleSign(x,y,k){return `<g transform="translate(${x} ${y}) scale(${k})"><path d="M0 0V-26" stroke="#1F1D2B" stroke-width="3"/><rect x="-26" y="-46" width="52" height="22" rx="5" fill="#fff" stroke="#1F1D2B" stroke-width="2.6"/><text x="0" y="-31" text-anchor="middle" font-family="Pretendard Variable,Pretendard,sans-serif" font-weight="800" font-size="12" fill="#1F1D2B">빈 땅</text></g>`}
+function drawTown(R,ds,c){
+  const road=c.road,sw=c.sw,pk=packDistricts({x:R.x,y:R.y,w:R.w,h:R.h,gap:road},ds);
+  const inner=pk.cells.map(b=>({x:b.x+sw+6,y:b.y+sw+c.lab+2,w:b.w-sw*2-12,h:b.h-sw*2-c.lab-6}));
+  let s=c.sMax;ds.forEach((d,i)=>{if(d.list.length)s=Math.min(s,fitSize(inner[i].w,inner[i].h,d.list.length,c.sMin,c.sMax))});
+  const W2=road*.82,kk=road/46;
+  let bg=`<rect x="${R.x-W2}" y="${R.y-W2}" width="${R.w+W2*2}" height="${R.h+W2*2}" rx="${road*.9}" fill="#A7AABF" ${SK}/>`;
+  bg+=`<rect x="${R.x-W2/2}" y="${R.y-W2/2}" width="${R.w+W2}" height="${R.h+W2}" rx="${road*.55}" fill="none" stroke="#fff" stroke-width="2.6" stroke-dasharray="16 14"/>`;
+  const zebraV=(x,y)=>{let z="";for(let xx=x-road/2+6;xx<x+road/2-6;xx+=8)z+=`<rect x="${xx}" y="${y}" width="4" height="${road*.36}" rx="1" fill="#fff"/>`;return z};
+  const zebraH=(x,y)=>{let z="";for(let yy=y-road/2+6;yy<y+road/2-6;yy+=8)z+=`<rect x="${x}" y="${yy}" width="${road*.36}" height="4" rx="1" fill="#fff"/>`;return z};
+  const cars=[];
+  pk.rows.forEach((rr,ri)=>{
+    const first=pk.cells[rr[0]],last=pk.cells[rr[rr.length-1]];
+    if(ri>0){const y=first.y-road/2;bg+=`<line x1="${R.x+road*.5}" y1="${y}" x2="${R.x+R.w-road*.5}" y2="${y}" stroke="#fff" stroke-width="2.6" stroke-dasharray="16 14"/>`+zebraH(R.x+4,y)+zebraH(R.x+R.w-road*.36-4,y);
+      cars.push([R.x+R.w*(.28+(ri%3)*.2),y+road*.18,ri%2===0])}
+    rr.forEach((i,k)=>{if(k>0){const b=pk.cells[i],x=b.x-road/2;bg+=`<line x1="${x}" y1="${b.y+road*.5}" x2="${x}" y2="${b.y+b.h-road*.5}" stroke="#fff" stroke-width="2.6" stroke-dasharray="16 14"/>`+zebraV(x,b.y+4)+zebraV(x,b.y+b.h-road*.36-4)}});
+  });
+  cars.push([R.x+R.w*.62,R.y+R.h+W2*.5+road*.12,true],[R.x+R.w*.18,R.y-W2*.5+road*.16,false]);
+  const CARC=["#FF6FA5","#5B8DE6","#FFB238","#2EC4B6"];
+  const marks=[];let fg="";
+  pk.cells.forEach((b,i)=>{
+    const d=ds[i],full=d.list.length>0,ib=inner[i];
+    bg+=`<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="${road*.38}" fill="url(#cvbrick)" ${SK}/>`;
+    bg+=`<rect x="${b.x+sw}" y="${b.y+sw}" width="${b.w-sw*2}" height="${b.h-sw*2}" rx="${road*.24}" fill="${full?"#B5E79A":"#A9E08C"}" stroke="#1F1D2B" stroke-width="2.2"/><rect x="${b.x+sw}" y="${b.y+sw}" width="${b.w-sw*2}" height="${b.h-sw*2}" rx="${road*.24}" fill="url(#cvgrass)"/>`;
+    if(full){
+      const r=placeIn(ib,d.list,s,"b"+i);marks.push(...r.out);
+      [...new Set(r.out.map(m=>Math.round(m.y)))].forEach(y=>{bg+=`<rect x="${b.x+sw}" y="${y-2}" width="${b.w-sw*2}" height="${s*.13+6}" fill="url(#cvbrick)"/><path d="M${b.x+sw} ${y-2}H${b.x+b.w-sw}" stroke="#1F1D2B" stroke-width="2"/>`});
+      if(r.plus)fg+=`<button class="cv-more" type="button" ${d.key!=null?`data-folder="${esc(d.key)}"`:""} style="left:${pct(r.plus.x,c.W)};top:${pct(r.plus.y,c.H)}">+${r.plus.n}</button>`;
+    }else bg+=treeAt(b.x+b.w*.3,b.y+b.h*.78,c.tk)+treeAt(b.x+b.w*.72,b.y+b.h*.84,c.tk*.9)+saleSign(b.x+b.w*.52,b.y+b.h*.8,c.tk*1.1);
+    bg+=lampSVG(b.x+sw*.5,b.y+b.h-sw*.25,kk*1.05)+lampSVG(b.x+b.w-sw*.5,b.y+sw*1.6,kk*1.05);
+    const lab=`<span class="nm">${esc(d.label)}</span><b>${d.list.length}</b>`,st=`left:${pct(b.x+sw+4,c.W)};top:${pct(b.y+sw+4,c.H)};max-width:${pct(b.w-sw*2-8,c.W)};background:${LABC[i%LABC.length]}`;
+    fg+=d.key!=null?`<button class="cv-lab" type="button" data-folder="${esc(d.key)}" style="${st}" title="${esc(d.label)} 거리 보기">${lab}</button>`:`<span class="cv-lab" style="${st};cursor:default">${lab}</span>`;
+    if(d.drop!=null)fg+=`<div class="blk-drop" data-drop="${esc(d.drop)}" data-dname="${esc(d.label)}" style="left:${pct(b.x,c.W)};top:${pct(b.y,c.H)};width:${pct(b.w,c.W)};height:${pct(b.h,c.H)}"></div>`;
+  });
+  cars.forEach(([x,y,f],j)=>{bg+=carSVG(x,y,CARC[j%CARC.length],kk*.95,f)});
+  return {bg,fg,marks,s};
+}
+function marksHTML(marks,W,H,acts){
+  return marks.sort((a,b)=>a.y-b.y).map(m=>{const l=m.l,st=bState(l);
+    return `<div class="mb${l.pinned?" pin":""}${S.picked.has(l.id)?" picked":""}" data-id="${esc(l.id)}" draggable="true" style="left:${pct(m.x,W)};top:${pct(m.y-m.s*.93,H)};width:${pct(m.s,W)}"><a class="mb-link" href="${esc(safeHref(l.url))}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" draggable="false" aria-label="${esc(displayName(l))} 열기">${buildingSVG(l,st)}<span class="tip">${esc(displayName(l))} ↗</span></a>${acts?`<span class="mb-acts"><button class="rb${l.pinned?" on":""}" type="button" data-pin="${esc(l.id)}" title="${l.pinned?"고정 풀기":"랜드마크로 고정"}" aria-label="고정">${STAR}</button><button class="rb" type="button" data-edit="${esc(l.id)}" title="고치기" aria-label="고치기">${PEN}</button></span>`:""}</div>`}).join("");
+}
+const TOWN_DEFS=`<defs><pattern id="cvgrass" width="96" height="96" patternUnits="userSpaceOnUse"><path d="M12 30q2-6 4 0M15 30q1-4 3-1M70 78q2-6 4 0M73 78q1-4 3-1M52 14q2-5 4 0" fill="none" stroke="#6BBF4E" stroke-width="2" stroke-linecap="round"/><circle cx="80" cy="24" r="2.8" fill="#fff"/><circle cx="80" cy="24" r="1.2" fill="#FFD84D"/><circle cx="30" cy="70" r="2.8" fill="#FF9EC4"/><circle cx="30" cy="70" r="1.2" fill="#fff"/></pattern><pattern id="cvbrick" width="26" height="16" patternUnits="userSpaceOnUse"><rect width="26" height="16" fill="#FFC6BC"/><path d="M0 8h26M9 0v8M22 8v8" stroke="#F2A193" stroke-width="1.5"/></pattern></defs>`;
+/* 거리 화면: 여러 블록을 한 화면에 */
+function townPageHTML(ds){
+  const mob=isM(),W=mob?900:1600;
+  const c=mob?{W,sMax:150,sMin:56,lab:62,road:58,sw:16,tk:1.6}:{W,sMax:120,sMin:40,lab:40,road:48,sw:13,tk:1.15};
+  const availW=Math.min(1200,innerWidth-(mob?24:32)),availH=Math.max(420,innerHeight-(mob?330:270)),comfy=mob?100:74;
+  let H=Math.round(Math.max(mob?1000:600,W*availH/availW)),t;
+  const run=h=>{c.H=h;return drawTown({x:c.road,y:c.road,w:W-c.road*2,h:h-c.road*2},ds,c)};
+  for(let k=0;k<16;k++){t=run(H);if(t.s>=comfy||H>W*4)break;H=Math.round(H*1.12)}
+  /* 건물이 이미 최대 크기면 빈 땅이 남지 않게 높이를 줄여요 */
+  for(let k=0;k<20&&t.s>=c.sMax&&H>(mob?700:380);k++){const h2=Math.round(H*.92),t2=run(h2);if(t2.s<c.sMax)break;H=h2;t=t2}
+  t=run(H);
+  const fs=mob?3.1:1.15;
+  return `<div class="tw"><div class="tw-stage" style="aspect-ratio:${W}/${H};--fs:${fs}"><svg class="cv-bg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">${TOWN_DEFS}${t.bg}</svg>${t.fg}${marksHTML(t.marks,W,H,true)}</div></div>`;
 }
 
 /* ================= 화면 ================= */
@@ -1721,13 +1797,14 @@ function render(){
     const schoolRoot=S.tab==="school"&&!S.folder&&!S.q;
     if(!all.length)body=emptyLot("아직 가게가 없어요. 위의 <b>⛵ 배 부르기</b>로 GitHub 웹앱을 불러와 보세요.");
     else if(S.view==="map"){
-      if(schoolRoot){
-        let h="";fl.forEach(f=>{h+=streetSection(f,v.filter(l=>l.folder===f))});
-        const none=v.filter(l=>!l.folder);if(none.length||!fl.length)h+=streetSection(NONE,none);
-        if(!fl.length)h=`<div class="notice"><span>${esc(catLabel("school"))} 가게를 <b>거리(폴더)</b>로 나눠 담을 수 있어요. 예: 수업, 업무, 3학년 2반</span><button class="linkish" data-act="folders" type="button">거리 만들기</button></div>`+h;
-        body=`<div class="sections">${h}</div>`;
-      }else if(!v.length)body=nomatchHTML();
-      else body=streetHTML(v);
+      let ds;
+      if(schoolRoot){ds=fl.map(f=>({key:f,label:f,list:v.filter(l=>l.folder===f),drop:"school|"+f}));const none=v.filter(l=>!l.folder);if(none.length||!fl.length)ds.push({key:NONE,label:"이름 없는 골목",list:none,drop:"school|"})}
+      else if(!v.length)ds=null;
+      else{const k=tabSlot();
+        const lab=S.q?"찾은 가게":S.tab==="pinned"?"랜드마크":k?"@"+ghHandle(k):S.tab==="personal"?LAND.personal:S.folder===NONE?"이름 없는 골목":S.folder||LAND.school;
+        const drop=S.q||S.tab==="pinned"||k?null:S.tab==="personal"?"personal":"school|"+(S.folder===NONE?"":S.folder||"");
+        ds=[{key:null,label:lab,list:v,drop}]}
+      body=ds?townPageHTML(ds):nomatchHTML();
     }else{
       if(!v.length&&!schoolRoot)body=nomatchHTML();
       else if(S.tab==="all"&&!S.q)body=`<div class="groups">${CATS.map(c=>{const it=v.filter(l=>l.category===c);return it.length?grpHTML(`<i class="dot" style="--c:${CCOLOR[c]}"></i>${LAND_EMO[c]} ${LAND[c]}`,it,c==="school"?"folder":"none",`<button class="linkish" type="button" data-tab="${c}">이 동네만 →</button>`):""}).join("")}</div>`;
@@ -1789,8 +1866,8 @@ function doMove(){
 /* ================= 이벤트 ================= */
 document.addEventListener("click",e=>{
   if(S.selecting){
-    const li=e.target.closest(".item,.bld");
-    if(li&&!e.target.closest(".i-links,.b-pop")){e.preventDefault();const id=li.dataset.id;S.picked.has(id)?S.picked.delete(id):S.picked.add(id);li.classList.toggle("picked");const nEl=$("#sel-n");if(nEl)nEl.textContent=S.picked.size?`📦 ${S.picked.size}곳 골랐어요`:"가게를 눌러 고르세요";const mv=$("#sel-move");if(mv)mv.disabled=!S.picked.size;return}
+    const li=e.target.closest(".item,.bld,.mb[data-id]");
+    if(li&&!e.target.closest(".i-links,.b-pop,.mb-acts")){e.preventDefault();const id=li.dataset.id;S.picked.has(id)?S.picked.delete(id):S.picked.add(id);li.classList.toggle("picked");const nEl=$("#sel-n");if(nEl)nEl.textContent=S.picked.size?`📦 ${S.picked.size}곳 골랐어요`:"가게를 눌러 고르세요";const mv=$("#sel-move");if(mv)mv.disabled=!S.picked.size;return}
   }
   const t=e.target.closest("[data-tab],[data-folder],[data-view],[data-pin],[data-edit],[data-open],[data-act],#b-select");
   if(!t)return;
