@@ -651,6 +651,10 @@ body.selecting .mb-tools,body.dragging .mb-tools{display:none}
 .placebar .roadsign{font-size:19px!important;padding:3px 16px!important;box-shadow:2px 2px 0 var(--ink)!important}
 body.m .crow.main .chip-n{padding:6px 11px;font-size:14px}
 
+/* 보기 전용: 고치는 버튼은 모두 숨겨요 */
+body.viewonly [data-act=add],body.viewonly [data-act=bulk],body.viewonly [data-act=import],body.viewonly [data-act=mail],body.viewonly [data-act=folders],body.viewonly [data-act=selmode],body.viewonly .mb-tools,body.viewonly [data-edit],body.viewonly [data-hide],body.viewonly [data-del],body.viewonly .blk-drop,body.viewonly #dock{display:none!important}
+body.viewonly .mb{cursor:pointer}
+
 /* 검색창은 🔎을 눌렀을 때만, 위에 떠서 */
 .bar{display:none!important}
 body.csearch .bar,body.m.msearch .bar{display:flex!important;position:fixed;top:calc(84px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(720px,calc(100% - 32px));z-index:30;padding:8px;border-radius:999px;box-shadow:4px 4px 0 var(--ink)}
@@ -979,6 +983,9 @@ function ghHandle(k){return (S.settings.gh[k]?.handle||"").trim()}
 function ghCat(k){return S.settings.gh[k]?.cat||DEF_SETTINGS.gh[k].cat}
 function token(k){return (S.cfg.tokens?.[k]||"").trim()}
 function connected(){return !!(S.cfg.url&&S.cfg.key)}
+/* 보기 전용 주소: 연결 키가 없는 브라우저도 이 시트의 가게 목록을 볼 수 있어요 (수정은 안 돼요) */
+const VIEW_URL="https://script.google.com/macros/s/AKfycbxrme5b36loLkcX7B-FHPeGZbKFuZz1i8ye2Io0IXE6SUi-1H2QxlOLBnOZudIM3a5Ydw/exec";
+function viewOnly(){return !connected()&&/^https:\/\/script\.google\.com\//.test(VIEW_URL)}
 function hashNum(s){let h=0;for(const c of String(s||""))h=(h*31+c.charCodeAt(0))>>>0;return h}
 function hashColor(s){return ICOLORS[hashNum(s)%ICOLORS.length]}
 function mono(name){const t=(name||"?").trim()||"?";const parts=t.split(/[\s\-_.]+/).filter(Boolean);
@@ -1114,6 +1121,16 @@ async function putSettings(st){
   try{const res=await api({action:"settings",settings:st});pendingSettings--;applyServer(res);S.sync="ok";S.lastSync=Date.now();render();return true}
   catch(e){pendingSettings--;S.sync="error";S.syncErr=apiErr(e);render();toast(S.syncErr);return false}
 }
+let viewLast=0,viewBusy=false;
+async function pullView(){
+  if(!viewOnly()||viewBusy)return;viewBusy=true;S.sync="syncing";renderStatus();
+  try{const r=await fetch(VIEW_URL+(VIEW_URL.includes("?")?"&":"?")+"view=1&t="+Date.now(),{redirect:"follow"});const j=await r.json();if(!j.ok)throw j;
+    S.links=new Map((j.links||[]).map(l=>{const x=normLink(l);return [x.id,x]}));if(j.settings)S.settings=normSettings(j.settings);S.queue=[];S.sync="view";S.syncErr="";viewLast=Date.now();saveData()}
+  catch(e){S.sync="error";S.syncErr="지도를 불러오지 못했어요. 잠시 후 다시 시도해 주세요."}
+  viewBusy=false;if(!$("#modal-root").firstChild)render();else renderStatus();
+}
+setInterval(()=>{if(viewOnly()&&!document.hidden&&Date.now()-viewLast>60e3)pullView()},15e3);
+document.addEventListener("visibilitychange",()=>{if(viewOnly()&&!document.hidden&&Date.now()-viewLast>10e3)pullView()});
 const pullIfStale=ms=>{if(!document.hidden&&connected()&&!flushing&&Date.now()-S.lastSync>ms)flush()};
 document.addEventListener("visibilitychange",()=>pullIfStale(5e3));
 window.addEventListener("focus",()=>pullIfStale(5e3));
@@ -1434,7 +1451,7 @@ function dockHTML(){
   return `<span class="t">🚚 여기로 옮기기</span>${fl.map(f=>z("school|"+f,"📍 "+f)).join("")}${z("school|","🚧 이름 없는 골목")}${z("personal","🏡 우리집 동네")}${z("new","＋ 새 거리")}`;
 }
 function clearOver(){document.querySelectorAll(".over").forEach(x=>x.classList.remove("over"))}
-document.addEventListener("dragstart",e=>{
+document.addEventListener("dragstart",e=>{if(viewOnly()){e.preventDefault();return}
   const li=e.target.closest&&e.target.closest(".bld[data-id],.item[data-id],.mb[data-id]");
   if(!li||isM()){return}
   const id=li.dataset.id;
@@ -1918,6 +1935,7 @@ function render(){
   $("#b-select").setAttribute("aria-pressed",S.selecting);
   const nc=$("#newcnt");nc.hidden=!S.newRepos.length;nc.textContent=S.newRepos.length;
   const v=visible(),overview=S.tab==="all"&&!S.q;
+  document.body.classList.toggle("viewonly",viewOnly());
   document.body.classList.toggle("cover",S.view==="map"&&overview&&!S.selecting);
   $("#bubble").textContent=bubbleText();
   $("#guide-tiger").innerHTML=S.q&&!v.length?TIGER_SAD:TIGER;
@@ -1948,6 +1966,7 @@ function render(){
   const nCount=(nt.match(/class="notice/g)||[]).length;
   S.mailHTML=nt;
   document.querySelectorAll(".mailcnt").forEach(el=>{el.hidden=!nCount;el.textContent=nCount});
+  if(viewOnly())nt="";
   $("#notice").innerHTML=nt;$("#notice").classList.toggle("show",!!nt);
   $("#tb-all").setAttribute("aria-current",S.tab==="all"&&!S.msearch);$("#tb-pin").setAttribute("aria-current",S.tab==="pinned"&&!S.msearch);$("#tb-search").setAttribute("aria-current",!!S.msearch);
   const tc=$("#tb-cnt");tc.hidden=!S.newRepos.length;tc.textContent=S.newRepos.length;
@@ -1989,7 +2008,10 @@ function render(){
 function nomatchHTML(){return `<div class="nomatch">${TIGER_SAD}<span>${S.q?`“${esc(S.q)}”와 맞는 가게가 없어요.`:"여기엔 아직 가게가 없어요."}</span>${S.q?"":`<button class="btn sm primary" data-act="add" type="button">🏗️ 가게 짓기</button>`}</div>`}
 function renderStatus(){
   let h;const pend=S.queue.length;
-  if(!connected())h=`<i class="dot" style="--c:var(--star)"></i>이 브라우저에만 저장됨`;
+  if(viewOnly()&&S.sync==="syncing")h=`<span class="spin" aria-hidden="true"></span>지도를 불러오는 중…`;
+  else if(viewOnly()&&S.sync==="error")h=`<i class="dot" style="--c:var(--danger)"></i>${esc(S.syncErr)} <button class="linkish" data-act="retry" type="button">다시 시도</button>`;
+  else if(viewOnly())h=`<i class="dot" style="--c:#4D9DE0"></i>👀 보기 전용 · 고치려면 ⚙️ 설정에서 구글 시트를 연결하거나 연결 링크로 열어 주세요`;
+  else if(!connected())h=`<i class="dot" style="--c:var(--star)"></i>이 브라우저에만 저장됨`;
   else if(S.sync==="syncing")h=`<span class="spin" aria-hidden="true"></span>구글 시트에 저장하는 중…`;
   else if(S.sync==="error")h=`<i class="dot" style="--c:var(--danger)"></i>${esc(S.syncErr)}${pend?` · 보내지 못한 변경 ${pend}개는 이 기기에 남아 있어요`:""} <button class="linkish" data-act="retry" type="button">다시 시도</button>`;
   else h=`<i class="dot" style="--c:#5DBB63"></i>구글 시트와 동기화됨${S.sheetUrl?` · <a href="${esc(S.sheetUrl)}" target="_blank" rel="noopener noreferrer">시트 열기 ↗</a>`:""}`;
@@ -2058,7 +2080,7 @@ document.addEventListener("click",e=>{
   if(act==="iconhint-off"){lsSet("wd-iconhint-off",true);render()}
   if(act==="sheethint-off"){lsSet("wd-sheethint-off",true);render()}
   if(act==="seen")markSeen();
-  if(act==="retry")flush();
+  if(act==="retry"){viewOnly()?pullView():flush()}
   if(act==="more")openMore();
   if(act==="msearch")setMsearch(!S.msearch);
   if(act==="mail")openMail();
@@ -2507,7 +2529,7 @@ function openImport(){
 /* ================= 시작 ================= */
 readConnectHash();applyLayout();
 render();
-if(connected())flush().then(autoCheck);else autoCheck();
+if(connected())flush().then(autoCheck);else if(viewOnly())pullView();else autoCheck();
 })();
 </script>
 </body>
