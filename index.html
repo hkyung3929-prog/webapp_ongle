@@ -635,6 +635,36 @@ body.selecting .mb-tools,body.dragging .mb-tools{display:none}
 .bk-row.del .bk-name{text-decoration:line-through;color:#C62828}
 @media (max-width:640px){.bk-btns{grid-column:3}}
 
+/* 탭 정돈: 한 덩어리 탭 + 거리 줄 */
+.chips{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin:2px 0 6px}
+.crow.main{display:inline-flex;gap:4px;padding:5px;background:#fff;border:2.5px solid var(--ink);border-radius:999px;box-shadow:3px 3px 0 var(--ink);max-width:100%}
+.crow.main .chip-n{border:0;box-shadow:none;background:transparent;padding:7px 16px;font-size:15px}
+.crow.main .chip-n:hover{background:#FFF6D6}
+.crow.main .chip-n[aria-pressed="true"]{background:var(--t-yellow);box-shadow:inset 0 0 0 2px var(--ink)}
+.crow.subs{display:flex;align-items:center;gap:6px;padding:2px 4px 2px 8px;max-width:100%}
+.crow-lab{flex:none;font-weight:900;font-size:13.5px;color:var(--ink2);margin-right:4px;padding-right:10px;border-right:2px solid var(--line)}
+.crow.subs .chip-n{border:2px solid transparent;background:transparent;box-shadow:none;padding:4px 12px;font-size:14px}
+.crow.subs .chip-n:hover{background:rgba(255,255,255,.8)}
+.crow.subs .chip-n[aria-pressed="true"]{background:var(--t-lav);border-color:var(--ink)}
+.crow.subs .chip-n.add{color:var(--muted);border:2px dashed var(--line)}
+.placebar{margin-top:4px}
+.placebar .roadsign{font-size:19px!important;padding:3px 16px!important;box-shadow:2px 2px 0 var(--ink)!important}
+body.m .crow.main .chip-n{padding:6px 11px;font-size:14px}
+
+/* 검색창은 🔎을 눌렀을 때만, 위에 떠서 */
+.bar{display:none!important}
+body.csearch .bar,body.m.msearch .bar{display:flex!important;position:fixed;top:calc(84px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(720px,calc(100% - 32px));z-index:30;padding:8px;border-radius:999px;box-shadow:4px 4px 0 var(--ink)}
+body.m.msearch .bar{top:calc(70px + env(safe-area-inset-top,0px))}
+.bar .guide,.bar #sort,.bar .viewsw,.bar #b-select{display:none!important}
+.sw-auto{width:auto!important;padding:0 8px;background:#fff!important;font-size:11px;font-weight:800;border-radius:13px!important;border:2px solid var(--line)!important}
+.sw-auto[aria-pressed="true"]{border-color:var(--ink)!important;background:var(--t-yellow)!important}
+.pb-r{margin-left:auto;display:flex;gap:8px;align-items:center}
+.pb-sort{border:2.5px solid var(--ink);border-radius:999px;padding:6px 12px;font-weight:700;background:#fff;box-shadow:2px 2px 0 var(--ink)}
+body.m .pb-r .btn{display:none}
+.mb .tip .tip-shot{display:block;width:calc(var(--fs)*13cqw);max-width:220px;min-width:140px;aspect-ratio:16/10;object-fit:cover;object-position:top;border-radius:10px;border:2px solid var(--ink);margin:2px auto 4px;background:#eef}
+.mb .tip:has(.tip-shot){border-radius:16px;padding:6px 8px 4px;white-space:normal;text-align:center}
+.mb .tip span{white-space:nowrap}
+
 /* ===================== 첫 화면: 표지 지도 (한 장면) ===================== */
 .cvonly{display:none}
 body.cover .cvonly{display:inline-flex}
@@ -749,14 +779,15 @@ body.dragging .blk-drop{pointer-events:auto;z-index:8}
       <a href="#" id="logo" data-act="home" aria-label="메인 지도로" title="메인 지도로"></a>
       <div><h1><a href="#" id="home-title" data-act="home" title="메인 지도로">ONGLE LAND</a></h1><div class="sub" id="sub"></div></div>
     </div>
-    <div class="macts"><button class="btn icon mailbtn" type="button" data-act="mail" aria-label="우편함" title="우편함">📮<i class="mailcnt" hidden></i></button><div class="viewsw mini" role="group" aria-label="보기 방식"><button type="button" data-view="map" title="지도">🗺️</button><button type="button" data-view="list" title="목록">📋</button></div></div>
+    <div class="macts"><button class="btn icon mailbtn" type="button" data-act="mail" aria-label="우편함" title="우편함">📮<i class="mailcnt" hidden></i></button><button class="btn icon" type="button" data-act="viewtoggle" id="b-view-m" aria-label="보기 바꾸기" title="목록으로 보기">📋</button></div>
     <div class="acts">
       <button class="btn" type="button" data-act="bulk" title="이름과 자리를 한 번에 고치기">✏️ <span class="tx">전체 편집</span></button>
-      <button class="btn icon cvonly" type="button" data-act="csearch" aria-label="찾기" title="가게 찾기 ( / )">🔎</button>
+      <button class="btn" type="button" data-act="viewtoggle" id="b-view" title="보기 바꾸기">📋 <span class="tx">목록으로 보기</span></button>
       <button class="btn icon mailbtn" type="button" data-act="mail" aria-label="우편함" title="우편함 · 마을 소식">📮<i class="mailcnt" hidden></i></button>
       <button class="btn icon" type="button" data-act="settings" aria-label="설정" title="설정"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button>
       <button class="btn" type="button" data-act="import" title="두 GitHub 계정에서 배포된 웹앱 불러오기">⛵ <span class="tx">GitHub 동기화</span><span class="cnt" id="newcnt" hidden></span></button>
       <button class="btn primary" type="button" data-act="add" title="링크 추가">🏗️ <span class="tx">가게 짓기</span></button>
+      <button class="btn icon" type="button" data-act="csearch" aria-label="찾기" title="가게 찾기 ( / )">🔎</button>
     </div>
   </header>
 
@@ -954,7 +985,8 @@ function mono(name){const t=(name||"?").trim()||"?";const parts=t.split(/[\s\-_.
   return /^[A-Za-z]/.test(t)?t.slice(0,2).replace(/^./,c=>c.toUpperCase()):t.slice(0,1)}
 function saveData(){lsSet(LS.data,{settings:S.settings,links:[...S.links.values()],sheetUrl:S.sheetUrl})}
 function thumbSrc(l){
-  if(l.thumb==="auto")return /^https?:\/\//i.test(l.url||"")?`https://s0.wp.com/mshots/v1/${encodeURIComponent(l.url)}?w=640&h=360`:"";
+  if(l.thumb==="none")return "";
+  if(!l.thumb||l.thumb==="auto")return /^https?:\/\//i.test(l.url||"")?`https://s0.wp.com/mshots/v1/${encodeURIComponent(l.url)}?w=640&h=360`:"";
   if(/^(https?:\/\/|data:image\/)/i.test(l.thumb||""))return l.thumb;
   return "";
 }
@@ -1249,7 +1281,7 @@ function signContent(l,cx,cy,s){
 function buildingSVG(l,st){
   st=st||{};
   const {type,base}=bInfo(l);
-  const pal=PAL[hashNum(l.id||displayName(l))%PAL.length];const W=pal[0],R=pal[1],D=mix(R,INK,.28);
+  const pal=PAL[hashNum(l.id||displayName(l))%PAL.length],ic0=l.icon||{},pc=ic0.pick&&/^#[0-9a-f]{6}$/i.test(ic0.color||"")?ic0.color:"";const W=pc?mix(pc,"#FFFFFF",.76):pal[0],R=pc||pal[1],D=mix(R,INK,.28);
   const G=st.sleepy?"#B5BCCB":st.lit?"#FFE45C":"#BFE9FF";
   const K=`stroke="${INK}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"`;
   const win=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${G}" ${K}/><path d="M${x+w/2} ${y}v${h}M${x} ${y+h/2}h${w}" stroke="${INK}" stroke-width="2"/>`;
@@ -1312,6 +1344,7 @@ function openMore(){
   renderStatus();
 }
 
+document.addEventListener("mouseover",e=>{const m=e.target.closest&&e.target.closest(".mb");if(!m)return;const im=m.querySelector("img.tip-shot[data-src]");if(im){im.src=im.dataset.src;im.removeAttribute("data-src");im.onerror=()=>im.remove()}});
 /* ================= 숨기기 · 삭제 ================= */
 function toastAct(msg,label,fn){
   let el=$(".toast");if(!el){el=document.createElement("div");el.className="toast";el.setAttribute("role","status");document.body.appendChild(el)}
@@ -1592,7 +1625,7 @@ function coverHTML(all,fl){
   fg+=`<button class="cv-sign home" type="button" data-tab="personal" style="left:${pct(c.home.cx,W)};top:${pct(c.home.cy+c.home.ry+8,H)}">${LAND.personal} <b>${per.length}</b></button>`;
   fg+=`<button class="cv-sign star" type="button" data-tab="pinned" style="left:${pct(c.isle.cx,W)};top:${pct(c.isle.cy+c.isle.ry+8,H)}">랜드마크 <b>${all.filter(l=>l.pinned).length}</b></button>`;
   SLOTS.filter(k=>ghHandle(k)).forEach((k,i)=>{const p=c.boats[i];if(!p)return;
-    fg+=`<button class="cv-boat" type="button" data-tab="gh:${k}" title="@${esc(ghHandle(k))} 가게만 보기 (→ ${LAND[ghCat(k)]})" style="left:${pct(p[0]-50,W)};top:${pct(p[1]-50,H)};width:${pct(100,W)}">${boatSVG(ghCat(k)==="personal"?"#FF8A3D":"#5B7CFA")}</button>`});
+    fg+=`<button class="cv-boat" type="button" data-tab="${ghCat(k)}" title="@${esc(ghHandle(k))}동네로 가기 (→ ${LAND[ghCat(k)]})" style="left:${pct(p[0]-50,W)};top:${pct(p[1]-50,H)};width:${pct(100,W)}">${boatSVG(ghCat(k)==="personal"?"#FF8A3D":"#5B7CFA")}</button>`});
   if(S.newRepos.length)fg+=`<button class="cv-lot" type="button" data-act="import" title="새로 배포된 저장소 ${S.newRepos.length}개 들이기" style="left:${pct(c.lot[0]-43,W)};top:${pct(c.lot[1]-60,H)};width:${pct(86,W)}">${CRANE}<b>${S.newRepos.length}</b></button>`;
   if(!all.length)fg+=`<button class="cv-empty btn primary" type="button" data-act="import" style="left:${pct(R.x+R.w/2,W)};top:${pct(R.y+R.h/2,H)}">⛵ 배 불러서 마을 채우기</button>`;
   return `<div class="cv"><div class="cv-stage" style="--arn:${W/H};aspect-ratio:${W}/${H};--fs:${c.fs}">${bg}${fg}</div></div>`;
@@ -1666,7 +1699,7 @@ const I_DEL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 function toolsHTML(l,cls){return `<span class="${cls}"><button class="tb" type="button" data-edit="${esc(l.id)}" title="고치기" aria-label="고치기">${I_EDIT}</button><button class="tb" type="button" data-hide="${esc(l.id)}" title="숨기기" aria-label="숨기기">${I_HIDE}</button><button class="tb del" type="button" data-del="${esc(l.id)}" title="삭제하기" aria-label="삭제하기">${I_DEL}</button></span>`}
 function marksHTML(marks,W,H,acts){
   return marks.sort((a,b)=>a.y-b.y).map(m=>{const l=m.l,st=bState(l);
-    return `<div class="mb${l.pinned?" pin":""}${S.picked.has(l.id)?" picked":""}${acts?" in-town":""}" data-id="${esc(l.id)}" draggable="true" style="left:${pct(m.x,W)};top:${pct(m.y-m.s*.93,H)};width:${pct(m.s,W)}"><a class="mb-link" href="${esc(safeHref(l.url))}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" draggable="false" aria-label="${esc(displayName(l))} 열기">${buildingSVG(l,st)}<span class="tip">${esc(displayName(l))} ↗</span></a>${toolsHTML(l,"mb-tools")}</div>`}).join("");
+    return `<div class="mb${l.pinned?" pin":""}${S.picked.has(l.id)?" picked":""}${acts?" in-town":""}" data-id="${esc(l.id)}" draggable="true" style="left:${pct(m.x,W)};top:${pct(m.y-m.s*.93,H)};width:${pct(m.s,W)}"><a class="mb-link" href="${esc(safeHref(l.url))}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" draggable="false" aria-label="${esc(displayName(l))} 열기">${buildingSVG(l,st)}<span class="tip">${!acts&&thumbSrc(l)?`<img class="tip-shot" alt="" referrerpolicy="no-referrer" data-src="${esc(thumbSrc(l))}">`:""}<span>${esc(displayName(l))} ↗</span></span></a>${toolsHTML(l,"mb-tools")}</div>`}).join("");
 }
 const TOWN_DEFS=`<defs><pattern id="cvgrass" width="96" height="96" patternUnits="userSpaceOnUse"><path d="M12 30q2-6 4 0M15 30q1-4 3-1M70 78q2-6 4 0M73 78q1-4 3-1M52 14q2-5 4 0" fill="none" stroke="#6BBF4E" stroke-width="2" stroke-linecap="round"/><circle cx="80" cy="24" r="2.8" fill="#fff"/><circle cx="80" cy="24" r="1.2" fill="#FFD84D"/><circle cx="30" cy="70" r="2.8" fill="#FF9EC4"/><circle cx="30" cy="70" r="1.2" fill="#fff"/></pattern><pattern id="cvbrick" width="26" height="16" patternUnits="userSpaceOnUse"><rect width="26" height="16" fill="#FFC6BC"/><path d="M0 8h26M9 0v8M22 8v8" stroke="#F2A193" stroke-width="1.5"/></pattern></defs>`;
 /* 거리 화면: 여러 블록을 한 화면에 */
@@ -1801,7 +1834,7 @@ function mapHTML(all,fl){
   const slots=SLOTS.filter(k=>ghHandle(k));
   const harbor=`<div class="harbor">
     ${S.newRepos.length?`<button class="lot" type="button" data-act="import">${CRANE}<span>🏗️ 공사 중 ${S.newRepos.length}곳</span><span class="hint">눌러서 마을에 들이기</span></button>`:""}
-    ${slots.map(k=>`<button class="boat" type="button" data-tab="gh:${k}" aria-pressed="${S.tab==="gh:"+k}" title="@${esc(ghHandle(k))} 계정 가게만 보기"><span>${boatSVG(ghCat(k)==="personal"?"#F28C38":"#5B7CFA")}</span><span class="pill">@${esc(ghHandle(k))}</span><span class="to">→ ${LAND[ghCat(k)]}</span></button>`).join("")}
+    ${slots.map(k=>`<button class="boat" type="button" data-tab="${ghCat(k)}" aria-pressed="${S.tab==="gh:"+k}" title="@${esc(ghHandle(k))} 동네로 가기"><span>${boatSVG(ghCat(k)==="personal"?"#F28C38":"#5B7CFA")}</span><span class="pill">@${esc(ghHandle(k))}</span><span class="to">→ ${LAND[ghCat(k)]}</span></button>`).join("")}
     <button class="btn sm callboat" type="button" data-act="import">⛵ 배 부르기</button>
     <button class="dice" type="button" data-act="dice" title="아무 앱이나 하나 골라 줘요"><span class="dd">${die(3)}${die(5)}</span><span class="pill">🎲 오늘의 앱</span></button></div>`;
   const perBlds=per.slice(0,8);
@@ -1844,6 +1877,8 @@ function render(){
 
   $("#sub").innerHTML=`<span>웹앱 ${all.length}곳${nHid?` · 숨김 ${nHid}`:""}</span>${slots.map(k=>`<span class="mono" style="font-size:12px;font-family:var(--f-mono)">⛵ @${esc(ghHandle(k))}</span>`).join("")}`;
   document.querySelectorAll("[data-view]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.view===S.view));
+  $("#b-view").innerHTML=S.view==="map"?'📋 <span class="tx">목록으로 보기</span>':'🗺️ <span class="tx">지도로 보기</span>';
+  $("#b-view-m").textContent=S.view==="map"?"📋":"🗺️";$("#b-view-m").title=S.view==="map"?"목록으로 보기":"지도로 보기";
   $("#b-select").setAttribute("aria-pressed",S.selecting);
   const nc=$("#newcnt");nc.hidden=!S.newRepos.length;nc.textContent=S.newRepos.length;
   const v=visible(),overview=S.tab==="all"&&!S.q;
@@ -1855,16 +1890,15 @@ function render(){
   const ch=(attrs,on,label,n,cls)=>`<button class="chip-n${cls?" "+cls:""}" type="button" ${attrs} aria-pressed="${on}">${label}${n!=null?`<span class="n">${n}</span>`:""}</button>`;
   let r1=ch('data-tab="all"',S.tab==="all",S.view==="map"?"🗺️ 마을 지도":"📋 전체",all.length)
     +ch('data-tab="pinned"',S.tab==="pinned","⭐ 랜드마크",all.filter(l=>l.pinned).length)
-    +CATS.map(c=>ch(`data-tab="${c}" data-drop="${c==="school"?"school|":"personal"}" data-dname="${LAND[c]}"`,S.tab===c,`${LAND_EMO[c]} ${LAND[c]}`,cnt[c])).join("")
-    +slots.map(k=>ch(`data-tab="gh:${k}"`,S.tab==="gh:"+k,`⛵ <span style="font-family:var(--f-mono);font-size:12.5px">@${esc(ghHandle(k))}</span>`,slotLinks(k).length)).join("");
+    +CATS.map(c=>ch(`data-tab="${c}" data-drop="${c==="school"?"school|":"personal"}" data-dname="${LAND[c]}"`,S.tab===c,`${LAND_EMO[c]} ${LAND[c]}`,cnt[c])).join("");
   let r2="";
   if(S.tab==="school"){
     const nn=folderCount(NONE);
-    r2=ch('data-folder=""',!S.folder,"모든 거리",cnt.school,"sub")+fl.map(f=>ch(`data-folder="${esc(f)}" data-drop="school|${esc(f)}" data-dname="${esc(f)}"`,S.folder===f,`📍 ${esc(f)}`,folderCount(f),"sub")).join("")
+    r2=`<span class="crow-lab">🏫 거리</span>`+ch('data-folder=""',!S.folder,"전체",cnt.school,"sub")+fl.map(f=>ch(`data-folder="${esc(f)}" data-drop="school|${esc(f)}" data-dname="${esc(f)}"`,S.folder===f,`📍 ${esc(f)}`,folderCount(f),"sub")).join("")
       +(nn?ch(`data-folder="${NONE}"`,S.folder===NONE,"이름 없는 골목",nn,"sub"):"")
-      +`<button class="chip-n sub add" type="button" data-act="folders">${fl.length?"✏️ 거리 관리":"＋ 거리 만들기"}</button>`;
+      +`<button class="chip-n sub add" type="button" data-act="folders">${fl.length?"✏️ 관리":"＋ 거리 만들기"}</button>`;
   }
-  $("#chips").innerHTML=`<div class="crow">${r1}</div>${r2?`<div class="crow">${r2}</div>`:""}`;
+  $("#chips").innerHTML=`<div class="crow main">${r1}</div>${r2?`<div class="crow subs">${r2}</div>`:""}`;
 
   /* 알림 */
   let nt="";
@@ -1888,7 +1922,7 @@ function render(){
   else{
     const ti=titleHTML();
     const back=S.view==="map"&&!overview?`<button class="btn sm" type="button" data-tab="all">← 🗺️ 지도로</button>`:"";
-    let head=`<div class="placebar">${back}<span class="roadsign ${ti.cls}">${ti.t}</span><span class="n">${v.length}곳</span>${S.tab==="school"&&S.folder&&S.folder!==NONE?`<button class="linkish" type="button" data-act="folders">거리 이름 바꾸기</button>`:""}</div>`;
+    let head=`<div class="placebar">${back}<span class="roadsign ${ti.cls}">${ti.t}</span><span class="n">${v.length}곳</span>${S.tab==="school"&&S.folder&&S.folder!==NONE?`<button class="linkish" type="button" data-act="folders">거리 이름 바꾸기</button>`:""}<span class="pb-r">${S.view==="list"?`<select class="pb-sort" aria-label="정렬">${[["pinned","⭐ 고정 먼저"],["recent","최근 연 순"],["opens","자주 연 순"],["name","이름 순"],["added","새로 지은 순"]].map(([k,n])=>`<option value="${k}" ${S.sort===k?"selected":""}>${n}</option>`).join("")}</select>`:""}<button class="btn sm" type="button" data-act="selmode">${S.selecting?"✅ 옮기기 끝내기":"📦 골라서 옮기기"}</button></span></div>`;
     let body="";
     const schoolRoot=S.tab==="school"&&!S.folder&&!S.q;
     if(!all.length)body=emptyLot("아직 가게가 없어요. 위의 <b>⛵ 배 부르기</b>로 GitHub 웹앱을 불러와 보세요.");
@@ -1992,10 +2026,12 @@ document.addEventListener("click",e=>{
   if(act==="more")openMore();
   if(act==="msearch")setMsearch(!S.msearch);
   if(act==="mail")openMail();
+  if(act==="viewtoggle"){S.view=S.view==="map"?"list":"map";lsSet(LS.view,S.view);if(S.selecting)endSelect();render();window.scrollTo({top:0,behavior:"smooth"});return}
   if(act==="home"){e.preventDefault();if(S.selecting)endSelect();S.tab="all";S.folder="";S.q="";$("#q").value="";document.body.classList.remove("csearch","msearch");S.msearch=false;S.view="map";lsSet(LS.view,"map");closeModal();render();window.scrollTo({top:0,behavior:"smooth"})}
   if(act==="bulk")openBulk();
   if(act==="csearch"){document.body.classList.add("csearch");setTimeout(()=>$("#q").focus(),30)}
   if(act==="dice")rollDice();
+  if(act==="selmode"){S.selecting?endSelect():startSelect();return}
   if(act==="sort-none"){S.tab="school";S.folder=NONE;startSelect()}
 });
 $("#q").addEventListener("input",e=>{S.q=e.target.value;render()});
@@ -2003,6 +2039,7 @@ $("#q").addEventListener("blur",()=>{if(!S.q)setTimeout(()=>document.body.classL
 $("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&!S.selecting){const a=document.querySelector("#main [data-open]");if(a)a.click()}if(e.key==="Escape"){e.target.value="";S.q="";if(S.msearch)setMsearch(false);else render()}});
 $("#sort").value=S.sort;
 $("#sort").addEventListener("change",e=>{S.sort=e.target.value;lsSet(LS.sort,S.sort);render()});
+document.addEventListener("change",e=>{if(e.target.classList&&e.target.classList.contains("pb-sort")){S.sort=e.target.value;$("#sort").value=S.sort;lsSet(LS.sort,S.sort);render()}});
 document.addEventListener("keydown",e=>{
   const typing=/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
   if((e.key==="/"&&!typing||(e.key==="k"&&(e.metaKey||e.ctrlKey)))&&!$("#modal-root").firstChild){e.preventDefault();document.body.classList.add("csearch");$("#q").focus()}
@@ -2139,10 +2176,10 @@ async function fileToThumb(file,maxChars){
 function openEditor(link){
   const isNew=!link;
   const startFolder=S.tab==="school"&&S.folder&&S.folder!==NONE?S.folder:"";
-  const d=link?normLink(clone(link)):{id:newId(),name:"",url:"",memo:"",links:[],thumb:"",repo:"",category:S.tab==="personal"?"personal":tabSlot()?ghCat(tabSlot()):"school",folder:startFolder,icon:{type:"auto"},pinned:false,opens:0,createdAt:Date.now()};
+  const d=link?normLink(clone(link)):{id:newId(),name:"",url:"",memo:"",links:[],thumb:"auto",repo:"",category:S.tab==="personal"?"personal":tabSlot()?ghCat(tabSlot()):"school",folder:startFolder,icon:{type:"auto"},pinned:false,opens:0,createdAt:Date.now()};
   let uploading=false,autoPick=isNew;
   if(isNew)d.icon={type:"emoji",value:"",color:""};
-  const thumbMode=()=>!d.thumb?"none":d.thumb==="auto"?"auto":/^data:/.test(d.thumb)||/drive\.google\.com\/thumbnail/.test(d.thumb)?"image":"url";
+  const thumbMode=()=>d.thumb==="none"?"none":(!d.thumb||d.thumb==="auto")?"auto":/^data:/.test(d.thumb)||/drive\.google\.com\/thumbnail/.test(d.thumb)?"image":"url";
   let tmode=thumbMode();
   const destVal=()=>d.category==="personal"?"personal":"school|"+d.folder;
   const m=openModal(`<div class="m-head"><h3>${isNew?"🏗️ 새 가게 짓기":"🔧 가게 고치기"}</h3>${XBTN}</div>
@@ -2200,7 +2237,7 @@ function openEditor(link){
   }
   function setTmode(t){
     tmode=t;
-    if(t==="none")d.thumb="";
+    if(t==="none")d.thumb="none";
     if(t==="auto")d.thumb="auto";
     if((t==="image"&&!/^data:|drive\.google\.com\/thumbnail/.test(d.thumb))||(t==="url"&&!/^https?:/.test(d.thumb)))d.thumb="";
     m.querySelectorAll("#ed-tmode button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.t===t));
@@ -2237,9 +2274,9 @@ function openEditor(link){
   /* 아이콘 */
   function iopts(){
     const t=d.icon.type||"auto",box=m.querySelector("#ed-icopt");
-    const sw=`<div class="swatches">${ICOLORS.map(c=>`<button type="button" class="sw" style="--c:${c}" data-c="${c}" aria-label="색 ${c}" aria-pressed="${(d.icon.color||hashColor(d.name))===c}"></button>`).join("")}</div>`;
+    const sw=`<span class="hint">건물 색</span><div class="swatches"><button type="button" class="sw sw-auto" data-c="" aria-label="자동" title="자동 (앱마다 다른 색)" aria-pressed="${!(d.icon.pick&&d.icon.color)}">자동</button>${["#F25F5C","#FF8A3D","#FFB238","#7BC67E","#2EC4B6","#4D9DE0","#7C6BE0","#FF6FA5","#8D6E63","#5C6370"].map(c=>`<button type="button" class="sw" style="--c:${c}" data-c="${c}" aria-label="색 ${c}" aria-pressed="${!!d.icon.pick&&d.icon.color===c}"></button>`).join("")}</div>`;
     if(t==="auto")box.innerHTML=`<p class="hint">이름 첫 글자로 만들어요. 색을 고를 수 있어요.</p>${sw}`;
-    if(t==="site")box.innerHTML=`<p class="hint">${favOf(d)?"웹앱 주소에서 찾은 아이콘을 간판에 달아요.":"웹앱 HTML의 &lt;link rel=\"icon\"&gt; 아이콘을 간판에 달아요. 아직 못 찾았으면 이모지로 보여요."}</p>`;
+    if(t==="site")box.innerHTML=`<p class="hint">${favOf(d)?"웹앱 주소에서 찾은 아이콘을 간판에 달아요.":"웹앱 HTML의 &lt;link rel=\"icon\"&gt; 아이콘을 간판에 달아요. 아직 못 찾았으면 이모지로 보여요."}</p>${sw}`;
     if(t==="auto")box.innerHTML=`<p class="hint">따로 고르지 않으면 사이트 아이콘이 있을 때 그걸, 없으면 이모지를 달아요.</p>`;
     if(t==="mono")box.innerHTML=`<input type="text" class="inp" id="ed-mono" maxlength="3" value="${esc(d.icon.value||mono(d.name))}" aria-label="아이콘 글자">${sw}`;
     if(t==="emoji"){
@@ -2247,11 +2284,11 @@ function openEditor(link){
       box.innerHTML=`<div class="emopick"><span class="hint">추천</span>${sug.map(s=>`<button type="button" class="emo" data-e="${esc(s.emoji)}" data-c="${esc(s.color)}" title="${esc(s.word?`‘${s.word}’ 보고 고름`:"")}">${s.emoji}</button>`).join("")}</div>
       <details class="emomore"><summary>다른 이모지 고르기</summary><div class="emopick">${PICKER_EMOJI.map(e=>`<button type="button" class="emo" data-e="${e}">${e}</button>`).join("")}</div></details>
       <input type="text" class="inp" id="ed-emoji" maxlength="8" value="${esc(d.icon.value||"")}" placeholder="또는 이모지를 직접 붙여넣기" aria-label="이모지">
-      <span class="hint">바탕색</span>${sw}`;
+      ${sw}`;
       box.querySelectorAll(".emo").forEach(b=>b.addEventListener("click",()=>{autoPick=false;d.icon.pick=true;d.icon.value=b.dataset.e;if(b.dataset.c)d.icon.color=b.dataset.c;iopts();prev()}));
     }
-    if(t==="image")box.innerHTML=`<div class="acts"><span class="btn sm filebtn">🖼️ 이미지 파일 고르기<input type="file" id="ed-ifile" accept="image/*"></span></div><p class="hint">정사각형으로 잘라 간판에 달아요. PNG·JPG·SVG 모두 돼요.</p>`;
-    box.querySelectorAll(".sw").forEach(b=>b.addEventListener("click",()=>{autoPick=false;d.icon.color=b.dataset.c;iopts();prev()}));
+    if(t==="image")box.innerHTML=`<div class="acts"><span class="btn sm filebtn">🖼️ 이미지 파일 고르기<input type="file" id="ed-ifile" accept="image/*"></span></div><p class="hint">정사각형으로 잘라 간판에 달아요. PNG·JPG·SVG 모두 돼요.</p>${sw}`;
+    box.querySelectorAll(".sw").forEach(b=>b.addEventListener("click",()=>{autoPick=false;if(!d.icon.pick&&d.icon.type!=="image"&&favOf(d)){d.icon.type="site";m.querySelectorAll("#ed-ictype button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.t==="site"))}d.icon.pick=true;d.icon.color=b.dataset.c;iopts();prev()}));
     const mi=box.querySelector("#ed-mono");if(mi)mi.addEventListener("input",()=>{d.icon.value=mi.value;d.icon.pick=true;prev()});
     const ei=box.querySelector("#ed-emoji");if(ei)ei.addEventListener("input",()=>{autoPick=false;d.icon.pick=true;d.icon.value=ei.value.trim();prev()});
     const fi=box.querySelector("#ed-ifile");if(fi)fi.addEventListener("change",async()=>{if(!fi.files[0])return;try{d.icon={type:"image",value:await fileToIcon(fi.files[0]),pick:true};prev()}catch{toast("이미지를 읽지 못했어요.")}});
