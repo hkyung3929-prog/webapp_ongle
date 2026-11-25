@@ -606,6 +606,35 @@ body.m .brand h1{font-size:17px}
 .bk-url{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media (max-width:640px){.bk-row{grid-template-columns:auto minmax(0,1fr) auto}.bk-dest{grid-column:2/4}.bk-url{display:none}}
 
+#home-title{color:inherit;text-decoration:none}
+#logo{display:block;text-decoration:none}
+#home-title:hover{filter:brightness(1.06)}
+.mb-tools{position:absolute;left:50%;top:100%;transform:translateX(-50%);display:flex;gap:4px;padding-top:6px;opacity:0;pointer-events:none;transition:opacity .12s;z-index:4;white-space:nowrap}
+.mb:hover .mb-tools,.mb:focus-within .mb-tools{opacity:1;pointer-events:auto}
+.mb.in-town .mb-tools{top:auto;bottom:100%;padding:0 0 6px}
+.mb:not(.in-town):hover .tip{opacity:1}
+.tb{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--ink);background:#fff;display:grid;place-items:center;padding:0;cursor:pointer;color:var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.tb svg{width:15px;height:15px}
+.tb:hover{background:var(--t-yellow)}
+.tb.del:hover{background:#FFB3B3;color:#C62828}
+@media (hover:none){.mb-tools{display:none}}
+body.selecting .mb-tools,body.dragging .mb-tools{display:none}
+.mb-acts{display:none!important}
+.del-card{display:flex;gap:12px;align-items:center;border:2.5px solid var(--ink);border-radius:16px;padding:10px 12px;background:#FFF8E7}
+.del-card div{display:grid;min-width:0}
+.del-card b{font-size:16px}
+.toast{display:flex;gap:10px;align-items:center}
+.toast-btn{border:2px solid #fff;background:transparent;color:#fff;border-radius:999px;padding:2px 10px;font:inherit;font-weight:800;cursor:pointer}
+.bk-row{grid-template-columns:auto minmax(0,1.3fr) minmax(0,1fr) auto minmax(0,.7fr)}
+.bk-btns{display:flex;gap:4px}
+.bk-btns .rb{width:30px;height:30px}
+.bk-btns .rb svg{width:15px;height:15px}
+.bk-hid.on{background:#E3E0EE}
+.bk-del.on{background:#FFB3B3;color:#C62828}
+.bk-row.hid{opacity:.62}
+.bk-row.del .bk-name{text-decoration:line-through;color:#C62828}
+@media (max-width:640px){.bk-btns{grid-column:3}}
+
 /* ===================== 첫 화면: 표지 지도 (한 장면) ===================== */
 .cvonly{display:none}
 body.cover .cvonly{display:inline-flex}
@@ -717,8 +746,8 @@ body.dragging .blk-drop{pointer-events:auto;z-index:8}
 <div class="wrap">
   <header class="hd">
     <div class="brand">
-      <span id="logo"></span>
-      <div><h1>ONGLE LAND</h1><div class="sub" id="sub"></div></div>
+      <a href="#" id="logo" data-act="home" aria-label="메인 지도로" title="메인 지도로"></a>
+      <div><h1><a href="#" id="home-title" data-act="home" title="메인 지도로">ONGLE LAND</a></h1><div class="sub" id="sub"></div></div>
     </div>
     <div class="macts"><button class="btn icon mailbtn" type="button" data-act="mail" aria-label="우편함" title="우편함">📮<i class="mailcnt" hidden></i></button><div class="viewsw mini" role="group" aria-label="보기 방식"><button type="button" data-view="map" title="지도">🗺️</button><button type="button" data-view="list" title="목록">📋</button></div></div>
     <div class="acts">
@@ -772,7 +801,7 @@ const CATS=["school","personal"];
 const CCOLOR={school:"var(--school)",personal:"var(--personal)"};
 const LAND={school:"학교 동네",personal:"우리집 동네"};
 const LAND_EMO={school:"🏫",personal:"🏡"};
-const DEF_SETTINGS={cats:{school:{label:"학교용"},personal:{label:"개인용"}},gh:{a:{handle:"hkyung3929-prog",cat:"personal"},b:{handle:"dhkyung1020-rgb",cat:"school"}},folders:[]};
+const DEF_SETTINGS={title:"ONGLE LAND",cats:{school:{label:"학교용"},personal:{label:"개인용"}},gh:{a:{handle:"hkyung3929-prog",cat:"personal"},b:{handle:"dhkyung1020-rgb",cat:"school"}},folders:[]};
 const SLOTS=["a","b"];
 const NONE="__none";
 const ICOLORS=["#3B7A4B","#3452C4","#A8571F","#B3362B","#6B3FA0","#1F7A80","#C0548A","#3D4A55"];
@@ -870,6 +899,7 @@ function normSettings(s){
   if(s.gh)SLOTS.forEach(k=>{if(s.gh[k]){o.gh[k].handle=(s.gh[k].handle||"").trim()||o.gh[k].handle;if(CATS.includes(s.gh[k].cat))o.gh[k].cat=s.gh[k].cat}});
   else{if(s.personal&&s.personal.handle)o.gh.a.handle=s.personal.handle;if(s.work&&s.work.handle)o.gh.b.handle=s.work.handle}
   if(Array.isArray(s.folders))o.folders=uniq(s.folders);
+  if(typeof s.title==="string"&&s.title.trim())o.title=s.title.trim().slice(0,30);
   return o;
 }
 function normLink(l){
@@ -960,7 +990,7 @@ function hasLetterIcon(l){const t=(l.icon||{}).type||"auto";return t==="auto"||t
 function displayName(l){return (l.name||"").trim()||((l.repo||"").split("/")[1]||"")||hostOf(l.url)||"이름 없음"}
 
 /* ---- 폴더 ---- */
-function schoolLinks(){return [...S.links.values()].filter(l=>l.category==="school")}
+function schoolLinks(){return [...S.links.values()].filter(l=>l.category==="school"&&!l.hidden)}
 /* 설정에 적힌 순서대로, 시트에서 직접 적은 폴더도 뒤에 붙여 줍니다 */
 function folderList(){
   const list=[...S.settings.folders];
@@ -1204,13 +1234,17 @@ function bState(l){
 }
 /* 간판 내용: 앱에 사이트 아이콘(파비콘)이 있으면 그걸, 없으면 이모지/글자 */
 function signContent(l,cx,cy,s){
-  const ic=l.icon||{},fav=ic.type!=="image"?favOf(l):"";
+  const ic=l.icon||{},fv=favOf(l);
   const img=(src,k)=>`<image href="${esc(src)}" x="${cx-s*k/2}" y="${cy-s*k/2}" width="${s*k}" height="${s*k}" preserveAspectRatio="xMidYMid meet" style="clip-path:inset(0 round ${s*.12}px)"/>`;
-  if(fav)return img(fav,.74);
-  if(ic.type==="image"&&ic.value)return img(ic.value,.8);
-  if(ic.type==="emoji"&&ic.value)return `<text x="${cx}" y="${cy+s*.04}" font-size="${s*.62}" text-anchor="middle" dominant-baseline="central">${esc(ic.value)}</text>`;
-  const tx=(ic.type==="mono"&&ic.value)?ic.value:mono(displayName(l));
-  return `<text x="${cx}" y="${cy+s*.04}" font-size="${s*(tx.length>2?.34:.48)}" font-family="Jua,sans-serif" fill="${INK}" text-anchor="middle" dominant-baseline="central">${esc(tx)}</text>`;
+  const emo=v=>`<text x="${cx}" y="${cy+s*.05}" font-size="${s*.66}" text-anchor="middle" dominant-baseline="central">${esc(v)}</text>`;
+  const txt=v=>`<text x="${cx}" y="${cy+s*.04}" font-size="${s*(v.length>2?.34:.5)}" font-family="Pretendard Variable,Pretendard,sans-serif" font-weight="900" fill="${INK}" text-anchor="middle" dominant-baseline="central">${esc(v)}</text>`;
+  if(ic.type==="image"&&ic.value)return img(ic.value,.82);
+  if(ic.type==="site")return fv?img(fv,.8):emo(suggestIcons(l)[0].emoji);
+  if(ic.pick&&ic.type==="emoji"&&ic.value)return emo(ic.value);
+  if(ic.pick&&ic.type==="mono")return txt(ic.value||mono(displayName(l)));
+  if(fv)return img(fv,.8);
+  if(ic.type==="emoji"&&ic.value)return emo(ic.value);
+  return txt((ic.type==="mono"&&ic.value)?ic.value:mono(displayName(l)));
 }
 function buildingSVG(l,st){
   st=st||{};
@@ -1220,29 +1254,29 @@ function buildingSVG(l,st){
   const K=`stroke="${INK}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"`;
   const win=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="${G}" ${K}/><path d="M${x+w/2} ${y}v${h}M${x} ${y+h/2}h${w}" stroke="${INK}" stroke-width="2"/>`;
   const door=(x,y,w,h)=>`<path d="M${x} ${y+h}V${y+w/2}a${w/2} ${w/2} 0 0 1 ${w} 0V${y+h}Z" fill="${D}" ${K}/><circle cx="${x+w*.75}" cy="${y+h*.6}" r="1.6" fill="#FFE27A"/>`;
-  const sq=(cx,cy,s)=>`<rect x="${cx-s/2}" y="${cy-s/2}" width="${s}" height="${s}" rx="${s*.24}" fill="#fff" ${K}/>${signContent(l,cx,cy,s)}`;
+  const sq=(cx,cy,s)=>`<rect x="${cx-s/2+3}" y="${cy-s/2+3}" width="${s}" height="${s}" rx="${s*.24}" fill="${INK}"/><rect x="${cx-s/2}" y="${cy-s/2}" width="${s}" height="${s}" rx="${s*.24}" fill="#fff" ${K}/>${signContent(l,cx,cy,s)}`;
   let s="",smoke=null;
   const fbox=(x,y,w)=>`<rect x="${x}" y="${y}" width="${w}" height="6" rx="2" fill="#B57D45" stroke="${INK}" stroke-width="2"/><g stroke="${INK}" stroke-width="1.2"><circle cx="${x+5}" cy="${y-1}" r="2.6" fill="#F6A3B6"/><circle cx="${x+w/2}" cy="${y-1.5}" r="2.6" fill="#FFD35C"/><circle cx="${x+w-5}" cy="${y-1}" r="2.6" fill="#F6A3B6"/></g>`;
   if(type==="house"){
-    s=`<rect x="90" y="26" width="13" height="28" fill="${D}" ${K}/><rect x="28" y="60" width="84" height="68" fill="${W}" ${K}/><path d="M18 64L70 20l52 44z" fill="${R}" ${K}/><path d="M32 52h76M44 42h52M56 32h28" stroke="${INK}" stroke-opacity=".22" stroke-width="2" stroke-linecap="round"/>${sq(70,46,26)}${win(38,74,24,20)}${fbox(35,96,30)}${door(78,88,22,40)}<path d="M74 128h30" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>`;smoke=[96,20];
+    s=`<rect x="90" y="26" width="13" height="28" fill="${D}" ${K}/><rect x="28" y="60" width="84" height="68" fill="${W}" ${K}/><path d="M18 64L70 20l52 44z" fill="${R}" ${K}/><path d="M32 52h76M44 42h52M56 32h28" stroke="${INK}" stroke-opacity=".22" stroke-width="2" stroke-linecap="round"/>${sq(70,40,42)}${win(38,74,24,20)}${fbox(35,96,30)}${door(78,88,22,40)}<path d="M74 128h30" stroke="${INK}" stroke-width="3" stroke-linecap="round"/>`;smoke=[96,20];
   }else if(type==="shop"){
     let aw="";for(let i=0;i<5;i++)aw+=`<rect x="${18+i*20}" y="58" width="20" height="14" fill="${i%2?"#fff":R}"/>`;
     let sc="M18 72";for(let i=0;i<10;i++)sc+="q5 8 10 0";
-    s=`<rect x="18" y="48" width="104" height="80" fill="${W}" ${K}/><rect x="14" y="42" width="112" height="10" rx="2" fill="${R}" ${K}/>${sq(70,25,32)}${aw}<rect x="18" y="58" width="104" height="14" fill="none" ${K}/><path d="${sc}" fill="${R}" ${K}/>${win(26,88,46,28)}${fbox(24,118,50)}${door(84,86,26,42)}`;
+    s=`<rect x="18" y="48" width="104" height="80" fill="${W}" ${K}/><rect x="14" y="42" width="112" height="10" rx="2" fill="${R}" ${K}/>${sq(70,22,46)}${aw}<rect x="18" y="58" width="104" height="14" fill="none" ${K}/><path d="${sc}" fill="${R}" ${K}/>${win(26,88,46,28)}${fbox(24,118,50)}${door(84,86,26,42)}`;
   }else if(type==="school"){
-    s=`<rect x="14" y="62" width="112" height="66" fill="${W}" ${K}/><rect x="10" y="56" width="120" height="10" rx="2" fill="${R}" ${K}/><rect x="50" y="28" width="40" height="34" fill="${W}" ${K}/><path d="M44 30L70 6l26 24z" fill="${R}" ${K}/><path d="M70 6V-6" ${K}/><path d="M70 -6l12 4-12 4z" fill="#EE4B5B" ${K}/>${sq(70,45,30)}${win(22,76,18,16)}${win(100,76,18,16)}${win(22,100,18,16)}${win(100,100,18,16)}${door(58,92,24,36)}`;
+    s=`<rect x="14" y="62" width="112" height="66" fill="${W}" ${K}/><rect x="10" y="56" width="120" height="10" rx="2" fill="${R}" ${K}/><rect x="50" y="28" width="40" height="34" fill="${W}" ${K}/><path d="M44 30L70 6l26 24z" fill="${R}" ${K}/><path d="M70 6V-6" ${K}/><path d="M70 -6l12 4-12 4z" fill="#EE4B5B" ${K}/>${sq(70,40,44)}${win(22,76,18,16)}${win(100,76,18,16)}${win(22,100,18,16)}${win(100,100,18,16)}${door(58,92,24,36)}`;
   }else if(type==="tower"){
-    s=`<rect x="18" y="80" width="30" height="48" fill="${W}" ${K}/><rect x="92" y="80" width="30" height="48" fill="${W}" ${K}/><rect x="44" y="30" width="52" height="98" fill="${W}" ${K}/><path d="M38 32L70 4l32 28z" fill="${R}" ${K}/>${sq(70,54,34)}${win(53,76,14,12)}${win(73,76,14,12)}${win(53,94,14,12)}${win(73,94,14,12)}${win(26,92,14,12)}${win(100,92,14,12)}${door(61,108,18,20)}`;
+    s=`<rect x="18" y="80" width="30" height="48" fill="${W}" ${K}/><rect x="92" y="80" width="30" height="48" fill="${W}" ${K}/><rect x="44" y="30" width="52" height="98" fill="${W}" ${K}/><path d="M38 32L70 4l32 28z" fill="${R}" ${K}/>${sq(70,50,48)}${win(53,76,14,12)}${win(73,76,14,12)}${win(53,94,14,12)}${win(73,94,14,12)}${win(26,92,14,12)}${win(100,92,14,12)}${door(61,108,18,20)}`;
   }else if(type==="dome"){
-    s=`<path d="M70 32V14" ${K}/><circle cx="70" cy="12" r="4" fill="#EE4B5B" ${K}/><rect x="24" y="72" width="92" height="56" fill="${W}" ${K}/><path d="M28 74a42 42 0 0 1 84 0z" fill="${R}" ${K}/>${sq(70,56,30)}<circle cx="38" cy="100" r="8" fill="${G}" ${K}/><circle cx="102" cy="100" r="8" fill="${G}" ${K}/>${door(61,104,18,24)}`;
+    s=`<path d="M70 32V14" ${K}/><circle cx="70" cy="12" r="4" fill="#EE4B5B" ${K}/><rect x="24" y="72" width="92" height="56" fill="${W}" ${K}/><path d="M28 74a42 42 0 0 1 84 0z" fill="${R}" ${K}/>${sq(70,54,44)}<circle cx="38" cy="100" r="8" fill="${G}" ${K}/><circle cx="102" cy="100" r="8" fill="${G}" ${K}/>${door(61,104,18,24)}`;
   }else if(type==="arcade"){
     let bulbs="";for(let x=24;x<=118;x+=13)bulbs+=`<circle cx="${x}" cy="16" r="3" fill="${st.sleepy?"#ccc":"#FFE27A"}" stroke="${INK}" stroke-width="1.6"/>`;
-    s=`<rect x="20" y="44" width="100" height="84" fill="${W}" ${K}/><rect x="12" y="16" width="116" height="32" rx="10" fill="${R}" ${K}/>${bulbs}${sq(70,32,30)}${win(28,58,84,28)}<path d="M40 66l2 4 4 .5-3 3 .8 4-3.8-2-3.8 2 .8-4-3-3 4-.5z" fill="#fff" stroke="${INK}" stroke-width="1.5"/>${door(54,96,32,32)}`;
+    s=`<rect x="20" y="44" width="100" height="84" fill="${W}" ${K}/><rect x="12" y="16" width="116" height="32" rx="10" fill="${R}" ${K}/>${bulbs}${sq(70,30,44)}${win(28,58,84,28)}<path d="M40 66l2 4 4 .5-3 3 .8 4-3.8-2-3.8 2 .8-4-3-3 4-.5z" fill="#fff" stroke="${INK}" stroke-width="1.5"/>${door(54,96,32,32)}`;
   }else if(type==="library"){
     let cols="";[28,50,80,102].forEach(x=>cols+=`<rect x="${x}" y="64" width="10" height="52" fill="#fff" ${K}/>`);
-    s=`<rect x="22" y="62" width="96" height="56" fill="${W}" ${K}/>${cols}<rect x="18" y="52" width="104" height="12" fill="${W}" ${K}/><path d="M14 54L70 22l56 32z" fill="${R}" ${K}/>${sq(70,41,20)}${door(62,86,16,32)}<rect x="12" y="116" width="116" height="12" rx="2" fill="#EDE3CF" ${K}/>`;
+    s=`<rect x="22" y="62" width="96" height="56" fill="${W}" ${K}/>${cols}<rect x="18" y="52" width="104" height="12" fill="${W}" ${K}/><path d="M14 54L70 22l56 32z" fill="${R}" ${K}/>${sq(70,38,32)}${door(62,86,16,32)}<rect x="12" y="116" width="116" height="12" rx="2" fill="#EDE3CF" ${K}/>`;
   }else{ /* factory */
-    s=`<rect x="98" y="18" width="14" height="50" fill="${D}" ${K}/><path d="M98 30h14" stroke="#fff" stroke-width="3"/><rect x="14" y="66" width="112" height="62" fill="${W}" ${K}/><path d="M14 66V44l26 22V44l26 22V44l26 22z" fill="${R}" ${K}/>${sq(48,92,28)}${win(24,108,22,14)}${win(52,108,22,14)}${door(88,92,26,36)}`;smoke=[105,12];
+    s=`<rect x="98" y="18" width="14" height="50" fill="${D}" ${K}/><path d="M98 30h14" stroke="#fff" stroke-width="3"/><rect x="14" y="66" width="112" height="62" fill="${W}" ${K}/><path d="M14 66V44l26 22V44l26 22V44l26 22z" fill="${R}" ${K}/>${sq(50,88,42)}${win(24,108,22,14)}${win(52,108,22,14)}${door(88,92,26,36)}`;smoke=[105,12];
   }
   const sm=st.lit&&smoke?`<g class="smoke" fill="#fff" stroke="${INK}" stroke-width="2"><circle cx="${smoke[0]}" cy="${smoke[1]}" r="5"/><circle cx="${smoke[0]+4}" cy="${smoke[1]-6}" r="6"/><circle cx="${smoke[0]}" cy="${smoke[1]-12}" r="4"/></g>`:"";
   const zz=st.sleepy?`<text class="zz" x="116" y="20" font-family="Jua,sans-serif" font-size="17" fill="#6E6B78">Zz</text>`:"";
@@ -1278,38 +1312,61 @@ function openMore(){
   renderStatus();
 }
 
+/* ================= 숨기기 · 삭제 ================= */
+function toastAct(msg,label,fn){
+  let el=$(".toast");if(!el){el=document.createElement("div");el.className="toast";el.setAttribute("role","status");document.body.appendChild(el)}
+  el.innerHTML=`<span>${esc(msg)}</span>${label?` <button type="button" class="toast-btn">${esc(label)}</button>`:""}`;
+  const b=el.querySelector(".toast-btn");if(b)b.addEventListener("click",()=>{fn();el.remove()});
+  clearTimeout(window.__tt);window.__tt=setTimeout(()=>el.remove(),5000);
+}
+function hideLink(id){
+  const l=S.links.get(id);if(!l)return;
+  patchLink(id,{hidden:true});
+  toastAct(`🙈 「${displayName(l)}」를 숨겼어요. 전체 편집에서 다시 꺼낼 수 있어요.`,"되돌리기",()=>patchLink(id,{hidden:false}));
+}
+function askDelete(id){
+  const l=S.links.get(id);if(!l)return;
+  const m=openModal(`<div class="m-head"><h3>🗑 가게 지우기</h3>${XBTN}</div><div class="m-body"><div class="del-card">${icoHTML(l)}<div><b>${esc(displayName(l))}</b><span class="hint mono">${esc(hostOf(l.url))}</span></div></div>
+    <p class="hint">지우면 모든 기기와 구글 시트에서 사라지고 되돌릴 수 없어요. 잠깐 안 보이게만 하려면 <b>숨기기</b>를 쓰세요. GitHub 저장소는 그대로예요.</p></div>
+    <div class="m-foot"><button class="btn" type="button" id="dl-hide">🙈 숨기기만</button><div class="r"><button class="btn" type="button" data-close>취소</button><button class="btn danger arm" type="button" id="dl-go">지우기</button></div></div>`);
+  m.querySelector("#dl-hide").addEventListener("click",()=>{closeModal();hideLink(id)});
+  m.querySelector("#dl-go").addEventListener("click",()=>{closeModal();removeLink(id);toast(`🗑 「${displayName(l)}」를 지웠어요.`)});
+}
+
 /* ================= 전체 편집 ================= */
 function openBulk(){
   const fl=folderList(),ord=l=>l.category==="personal"?1e4:(l.folder?(fl.indexOf(l.folder)>=0?fl.indexOf(l.folder):500):9e3);
   const list=[...S.links.values()].sort((a,b)=>ord(a)-ord(b)||(a.name||"").localeCompare(b.name||"","ko"));
   const destOf=l=>l.category==="personal"?"personal":"school|"+(l.folder||"");
-  const draft=new Map(list.map(l=>[l.id,{name:l.name||"",dest:destOf(l),pinned:!!l.pinned}]));
+  const draft=new Map(list.map(l=>[l.id,{name:l.name||"",dest:destOf(l),pinned:!!l.pinned,hidden:!!l.hidden,del:false}]));
   const m=openModal(`<div class="m-head"><h3>✏️ 전체 편집</h3>${XBTN}</div>
   <div class="m-body">
-    <p class="hint">가게 이름과 자리(동네 › 거리)를 한 번에 고쳐요. 고친 줄은 노랗게 표시되고, 저장을 눌러야 반영돼요.</p>
+    <p class="hint">가게 이름과 자리(동네 › 거리)를 한 번에 고쳐요. 오른쪽 버튼으로 ⭐ 고정 · 🙈 숨기기 · 🗑 지우기를 할 수 있어요. 고친 줄은 노랗게 표시되고, 저장을 눌러야 반영돼요.</p>
     <div class="bk-tools"><input class="inp" id="bk-q" type="search" placeholder="이름·주소로 찾기" autocomplete="off"><span class="bk-new"><input class="inp" id="bk-nf" type="text" maxlength="40" placeholder="새 거리 이름"><button class="btn sm" id="bk-add" type="button">＋ 거리 추가</button></span></div>
     <div class="bk-list" id="bk-list"></div>
   </div>
   <div class="m-foot"><p class="hint" id="bk-sum"></p><div class="r"><button class="btn" type="button" data-close>취소</button><button class="btn primary" type="button" id="bk-save">저장</button></div></div>`,true);
   const box=m.querySelector("#bk-list");
-  const changed=l=>{const d=draft.get(l.id);return d.name.trim()!==(l.name||"").trim()||d.dest!==destOf(l)||d.pinned!==!!l.pinned};
+  const changed=l=>{const d=draft.get(l.id);return d.del||d.name.trim()!==(l.name||"").trim()||d.dest!==destOf(l)||d.pinned!==!!l.pinned||d.hidden!==!!l.hidden};
   function draw(){
     let last="";
     box.innerHTML=list.map(l=>{const d=draft.get(l.id),place=l.category==="personal"?`🏡 ${LAND.personal}`:`📍 ${l.folder||"이름 없는 골목"}`;
       const head=place!==last?`<div class="bk-h">${esc(place)}</div>`:"";last=place;
-      return head+`<div class="bk-row${changed(l)?" ch":""}" data-id="${esc(l.id)}" data-s="${esc(((l.name||"")+" "+l.url+" "+(l.repo||"")).toLowerCase())}">
+      return head+`<div class="bk-row${changed(l)?" ch":""}${d.hidden?" hid":""}${d.del?" del":""}" data-id="${esc(l.id)}" data-s="${esc(((l.name||"")+" "+l.url+" "+(l.repo||"")).toLowerCase())}">
         ${icoHTML(l,"sm")}<input class="inp bk-name" type="text" value="${esc(d.name)}" placeholder="${esc(displayName(l))}" aria-label="가게 이름">
         <select class="inp bk-dest" aria-label="자리">${destOptions(d.dest,false)}</select>
-        <button class="rb bk-pin${d.pinned?" on":""}" type="button" title="랜드마크로 고정" aria-pressed="${d.pinned}">${STAR}</button>
+        <span class="bk-btns"><button class="rb bk-pin${d.pinned?" on":""}" type="button" title="랜드마크로 고정" aria-pressed="${d.pinned}">${STAR}</button><button class="rb bk-hid${d.hidden?" on":""}" type="button" title="${d.hidden?"다시 보이기":"숨기기"}" aria-pressed="${d.hidden}">${I_HIDE}</button><button class="rb bk-del${d.del?" on":""}" type="button" title="${d.del?"지우기 취소":"지우기"}" aria-pressed="${d.del}">${I_DEL}</button></span>
         <span class="bk-url mono" title="${esc(l.url)}">${esc(hostOf(l.url))}</span></div>`}).join("");
     filter();upd();
   }
   function filter(){const q=m.querySelector("#bk-q").value.trim().toLowerCase();box.querySelectorAll(".bk-row").forEach(r=>r.hidden=!!q&&!r.dataset.s.includes(q));box.querySelectorAll(".bk-h").forEach(h=>h.hidden=!!q)}
-  function upd(){const n=list.filter(changed).length;m.querySelector("#bk-sum").textContent=n?`${n}곳을 고쳤어요`:"";const b=m.querySelector("#bk-save");b.disabled=!n;b.textContent=n?`${n}곳 저장`:"저장"}
+  function upd(){const n=list.filter(changed).length,nd=list.filter(l=>draft.get(l.id).del).length;m.querySelector("#bk-sum").textContent=n?`${n}곳을 고쳤어요${nd?` (그중 ${nd}곳은 지워요)`:""}`:"";const b=m.querySelector("#bk-save");b.disabled=!n;b.textContent=n?`${n}곳 저장`:"저장"}
   const rowOf=e=>{const r=e.target.closest(".bk-row");return r&&[r,S.links.get(r.dataset.id)]};
   box.addEventListener("input",e=>{const x=rowOf(e);if(!x)return;const [r,l]=x;if(e.target.classList.contains("bk-name"))draft.get(l.id).name=e.target.value;r.classList.toggle("ch",changed(l));upd()});
   box.addEventListener("change",e=>{const x=rowOf(e);if(!x||!e.target.classList.contains("bk-dest"))return;const [r,l]=x;draft.get(l.id).dest=e.target.value;r.classList.toggle("ch",changed(l));upd()});
-  box.addEventListener("click",e=>{const b=e.target.closest(".bk-pin");if(!b)return;const [r,l]=rowOf(e);const d=draft.get(l.id);d.pinned=!d.pinned;b.classList.toggle("on",d.pinned);b.setAttribute("aria-pressed",d.pinned);r.classList.toggle("ch",changed(l));upd()});
+  box.addEventListener("click",e=>{const b=e.target.closest(".bk-pin,.bk-hid,.bk-del");if(!b)return;const [r,l]=rowOf(e);const d=draft.get(l.id);
+    const k=b.classList.contains("bk-pin")?"pinned":b.classList.contains("bk-hid")?"hidden":"del";d[k]=!d[k];
+    b.classList.toggle("on",d[k]);b.setAttribute("aria-pressed",d[k]);r.classList.toggle("hid",d.hidden);r.classList.toggle("del",d.del);r.classList.toggle("ch",changed(l));upd()});
   m.querySelector("#bk-q").addEventListener("input",filter);
   const addF=()=>{const inp=m.querySelector("#bk-nf"),v=cleanFolder(inp.value);if(!v)return;if(folderList().includes(v)){toast("같은 이름의 거리가 있어요.");return}addFolders([v]);inp.value="";draw();toast(`📍 ‘${v}’ 거리를 만들었어요. 가게의 자리에서 고를 수 있어요.`)};
   m.querySelector("#bk-add").addEventListener("click",addF);
@@ -1317,6 +1374,8 @@ function openBulk(){
   m.querySelector("#bk-save").addEventListener("click",()=>{
     let n=0;
     list.forEach(l=>{if(!changed(l))return;const d=draft.get(l.id),f={};
+      if(d.del){removeLink(l.id);n++;return}
+      if(d.hidden!==!!l.hidden)f.hidden=d.hidden;
       if(d.name.trim()!==(l.name||"").trim())f.name=d.name.trim();
       if(d.dest!==destOf(l))Object.assign(f,parseDest(d.dest));
       if(d.pinned!==!!l.pinned)f.pinned=d.pinned;
@@ -1420,7 +1479,7 @@ function sceneTall(H){
 function pickScene(){
   const vw=Math.max(320,innerWidth),vh=Math.max(420,innerHeight-(isM()?100:0));
   if(isM())return sceneTall(Math.round(Math.min(1900,Math.max(1400,900*vh/vw))));
-  return sceneWide(Math.round(Math.min(2200,Math.max(1450,900*vw/vh))));
+  return sceneWide(Math.round(Math.min(2200,Math.max(1200,900*vw/vh))));
 }
 let cvKey="";
 addEventListener("resize",()=>{clearTimeout(window.__cvT);window.__cvT=setTimeout(()=>{if(document.body.classList.contains("cover")){const c=pickScene(),k=c.W+"x"+c.H;if(k!==cvKey)render()}},160)});
@@ -1545,10 +1604,28 @@ function coverHTML(all,fl){
 function lampSVG(x,y,k){return `<g transform="translate(${x} ${y}) scale(${k})"><path d="M0 0V-34" stroke="#1F1D2B" stroke-width="3"/><path d="M0-34h-7" stroke="#1F1D2B" stroke-width="3" stroke-linecap="round"/><circle cx="-8" cy="-31" r="5" fill="#FFE45C" stroke="#1F1D2B" stroke-width="2.4"/><rect x="-5" y="-2" width="10" height="5" rx="2" fill="#1F1D2B"/></g>`}
 function carSVG(x,y,col,k,flip){return `<g transform="translate(${x} ${y}) scale(${flip?-k:k} ${k})"><rect x="-24" y="-15" width="48" height="17" rx="7" fill="${col}" stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"/><path d="M-13-15l5-10h17l7 10z" fill="#BFE9FF" stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"/><path d="M0-25v10" stroke="#1F1D2B" stroke-width="2"/><circle cx="-13" cy="3" r="5.5" fill="#1F1D2B"/><circle cx="13" cy="3" r="5.5" fill="#1F1D2B"/><circle cx="-13" cy="3" r="2" fill="#fff"/><circle cx="13" cy="3" r="2" fill="#fff"/><rect x="18" y="-11" width="5" height="4" rx="1.5" fill="#FFE45C" stroke="#1F1D2B" stroke-width="1.4"/></g>`}
 function saleSign(x,y,k){return `<g transform="translate(${x} ${y}) scale(${k})"><path d="M0 0V-26" stroke="#1F1D2B" stroke-width="3"/><rect x="-26" y="-46" width="52" height="22" rx="5" fill="#fff" stroke="#1F1D2B" stroke-width="2.6"/><text x="0" y="-31" text-anchor="middle" font-family="Pretendard Variable,Pretendard,sans-serif" font-weight="800" font-size="12" fill="#1F1D2B">빈 땅</text></g>`}
+/* 블록 안에 건물을 줄로 세워요. 두 줄마다 골목길이 하나씩 생겨요 */
+function rowsNeed(k,cols,s,alley){const r=Math.ceil(k/cols);return r*(s*.93+10)+Math.floor((r-1)/2)*alley}
+function fitRows(aw,ah,k,sMin,sMax,alley){if(!k)return sMax;for(let s=sMax;s>=sMin;s-=2){const cols=Math.floor(aw/s);if(cols>0&&rowsNeed(k,cols,s,alley)<=ah)return s}return sMin}
+function placeRows(box,list,s,seed,alley){
+  const bh=s*.93,cols=Math.max(1,Math.floor(box.w/s)),out=[],alleys=[];
+  const maxRowsFit=r=>rowsNeed(r*cols,cols,s,alley)<=box.h+1;let maxR=1;while(maxRowsFit(maxR+1))maxR++;
+  const cap=cols*maxR,show=list.length>cap?list.slice(0,cap-1):list,more=list.length-show.length,tot=show.length+(more?1:0);
+  let y=box.y+4;const rows=Math.ceil(tot/cols);
+  for(let r=0;r<rows;r++){
+    if(r>0&&r%2===0){alleys.push(y+alley*.08);y+=alley}
+    const inRow=Math.min(cols,tot-r*cols),x0=box.x+(box.w-inRow*s)/2;
+    for(let c2=0;c2<inRow;c2++){const i=r*cols+c2;if(i<show.length){const l=show[i],j=((hashNum(l.id+seed)%9)-4)*s*.012;out.push({l,x:x0+c2*s+j,y:y+bh,s})}}
+    y+=bh+10;
+  }
+  let plus=null;if(more){const last=out[out.length-1];plus={x:last.x+s*1.5,y:last.y-bh/2,n:more}}
+  return {out,plus,alleys};
+}
 function drawTown(R,ds,c){
-  const road=c.road,sw=c.sw,pk=packDistricts({x:R.x,y:R.y,w:R.w,h:R.h,gap:road},ds);
+  const road=c.road,sw=c.sw,pk=c.pk||packDistricts({x:R.x,y:R.y,w:R.w,h:R.h,gap:road},ds);
   const inner=pk.cells.map(b=>({x:b.x+sw+6,y:b.y+sw+c.lab+2,w:b.w-sw*2-12,h:b.h-sw*2-c.lab-6}));
-  let s=c.sMax;ds.forEach((d,i)=>{if(d.list.length)s=Math.min(s,fitSize(inner[i].w,inner[i].h,d.list.length,c.sMin,c.sMax))});
+  const alley=road*.72;
+  let s=c.sMax;ds.forEach((d,i)=>{if(d.list.length)s=Math.min(s,fitRows(inner[i].w,inner[i].h,d.list.length,c.sMin,c.sMax,alley))});
   const W2=road*.82,kk=road/46;
   let bg=`<rect x="${R.x-W2}" y="${R.y-W2}" width="${R.w+W2*2}" height="${R.h+W2*2}" rx="${road*.9}" fill="#A7AABF" ${SK}/>`;
   bg+=`<rect x="${R.x-W2/2}" y="${R.y-W2/2}" width="${R.w+W2}" height="${R.h+W2}" rx="${road*.55}" fill="none" stroke="#fff" stroke-width="2.6" stroke-dasharray="16 14"/>`;
@@ -1569,7 +1646,9 @@ function drawTown(R,ds,c){
     bg+=`<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="${road*.38}" fill="url(#cvbrick)" ${SK}/>`;
     bg+=`<rect x="${b.x+sw}" y="${b.y+sw}" width="${b.w-sw*2}" height="${b.h-sw*2}" rx="${road*.24}" fill="${full?"#B5E79A":"#A9E08C"}" stroke="#1F1D2B" stroke-width="2.2"/><rect x="${b.x+sw}" y="${b.y+sw}" width="${b.w-sw*2}" height="${b.h-sw*2}" rx="${road*.24}" fill="url(#cvgrass)"/>`;
     if(full){
-      const r=placeIn(ib,d.list,s,"b"+i);marks.push(...r.out);
+      const r=placeRows(ib,d.list,s,"b"+i,alley);marks.push(...r.out);
+      r.alleys.forEach(ay=>{const ah=alley*.84;bg+=`<rect x="${b.x+sw-2}" y="${ay}" width="${b.w-sw*2+4}" height="${ah}" fill="#A7AABF" stroke="#1F1D2B" stroke-width="2.2"/><line x1="${b.x+sw+road*.5}" y1="${ay+ah/2}" x2="${b.x+b.w-sw-road*.5}" y2="${ay+ah/2}" stroke="#fff" stroke-width="2.4" stroke-dasharray="14 12"/>`;
+        for(let zz=0;zz<4;zz++)bg+=`<rect x="${b.x+sw+6}" y="${ay+5+zz*(ah-10)/4}" width="${road*.3}" height="${Math.max(3,(ah-10)/8)}" rx="1" fill="#fff"/><rect x="${b.x+b.w-sw-6-road*.3}" y="${ay+5+zz*(ah-10)/4}" width="${road*.3}" height="${Math.max(3,(ah-10)/8)}" rx="1" fill="#fff"/>`});
       [...new Set(r.out.map(m=>Math.round(m.y)))].forEach(y=>{bg+=`<rect x="${b.x+sw}" y="${y-2}" width="${b.w-sw*2}" height="${s*.13+6}" fill="url(#cvbrick)"/><path d="M${b.x+sw} ${y-2}H${b.x+b.w-sw}" stroke="#1F1D2B" stroke-width="2"/>`});
       if(r.plus)fg+=`<button class="cv-more" type="button" ${d.key!=null?`data-folder="${esc(d.key)}"`:""} style="left:${pct(r.plus.x,c.W)};top:${pct(r.plus.y,c.H)}">+${r.plus.n}</button>`;
     }else bg+=treeAt(b.x+b.w*.3,b.y+b.h*.78,c.tk)+treeAt(b.x+b.w*.72,b.y+b.h*.84,c.tk*.9)+saleSign(b.x+b.w*.52,b.y+b.h*.8,c.tk*1.1);
@@ -1581,22 +1660,38 @@ function drawTown(R,ds,c){
   cars.forEach(([x,y,f],j)=>{bg+=carSVG(x,y,CARC[j%CARC.length],kk*.95,f)});
   return {bg,fg,marks,s};
 }
+const I_EDIT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg>';
+const I_HIDE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c5 0 9 4.5 10 7a13 13 0 0 1-3.2 4.2M6.6 6.6C4.4 8 2.8 10.2 2 12c1 2.5 5 7 10 7 1.7 0 3.3-.5 4.6-1.3"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+const I_DEL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>';
+function toolsHTML(l,cls){return `<span class="${cls}"><button class="tb" type="button" data-edit="${esc(l.id)}" title="고치기" aria-label="고치기">${I_EDIT}</button><button class="tb" type="button" data-hide="${esc(l.id)}" title="숨기기" aria-label="숨기기">${I_HIDE}</button><button class="tb del" type="button" data-del="${esc(l.id)}" title="삭제하기" aria-label="삭제하기">${I_DEL}</button></span>`}
 function marksHTML(marks,W,H,acts){
   return marks.sort((a,b)=>a.y-b.y).map(m=>{const l=m.l,st=bState(l);
-    return `<div class="mb${l.pinned?" pin":""}${S.picked.has(l.id)?" picked":""}" data-id="${esc(l.id)}" draggable="true" style="left:${pct(m.x,W)};top:${pct(m.y-m.s*.93,H)};width:${pct(m.s,W)}"><a class="mb-link" href="${esc(safeHref(l.url))}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" draggable="false" aria-label="${esc(displayName(l))} 열기">${buildingSVG(l,st)}<span class="tip">${esc(displayName(l))} ↗</span></a>${acts?`<span class="mb-acts"><button class="rb${l.pinned?" on":""}" type="button" data-pin="${esc(l.id)}" title="${l.pinned?"고정 풀기":"랜드마크로 고정"}" aria-label="고정">${STAR}</button><button class="rb" type="button" data-edit="${esc(l.id)}" title="고치기" aria-label="고치기">${PEN}</button></span>`:""}</div>`}).join("");
+    return `<div class="mb${l.pinned?" pin":""}${S.picked.has(l.id)?" picked":""}${acts?" in-town":""}" data-id="${esc(l.id)}" draggable="true" style="left:${pct(m.x,W)};top:${pct(m.y-m.s*.93,H)};width:${pct(m.s,W)}"><a class="mb-link" href="${esc(safeHref(l.url))}" target="_blank" rel="noopener noreferrer" data-open="${esc(l.id)}" draggable="false" aria-label="${esc(displayName(l))} 열기">${buildingSVG(l,st)}<span class="tip">${esc(displayName(l))} ↗</span></a>${toolsHTML(l,"mb-tools")}</div>`}).join("");
 }
 const TOWN_DEFS=`<defs><pattern id="cvgrass" width="96" height="96" patternUnits="userSpaceOnUse"><path d="M12 30q2-6 4 0M15 30q1-4 3-1M70 78q2-6 4 0M73 78q1-4 3-1M52 14q2-5 4 0" fill="none" stroke="#6BBF4E" stroke-width="2" stroke-linecap="round"/><circle cx="80" cy="24" r="2.8" fill="#fff"/><circle cx="80" cy="24" r="1.2" fill="#FFD84D"/><circle cx="30" cy="70" r="2.8" fill="#FF9EC4"/><circle cx="30" cy="70" r="1.2" fill="#fff"/></pattern><pattern id="cvbrick" width="26" height="16" patternUnits="userSpaceOnUse"><rect width="26" height="16" fill="#FFC6BC"/><path d="M0 8h26M9 0v8M22 8v8" stroke="#F2A193" stroke-width="1.5"/></pattern></defs>`;
 /* 거리 화면: 여러 블록을 한 화면에 */
 function townPageHTML(ds){
   const mob=isM(),W=mob?900:1600;
   const c=mob?{W,sMax:150,sMin:56,lab:62,road:58,sw:16,tk:1.6}:{W,sMax:120,sMin:40,lab:40,road:48,sw:13,tk:1.15};
-  const availW=Math.min(1200,innerWidth-(mob?24:32)),availH=Math.max(420,innerHeight-(mob?330:270)),comfy=mob?100:74;
-  let H=Math.round(Math.max(mob?1000:600,W*availH/availW)),t;
-  const run=h=>{c.H=h;return drawTown({x:c.road,y:c.road,w:W-c.road*2,h:h-c.road*2},ds,c)};
-  for(let k=0;k<16;k++){t=run(H);if(t.s>=comfy||H>W*4)break;H=Math.round(H*1.12)}
-  /* 건물이 이미 최대 크기면 빈 땅이 남지 않게 높이를 줄여요 */
-  for(let k=0;k<20&&t.s>=c.sMax&&H>(mob?700:380);k++){const h2=Math.round(H*.92),t2=run(h2);if(t2.s<c.sMax)break;H=h2;t=t2}
-  t=run(H);
+  const target=mob?112:86;c.sMax=target;
+  /* 앱 수에 꼭 맞게: 각 블록에 필요한 줄 수만큼만 높이를 주고, 앱이 늘면 줄과 골목길이 늘어요 */
+  const road=c.road,sw=c.sw,alley=road*.72,Rw=W-road*2,n=ds.length;
+  const need=(d,w)=>{const iw=w-sw*2-12;let s=target;let cols=Math.floor(iw/s);while(cols<1&&s>c.sMin){s-=4;cols=Math.floor(iw/s)}
+    const body=d.list.length?rowsNeed(d.list.length,Math.max(1,cols),s,alley)+8:s*1.15;return c.lab+sw*2+10+body};
+  const mk=Math.max(1,...ds.map(d=>d.list.length)),wts=ds.map(d=>Math.max(d.list.length,4,mk*.25)),total=wts.reduce((a,b)=>a+b,0);
+  let best=null;
+  for(let r=1;r<=n;r++){
+    const rows=[];let cur=[],acc=0;
+    ds.forEach((d,i)=>{cur.push(i);acc+=wts[i];if(rows.length<r-1&&acc>=total/r*(rows.length+1)-1e-9){rows.push(cur);cur=[]}});
+    if(cur.length)rows.push(cur);
+    let y=road,cells=[],bad=0;
+    rows.forEach(rr=>{const rw=rr.reduce((a,i)=>a+wts[i],0),Ww=Rw-road*(rr.length-1);let x=road;
+      const ws=rr.map(i=>Ww*wts[i]/rw),h=Math.max(...rr.map((i,k)=>need(ds[i],ws[k])));
+      rr.forEach((i,k)=>{cells[i]={x,y,w:ws[k],h};if(ws[k]<target*2.6+sw*2)bad++;x+=ws[k]+road});y+=h+road});
+    const score=y+bad*400;if(!best||score<best.score)best={score,cells,rows,H:y};
+  }
+  const H=Math.round(best.H+road*.2);c.H=H;c.pk={cells:best.cells,rows:best.rows};
+  const t=drawTown({x:road,y:road,w:Rw,h:H-road*2},ds,c);
   const fs=mob?3.1:1.15;
   return `<div class="tw"><div class="tw-stage" style="aspect-ratio:${W}/${H};--fs:${fs}"><svg class="cv-bg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">${TOWN_DEFS}${t.bg}</svg>${t.fg}${marksHTML(t.marks,W,H,true)}</div></div>`;
 }
@@ -1617,7 +1712,7 @@ function ownerOf(l){const r=(l.repo||"").split("/")[0];if(r&&l.repo.includes("/"
 function tabSlot(){return S.tab.startsWith("gh:")?S.tab.slice(3):""}
 function slotLinks(k){const h=ghHandle(k).toLowerCase();return h?[...S.links.values()].filter(l=>ownerOf(l)===h):[]}
 function visible(){
-  let arr=[...S.links.values()];
+  let arr=[...S.links.values()].filter(l=>!l.hidden);
   const k=tabSlot(),q=S.q.trim().toLowerCase();
   if(q)arr=arr; /* 찾기는 마을 전체에서 */
   else if(S.tab==="pinned")arr=arr.filter(l=>l.pinned);
@@ -1630,7 +1725,7 @@ function visible(){
 function icoHTML(l,cls){
   const ic=l.icon||{},m=mono(displayName(l)),col=ic.color||hashColor(displayName(l)),k=cls?" "+cls:"";
   if(ic.type==="image"&&ic.value)return `<span class="ico image${k}"><img alt="" src="${esc(ic.value)}"></span>`;
-  const fv=l.url?favOf(l):"";if(fv)return `<span class="ico fav${k}"><img alt="" src="${esc(fv)}"></span>`;
+  const fv=l.url?favOf(l):"";if(fv&&!(ic.pick&&(ic.type==="emoji"||ic.type==="mono")))return `<span class="ico fav${k}"><img alt="" src="${esc(fv)}"></span>`;
   if(ic.type==="emoji"&&ic.value)return `<span class="ico emoji${k}"${ic.color?` style="--eb:${esc(ic.color)}"`:""}>${esc(ic.value)}</span>`;
   if(ic.type==="site"&&domainOf(l.url))return `<span class="ico site${k}"><img class="fav" alt="" loading="lazy" referrerpolicy="no-referrer" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(domainOf(l.url))}&sz=128" data-m="${esc(m)}" data-c="${esc(col)}"></span>`;
   const txt=(ic.type==="mono"&&ic.value)?ic.value:m;
@@ -1644,7 +1739,7 @@ document.addEventListener("error",e=>{const t=e.target;if(!t||!t.classList)retur
 const STAR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
 const PEN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg>';
 const pickHTML=`<span class="pickmark" aria-hidden="true">${CHECK_SVG}</span>`;
-function actsHTML(l,cls){return `<span class="${cls}"><button class="rb${l.pinned?" on":""}" type="button" data-pin="${esc(l.id)}" aria-pressed="${!!l.pinned}" aria-label="${l.pinned?"고정 해제":"랜드마크로 고정"}" title="${l.pinned?"고정 해제":"랜드마크로 고정"}">${STAR}</button><button class="rb" type="button" data-edit="${esc(l.id)}" aria-label="고치기" title="고치기">${PEN}</button></span>`}
+function actsHTML(l,cls){return `<span class="${cls}"><button class="rb" type="button" data-hide="${esc(l.id)}" aria-label="숨기기" title="숨기기">${I_HIDE}</button><button class="rb" type="button" data-del="${esc(l.id)}" aria-label="삭제하기" title="삭제하기">${I_DEL}</button><button class="rb${l.pinned?" on":""}" type="button" data-pin="${esc(l.id)}" aria-pressed="${!!l.pinned}" aria-label="${l.pinned?"고정 해제":"랜드마크로 고정"}" title="${l.pinned?"고정 해제":"랜드마크로 고정"}">${STAR}</button><button class="rb" type="button" data-edit="${esc(l.id)}" aria-label="고치기" title="고치기">${PEN}</button></span>`}
 function xlinks(l){return (l.links||[]).filter(x=>x&&x.url)}
 function lkHTML(x){return `<a class="lk" href="${esc(safeHref(normUrl(x.url)))}" target="_blank" rel="noopener noreferrer" title="${esc(x.url)}">${esc(x.label||hostOf(normUrl(x.url)))} ↗</a>`}
 function placeTag(l,ctx){
@@ -1740,13 +1835,14 @@ function bubbleText(){
 }
 
 function render(){
-  const all=[...S.links.values()],fl=folderList();
+  const all=[...S.links.values()].filter(l=>!l.hidden),fl=folderList(),nHid=S.links.size-all.length;
+  const ttl=(S.settings.title||"").trim()||"ONGLE LAND";$("#home-title").textContent=ttl;if(document.title!==ttl)document.title=ttl;
   const cnt={school:0,personal:0};all.forEach(l=>cnt[l.category]++);
   if(S.folder&&S.folder!==NONE&&!fl.includes(S.folder))S.folder="";
   if(tabSlot()&&!ghHandle(tabSlot()))S.tab="all";
   const slots=SLOTS.filter(k=>ghHandle(k));
 
-  $("#sub").innerHTML=`<span>웹앱 ${all.length}곳</span>${slots.map(k=>`<span class="mono" style="font-size:12px;font-family:var(--f-mono)">⛵ @${esc(ghHandle(k))}</span>`).join("")}`;
+  $("#sub").innerHTML=`<span>웹앱 ${all.length}곳${nHid?` · 숨김 ${nHid}`:""}</span>${slots.map(k=>`<span class="mono" style="font-size:12px;font-family:var(--f-mono)">⛵ @${esc(ghHandle(k))}</span>`).join("")}`;
   document.querySelectorAll("[data-view]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.view===S.view));
   $("#b-select").setAttribute("aria-pressed",S.selecting);
   const nc=$("#newcnt");nc.hidden=!S.newRepos.length;nc.textContent=S.newRepos.length;
@@ -1869,13 +1965,15 @@ document.addEventListener("click",e=>{
     const li=e.target.closest(".item,.bld,.mb[data-id]");
     if(li&&!e.target.closest(".i-links,.b-pop,.mb-acts")){e.preventDefault();const id=li.dataset.id;S.picked.has(id)?S.picked.delete(id):S.picked.add(id);li.classList.toggle("picked");const nEl=$("#sel-n");if(nEl)nEl.textContent=S.picked.size?`📦 ${S.picked.size}곳 골랐어요`:"가게를 눌러 고르세요";const mv=$("#sel-move");if(mv)mv.disabled=!S.picked.size;return}
   }
-  const t=e.target.closest("[data-tab],[data-folder],[data-view],[data-pin],[data-edit],[data-open],[data-act],#b-select");
+  const t=e.target.closest("[data-tab],[data-folder],[data-view],[data-pin],[data-edit],[data-hide],[data-del],[data-open],[data-act],#b-select");
   if(!t)return;
   if(t.dataset.tab){S.tab=t.dataset.tab;S.folder="";render();window.scrollTo({top:0,behavior:"smooth"});return}
   if(t.dataset.folder!==undefined){S.tab="school";S.folder=t.dataset.folder;render();window.scrollTo({top:0,behavior:"smooth"});return}
   if(t.dataset.view){S.view=t.dataset.view;lsSet(LS.view,S.view);render();return}
   if(t.dataset.pin){e.preventDefault();const l=S.links.get(t.dataset.pin);if(l){patchLink(l.id,{pinned:!l.pinned});toast(l.pinned?"고정을 풀었어요.":"⭐ 랜드마크 섬에 세웠어요!")}return}
   if(t.dataset.edit){e.preventDefault();openEditor(S.links.get(t.dataset.edit));return}
+  if(t.dataset.hide){e.preventDefault();hideLink(t.dataset.hide);return}
+  if(t.dataset.del){e.preventDefault();askDelete(t.dataset.del);return}
   if(t.dataset.open){const l=S.links.get(t.dataset.open);if(!l)return;
     if(safeHref(l.url)==="#"){e.preventDefault();toast("주소가 http:// 또는 https://로 시작해야 열 수 있어요.");return}
     const nx=Object.assign({},l,{opens:(l.opens||0)+1,lastOpenedAt:Date.now()});
@@ -1894,6 +1992,7 @@ document.addEventListener("click",e=>{
   if(act==="more")openMore();
   if(act==="msearch")setMsearch(!S.msearch);
   if(act==="mail")openMail();
+  if(act==="home"){e.preventDefault();if(S.selecting)endSelect();S.tab="all";S.folder="";S.q="";$("#q").value="";document.body.classList.remove("csearch","msearch");S.msearch=false;S.view="map";lsSet(LS.view,"map");closeModal();render();window.scrollTo({top:0,behavior:"smooth"})}
   if(act==="bulk")openBulk();
   if(act==="csearch"){document.body.classList.add("csearch");setTimeout(()=>$("#q").focus(),30)}
   if(act==="dice")rollDice();
@@ -2010,7 +2109,7 @@ function openIconMaker(){
   m.querySelector("#ic-all").addEventListener("change",e=>{redoAll=e.target.checked;draw()});
   m.querySelector("#ic-go").addEventListener("click",()=>{
     let n=0;
-    for(const l of targets()){const st=state.get(l.id);if(!st||!st.on)continue;const s=st.sug[st.pick];patchLink(l.id,{icon:{type:"emoji",value:s.emoji,color:s.color}},true);n++}
+    for(const l of targets()){const st=state.get(l.id);if(!st||!st.on)continue;const s=st.sug[st.pick];patchLink(l.id,{icon:{type:"emoji",value:s.emoji,color:s.color,pick:true}},true);n++}
     lsSet("wd-iconhint-off",true);closeModal();render();toast(`아이콘 ${n}개를 바꿨어요.`);
   });
   draw();
@@ -2069,7 +2168,7 @@ function openEditor(link){
     <div class="field"><span>간판 (아이콘) · 이름에 맞춰 건물 모양이 정해져요</span>
       <div class="iconed"><div id="ed-prev"></div>
         <div class="icopts">
-          <div class="seg sm" id="ed-ictype">${[["emoji","이모지"],["auto","첫 글자"],["mono","직접 글자"],["site","사이트 아이콘"],["image","이미지"]].map(([k,n])=>`<button type="button" data-t="${k}" aria-pressed="${(d.icon.type||"auto")===k}">${n}</button>`).join("")}</div>
+          <div class="seg sm" id="ed-ictype">${[["site","🌐 사이트 아이콘"],["emoji","😀 이모지 고르기"],["image","🖼️ 이미지 올리기"],["mono","🔤 글자"]].map(([k,n])=>`<button type="button" data-t="${k}" aria-pressed="${(d.icon.type||"auto")===k}">${n}</button>`).join("")}</div>
           <div id="ed-icopt"></div>
         </div></div></div>
     ${d.repo?`<p class="hint">연결된 저장소: <a class="mono" href="https://github.com/${esc(d.repo)}" target="_blank" rel="noopener noreferrer">${esc(d.repo)} ↗</a> · GitHub 동기화 때 주소가 갱신돼요.</p>`:""}
@@ -2140,7 +2239,8 @@ function openEditor(link){
     const t=d.icon.type||"auto",box=m.querySelector("#ed-icopt");
     const sw=`<div class="swatches">${ICOLORS.map(c=>`<button type="button" class="sw" style="--c:${c}" data-c="${c}" aria-label="색 ${c}" aria-pressed="${(d.icon.color||hashColor(d.name))===c}"></button>`).join("")}</div>`;
     if(t==="auto")box.innerHTML=`<p class="hint">이름 첫 글자로 만들어요. 색을 고를 수 있어요.</p>${sw}`;
-    if(t==="site")box.innerHTML=`<p class="hint">주소의 사이트 아이콘(파비콘)을 가져와요.</p>`;
+    if(t==="site")box.innerHTML=`<p class="hint">${favOf(d)?"웹앱 주소에서 찾은 아이콘을 간판에 달아요.":"웹앱 HTML의 &lt;link rel=\"icon\"&gt; 아이콘을 간판에 달아요. 아직 못 찾았으면 이모지로 보여요."}</p>`;
+    if(t==="auto")box.innerHTML=`<p class="hint">따로 고르지 않으면 사이트 아이콘이 있을 때 그걸, 없으면 이모지를 달아요.</p>`;
     if(t==="mono")box.innerHTML=`<input type="text" class="inp" id="ed-mono" maxlength="3" value="${esc(d.icon.value||mono(d.name))}" aria-label="아이콘 글자">${sw}`;
     if(t==="emoji"){
       const sug=suggestIcons(d);
@@ -2148,16 +2248,16 @@ function openEditor(link){
       <details class="emomore"><summary>다른 이모지 고르기</summary><div class="emopick">${PICKER_EMOJI.map(e=>`<button type="button" class="emo" data-e="${e}">${e}</button>`).join("")}</div></details>
       <input type="text" class="inp" id="ed-emoji" maxlength="8" value="${esc(d.icon.value||"")}" placeholder="또는 이모지를 직접 붙여넣기" aria-label="이모지">
       <span class="hint">바탕색</span>${sw}`;
-      box.querySelectorAll(".emo").forEach(b=>b.addEventListener("click",()=>{autoPick=false;d.icon.value=b.dataset.e;if(b.dataset.c)d.icon.color=b.dataset.c;iopts();prev()}));
+      box.querySelectorAll(".emo").forEach(b=>b.addEventListener("click",()=>{autoPick=false;d.icon.pick=true;d.icon.value=b.dataset.e;if(b.dataset.c)d.icon.color=b.dataset.c;iopts();prev()}));
     }
-    if(t==="image")box.innerHTML=`<div class="acts"><span class="btn sm filebtn">아이콘 이미지 고르기<input type="file" id="ed-ifile" accept="image/*"></span></div>`;
+    if(t==="image")box.innerHTML=`<div class="acts"><span class="btn sm filebtn">🖼️ 이미지 파일 고르기<input type="file" id="ed-ifile" accept="image/*"></span></div><p class="hint">정사각형으로 잘라 간판에 달아요. PNG·JPG·SVG 모두 돼요.</p>`;
     box.querySelectorAll(".sw").forEach(b=>b.addEventListener("click",()=>{autoPick=false;d.icon.color=b.dataset.c;iopts();prev()}));
-    const mi=box.querySelector("#ed-mono");if(mi)mi.addEventListener("input",()=>{d.icon.value=mi.value;prev()});
-    const ei=box.querySelector("#ed-emoji");if(ei)ei.addEventListener("input",()=>{autoPick=false;d.icon.value=ei.value.trim();prev()});
-    const fi=box.querySelector("#ed-ifile");if(fi)fi.addEventListener("change",async()=>{if(!fi.files[0])return;try{d.icon={type:"image",value:await fileToIcon(fi.files[0])};prev()}catch{toast("이미지를 읽지 못했어요.")}});
+    const mi=box.querySelector("#ed-mono");if(mi)mi.addEventListener("input",()=>{d.icon.value=mi.value;d.icon.pick=true;prev()});
+    const ei=box.querySelector("#ed-emoji");if(ei)ei.addEventListener("input",()=>{autoPick=false;d.icon.pick=true;d.icon.value=ei.value.trim();prev()});
+    const fi=box.querySelector("#ed-ifile");if(fi)fi.addEventListener("change",async()=>{if(!fi.files[0])return;try{d.icon={type:"image",value:await fileToIcon(fi.files[0]),pick:true};prev()}catch{toast("이미지를 읽지 못했어요.")}});
   }
   m.querySelectorAll("#ed-ictype button").forEach(b=>b.addEventListener("click",()=>{
-    const t=b.dataset.t;autoPick=false;if(t!==d.icon.type){const col=d.icon.color;d.icon={type:t};if(col&&(t==="auto"||t==="mono"))d.icon.color=col;if(t==="emoji"){const s=suggestIcons(d)[0];d.icon.value=s.emoji;d.icon.color=s.color}}
+    const t=b.dataset.t;autoPick=false;if(t!==d.icon.type){const col=d.icon.color;d.icon={type:t,pick:true};if(col&&(t==="auto"||t==="mono"))d.icon.color=col;if(t==="emoji"){const s=suggestIcons(d)[0];d.icon.value=s.emoji;d.icon.color=s.color}}
     m.querySelectorAll("#ed-ictype button").forEach(x=>x.setAttribute("aria-pressed",x===b));iopts();prev()}));
   let sugT;m.querySelector("#ed-name").addEventListener("input",()=>{prev();clearTimeout(sugT);sugT=setTimeout(()=>{if(d.icon.type==="emoji")iopts()},400)});
   m.querySelector("#ed-url").addEventListener("change",()=>{prev();tprev()});
@@ -2194,6 +2294,7 @@ function openSettings(){
   const catOpts=sel=>CATS.map(c=>`<option value="${c}" ${sel===c?"selected":""}>${esc(catLabel(c))}</option>`).join("");
   const m=openModal(`<div class="m-head"><h3>⚙️ 설정</h3>${XBTN}</div>
   <div class="m-body">
+    <section class="sec"><h4>지도 이름</h4><label class="field"><span>왼쪽 위 제목 (누르면 메인 지도로 가요)</span><input type="text" id="st-title" maxlength="30" value="${esc(st.title||"ONGLE LAND")}" placeholder="ONGLE LAND"></label></section>
     <section class="sec"><h4>분류 이름</h4>
       <div class="row">${CATS.map(c=>`<label class="field"><span><i class="dot" style="--c:${CCOLOR[c]};margin-right:6px"></i>${c==="school"?"폴더로 나누는 분류":"폴더 없는 분류"}</span><input type="text" id="st-cat-${c}" value="${esc(st.cats[c].label)}" maxlength="12"></label>`).join("")}</div>
       <div class="acts"><button class="btn sm" type="button" id="st-icons">아이콘 한꺼번에 만들기</button><button class="btn sm" type="button" id="st-folders">${esc(catLabel("school"))} 폴더 관리 (${folderList().length}개)</button></div>
@@ -2239,6 +2340,7 @@ function openSettings(){
   });
   m.querySelector("#st-save").addEventListener("click",async()=>{
     const btn=m.querySelector("#st-save");
+    st.title=m.querySelector("#st-title").value.trim()||"ONGLE LAND";
     CATS.forEach(c=>{st.cats[c].label=m.querySelector(`#st-cat-${c}`).value.trim()||DEF_SETTINGS.cats[c].label});
     const labels=CATS.map(c=>st.cats[c].label);
     if(new Set(labels).size<2||labels.includes("설정")){toast("분류 이름은 서로 달라야 하고 ‘설정’은 쓸 수 없어요.");return}
