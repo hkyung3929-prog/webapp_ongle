@@ -758,7 +758,8 @@ body.selecting .mb-acts,body.dragging .mb .tip{display:none}
 body.dragging .blk-drop{pointer-events:auto;z-index:8}
 .blk-drop.over{background:rgba(255,225,77,.35);outline:4px dashed var(--ink);outline-offset:-4px}
 .tw{width:100%}
-.tw-stage .mb .tip{opacity:1;bottom:auto;top:97%;transform:translateX(-50%);font-size:calc(var(--fs)*.78cqw);padding:.08em .6em;box-shadow:2px 2px 0 var(--ink);max-width:132%;overflow:hidden;text-overflow:ellipsis;z-index:2}
+.tw-stage .mb .tip{opacity:1;bottom:auto;top:97%;transform:translateX(-50%);font-size:calc(var(--fs)*.78cqw);padding:.08em .6em;box-shadow:2px 2px 0 var(--ink);max-width:142%;overflow:hidden;text-overflow:ellipsis;z-index:2}
+.tw-stage .mb:hover .tip{max-width:none;z-index:5}
 .tw-stage .mb:hover .tip{transform:translateX(-50%) translateY(-1px)}
 .tw-stage .mb:nth-child(6n+1) .tip{background:var(--t-lav)}.tw-stage .mb:nth-child(6n+2) .tip{background:var(--t-yellow)}.tw-stage .mb:nth-child(6n+3) .tip{background:var(--t-cyan)}
 .tw-stage .mb:nth-child(6n+4) .tip{background:var(--t-pink)}.tw-stage .mb:nth-child(6n+5) .tip{background:var(--t-mint)}.tw-stage .mb:nth-child(6n) .tip{background:var(--t-peach)}
@@ -1638,22 +1639,40 @@ function lampSVG(x,y,k){return `<g transform="translate(${x} ${y}) scale(${k})">
 function carSVG(x,y,col,k,flip){return `<g transform="translate(${x} ${y}) scale(${flip?-k:k} ${k})"><rect x="-24" y="-15" width="48" height="17" rx="7" fill="${col}" stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"/><path d="M-13-15l5-10h17l7 10z" fill="#BFE9FF" stroke="#1F1D2B" stroke-width="2.6" stroke-linejoin="round"/><path d="M0-25v10" stroke="#1F1D2B" stroke-width="2"/><circle cx="-13" cy="3" r="5.5" fill="#1F1D2B"/><circle cx="13" cy="3" r="5.5" fill="#1F1D2B"/><circle cx="-13" cy="3" r="2" fill="#fff"/><circle cx="13" cy="3" r="2" fill="#fff"/><rect x="18" y="-11" width="5" height="4" rx="1.5" fill="#FFE45C" stroke="#1F1D2B" stroke-width="1.4"/></g>`}
 function saleSign(x,y,k){return `<g transform="translate(${x} ${y}) scale(${k})"><path d="M0 0V-26" stroke="#1F1D2B" stroke-width="3"/><rect x="-26" y="-46" width="52" height="22" rx="5" fill="#fff" stroke="#1F1D2B" stroke-width="2.6"/><text x="0" y="-31" text-anchor="middle" font-family="Pretendard Variable,Pretendard,sans-serif" font-weight="800" font-size="12" fill="#1F1D2B">빈 땅</text></g>`}
 /* 블록 안에 건물을 줄로 세워요. 두 줄마다 골목길이 하나씩 생겨요 */
-function rowsNeed(k,cols,s,alley){const r=Math.ceil(k/cols);return r*(s*.93+10)+Math.floor((r-1)/2)*alley}
-function fitRows(aw,ah,k,sMin,sMax,alley){if(!k)return sMax;for(let s=sMax;s>=sMin;s-=2){const cols=Math.floor(aw/s);if(cols>0&&rowsNeed(k,cols,s,alley)<=ah)return s}return sMin}
+const GX=1.5;/* 건물 한 칸 = 건물 폭의 1.5배 (이름표가 안 겹치게) */
+const VRW=.62;/* 블록 안 세로 찻길 폭 (도로 폭 대비) */
+function kFor(c){return c<4?0:c<=6?Math.ceil(c/2):3}
+function nvFor(c){const K=kFor(c);return K?Math.ceil(c/K)-1:0}
+function colsFit(w,s,vw){for(let c=Math.max(1,Math.floor(w/(s*GX)));c>=1;c--){if(c*s*GX+nvFor(c)*vw<=w)return c}return 1}
+function rowsNeed(k,cols,s,alley){const r=Math.ceil(k/cols);return r*(s*.93+16)+Math.floor((r-1)/2)*alley*1.2}
+function fitRows(aw,ah,k,sMin,sMax,alley){if(!k)return sMax;const vw=alley/.72*VRW;for(let s=sMax;s>=sMin;s-=2){const cols=colsFit(aw,s,vw);if(cols>0&&rowsNeed(k,cols,s,alley)<=ah)return s}return sMin}
 function placeRows(box,list,s,seed,alley){
-  const bh=s*.93,cols=Math.max(1,Math.floor(box.w/s)),out=[],alleys=[];
+  const bh=s*.93,px=s*GX,vw=alley/.72*VRW,cols=Math.max(1,Math.min(colsFit(box.w,s,vw),list.length)),K=kFor(cols),nv=nvFor(cols),out=[],alleys=[],people=[];
   const maxRowsFit=r=>rowsNeed(r*cols,cols,s,alley)<=box.h+1;let maxR=1;while(maxRowsFit(maxR+1))maxR++;
   const cap=cols*maxR,show=list.length>cap?list.slice(0,cap-1):list,more=list.length-show.length,tot=show.length+(more?1:0);
+  const Wg=cols*px+nv*vw,gx0=box.x+(box.w-Wg)/2;
+  const slotX=c=>gx0+c*px+(K?Math.floor(c/K)*vw:0);
+  const vroads=[];for(let m=1;m<=nv;m++)vroads.push(gx0+m*K*px+(m-1)*vw+vw/2);
   let y=box.y+4;const rows=Math.ceil(tot/cols);
   for(let r=0;r<rows;r++){
-    if(r>0&&r%2===0){alleys.push(y+alley*.08);y+=alley}
-    const inRow=Math.min(cols,tot-r*cols),x0=box.x+(box.w-inRow*s)/2;
-    for(let c2=0;c2<inRow;c2++){const i=r*cols+c2;if(i<show.length){const l=show[i],j=((hashNum(l.id+seed)%9)-4)*s*.012;out.push({l,x:x0+c2*s+j,y:y+bh,s})}}
-    y+=bh+10;
+    if(r>0&&r%2===0){alleys.push(y+alley*.3);y+=alley*1.2}
+    const inRow=Math.min(cols,tot-r*cols),off=Math.floor((cols-inRow)/2);
+    for(let c2=0;c2<inRow;c2++){const i=r*cols+c2,sc=c2+off;if(i<show.length){const l=show[i],j=((hashNum(l.id+seed)%9)-4)*s*.01,x=slotX(sc)+(px-s)/2+j;out.push({l,x,y:y+bh,s});
+      const endOfGroup=K?(sc%K===K-1):false,h=hashNum(l.id+"p"+seed);
+      if(c2<inRow-1&&!endOfGroup&&h%5<2)people.push({x:x+s+(px-s)/2,y:y+bh,v:h})}}
+    y+=bh+16;
   }
   let plus=null;if(more){const last=out[out.length-1];plus={x:last.x+s*1.5,y:last.y-bh/2,n:more}}
-  return {out,plus,alleys};
+  return {out,plus,alleys,vroads,vw,people,bottom:y};
 }
+function personSVG(x,y,k,v){
+  const shirts=["#FF6FA5","#4D9DE0","#FFB238","#7BC67E","#7C6BE0","#2EC4B6"],hair=["#3B2A20","#6B4226","#1F1D2B","#C9772E"];
+  const sh=shirts[v%shirts.length],hr=hair[(v>>3)%hair.length],f=(v>>5)%2?-1:1;
+  if(v%7===0)/* 강아지 */return `<g transform="translate(${x} ${y}) scale(${k*f} ${k})"><ellipse cx="0" cy="0" rx="11" ry="2.2" fill="#1F1D2B" opacity=".15"/><rect x="-10" y="-13" width="17" height="9" rx="4.5" fill="#F6E3C6" stroke="#1F1D2B" stroke-width="2"/><path d="M-8-4v4M4-4v4" stroke="#1F1D2B" stroke-width="2.4" stroke-linecap="round"/><circle cx="8" cy="-15" r="6" fill="#F6E3C6" stroke="#1F1D2B" stroke-width="2"/><path d="M5-20l-2-5 4 2M11-20l2-5-4 2" fill="#C9772E" stroke="#1F1D2B" stroke-width="1.6" stroke-linejoin="round"/><circle cx="10" cy="-15" r="1.1" fill="#1F1D2B"/><path d="M-10-10q-5-3-4-8" fill="none" stroke="#1F1D2B" stroke-width="2" stroke-linecap="round"/></g>`;
+  return `<g transform="translate(${x} ${y}) scale(${k*f} ${k})"><ellipse cx="0" cy="0" rx="8" ry="2" fill="#1F1D2B" opacity=".15"/><path d="M-3-10v9M3-10v9" stroke="#1F1D2B" stroke-width="2.8" stroke-linecap="round"/><rect x="-6.5" y="-22" width="13" height="13" rx="5" fill="${sh}" stroke="#1F1D2B" stroke-width="2"/><path d="M6-19l4 6" stroke="#1F1D2B" stroke-width="2.4" stroke-linecap="round"/><circle cx="0" cy="-29" r="7.5" fill="#FFE0C2" stroke="#1F1D2B" stroke-width="2"/><path d="M-7.5-30a7.5 7.5 0 0 1 15 0q-4-4-9-2.5z" fill="${hr}" stroke="#1F1D2B" stroke-width="1.6" stroke-linejoin="round"/><circle cx="2.5" cy="-28" r="1.1" fill="#1F1D2B"/><circle cx="4.5" cy="-25.5" r="1.4" fill="#FF9EC4" opacity=".8"/></g>`;
+}
+function signalSVG(x,y,k,v){const lit=v%3;return `<g transform="translate(${x} ${y}) scale(${k})"><path d="M0 0V-34" stroke="#1F1D2B" stroke-width="3"/><rect x="-6" y="-56" width="12" height="26" rx="4" fill="#3A3850" stroke="#1F1D2B" stroke-width="2.2"/><circle cx="0" cy="-50" r="3" fill="${lit===0?"#FF5A5A":"#6B6880"}"/><circle cx="0" cy="-43" r="3" fill="${lit===1?"#FFD84D":"#6B6880"}"/><circle cx="0" cy="-36" r="3" fill="${lit===2?"#5BD67A":"#6B6880"}"/><rect x="-4" y="-2" width="8" height="4" rx="2" fill="#1F1D2B"/></g>`}
+function carTopSVG(x,y,col,k,up){return `<g transform="translate(${x} ${y}) scale(${k} ${up?k:-k})"><rect x="-9" y="-16" width="18" height="32" rx="7" fill="${col}" stroke="#1F1D2B" stroke-width="2.4"/><path d="M-6.5-8h13l-2-5h-9z" fill="#BFE9FF" stroke="#1F1D2B" stroke-width="1.8" stroke-linejoin="round"/><rect x="-6" y="3" width="12" height="7" rx="2" fill="#BFE9FF" stroke="#1F1D2B" stroke-width="1.8"/><circle cx="-5" cy="-15" r="1.6" fill="#FFF3A0"/><circle cx="5" cy="-15" r="1.6" fill="#FFF3A0"/></g>`}
 function drawTown(R,ds,c){
   const road=c.road,sw=c.sw,pk=c.pk||packDistricts({x:R.x,y:R.y,w:R.w,h:R.h,gap:road},ds);
   const inner=pk.cells.map(b=>({x:b.x+sw+6,y:b.y+sw+c.lab+2,w:b.w-sw*2-12,h:b.h-sw*2-c.lab-6}));
@@ -1673,7 +1692,7 @@ function drawTown(R,ds,c){
   });
   cars.push([R.x+R.w*.62,R.y+R.h+W2*.5+road*.12,true],[R.x+R.w*.18,R.y-W2*.5+road*.16,false]);
   const CARC=["#FF6FA5","#5B8DE6","#FFB238","#2EC4B6"];
-  const marks=[];let fg="";
+  const marks=[];let fg="";const fg2=[];
   pk.cells.forEach((b,i)=>{
     const d=ds[i],full=d.list.length>0,ib=inner[i];
     bg+=`<rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="${road*.38}" fill="url(#cvbrick)" ${SK}/>`;
@@ -1682,7 +1701,23 @@ function drawTown(R,ds,c){
       const r=placeRows(ib,d.list,s,"b"+i,alley);marks.push(...r.out);
       r.alleys.forEach(ay=>{const ah=alley*.84;bg+=`<rect x="${b.x+sw-2}" y="${ay}" width="${b.w-sw*2+4}" height="${ah}" fill="#A7AABF" stroke="#1F1D2B" stroke-width="2.2"/><line x1="${b.x+sw+road*.5}" y1="${ay+ah/2}" x2="${b.x+b.w-sw-road*.5}" y2="${ay+ah/2}" stroke="#fff" stroke-width="2.4" stroke-dasharray="14 12"/>`;
         for(let zz=0;zz<4;zz++)bg+=`<rect x="${b.x+sw+6}" y="${ay+5+zz*(ah-10)/4}" width="${road*.3}" height="${Math.max(3,(ah-10)/8)}" rx="1" fill="#fff"/><rect x="${b.x+b.w-sw-6-road*.3}" y="${ay+5+zz*(ah-10)/4}" width="${road*.3}" height="${Math.max(3,(ah-10)/8)}" rx="1" fill="#fff"/>`});
-      [...new Set(r.out.map(m=>Math.round(m.y)))].forEach(y=>{bg+=`<rect x="${b.x+sw}" y="${y-2}" width="${b.w-sw*2}" height="${s*.13+6}" fill="url(#cvbrick)"/><path d="M${b.x+sw} ${y-2}H${b.x+b.w-sw}" stroke="#1F1D2B" stroke-width="2"/>`});
+      const walkY=[...new Set(r.out.map(m=>Math.round(m.y)))];
+      walkY.forEach(y=>{bg+=`<rect x="${b.x+sw}" y="${y-2}" width="${b.w-sw*2}" height="${s*.13+6}" fill="url(#cvbrick)"/><path d="M${b.x+sw} ${y-2}H${b.x+b.w-sw}" stroke="#1F1D2B" stroke-width="2"/>`});
+      /* 블록 안 세로 찻길 + 횡단보도 + 신호등 + 차 */
+      const vt=b.y+sw,vb=b.y+b.h-sw,vw=r.vw;
+      r.vroads.forEach((vx,vi)=>{
+        bg+=`<rect x="${vx-vw/2}" y="${vt}" width="${vw}" height="${vb-vt}" fill="#A7AABF" stroke="#1F1D2B" stroke-width="2.2"/>`;
+        bg+=`<line x1="${vx}" y1="${vt+8}" x2="${vx}" y2="${vb-8}" stroke="#fff" stroke-width="2.2" stroke-dasharray="12 10"/>`;
+        const cross=yy=>{let z=`<rect x="${vx-vw/2+1}" y="${yy}" width="${vw-2}" height="${s*.13+6}" fill="#A7AABF"/>`;for(let xx=vx-vw/2+4;xx<vx+vw/2-4;xx+=7)z+=`<rect x="${xx}" y="${yy+2}" width="3.6" height="${s*.13+2}" rx="1" fill="#fff"/>`;return z};
+        walkY.forEach(y=>{bg+=cross(y-2)});
+        r.alleys.forEach(ay=>{const ah=alley*.84;bg+=`<rect x="${vx-vw/2+1}" y="${ay+1}" width="${vw-2}" height="${ah-2}" fill="#A7AABF"/>`});
+        const sigs=[...walkY.map(y=>y-2)];
+        sigs.forEach((y,si)=>{if(si%2===0)fg2.push(signalSVG(vx-vw/2-5,y+s*.13+4,kk*.95*s/86,vi+si))});
+        cars.push({top:true,x:vx+vw*.22*(vi%2?1:-1),y:vt+(vb-vt)*(.35+((vi+i)%3)*.2),up:vi%2===0});
+      });
+      r.alleys.forEach((ay,ai)=>{const ah=alley*.84;{let cx=b.x+sw+(b.w-sw*2)*(.18+((ai+i)%3)*.16);if(r.vroads.some(vx=>Math.abs(vx-cx)<s*.9))cx+=s*1.4;cars.push([cx,ay+ah*.66,(ai+i)%2===0,.8])}
+        r.vroads.forEach(vx=>{for(const sx of [vx-vw/2-road*.42,vx+vw/2+road*.06])for(let zz=0;zz<4;zz++)bg+=`<rect x="${sx}" y="${ay+5+zz*(ah-10)/4}" width="${road*.36}" height="${Math.max(3,(ah-10)/8)}" rx="1" fill="#fff"/>`})});
+      r.people.forEach(pp=>fg2.push(personSVG(pp.x,pp.y,s/86*1.05,pp.v)));
       if(r.plus)fg+=`<button class="cv-more" type="button" ${d.key!=null?`data-folder="${esc(d.key)}"`:""} style="left:${pct(r.plus.x,c.W)};top:${pct(r.plus.y,c.H)}">+${r.plus.n}</button>`;
     }else bg+=treeAt(b.x+b.w*.3,b.y+b.h*.78,c.tk)+treeAt(b.x+b.w*.72,b.y+b.h*.84,c.tk*.9)+saleSign(b.x+b.w*.52,b.y+b.h*.8,c.tk*1.1);
     bg+=lampSVG(b.x+sw*.5,b.y+b.h-sw*.25,kk*1.05)+lampSVG(b.x+b.w-sw*.5,b.y+sw*1.6,kk*1.05);
@@ -1690,7 +1725,8 @@ function drawTown(R,ds,c){
     fg+=d.key!=null?`<button class="cv-lab" type="button" data-folder="${esc(d.key)}" style="${st}" title="${esc(d.label)} 거리 보기">${lab}</button>`:`<span class="cv-lab" style="${st};cursor:default">${lab}</span>`;
     if(d.drop!=null)fg+=`<div class="blk-drop" data-drop="${esc(d.drop)}" data-dname="${esc(d.label)}" style="left:${pct(b.x,c.W)};top:${pct(b.y,c.H)};width:${pct(b.w,c.W)};height:${pct(b.h,c.H)}"></div>`;
   });
-  cars.forEach(([x,y,f],j)=>{bg+=carSVG(x,y,CARC[j%CARC.length],kk*.95,f)});
+  cars.forEach((cc,j)=>{if(cc.top)bg+=carTopSVG(cc.x,cc.y,CARC[(j+1)%CARC.length],kk*1.05,cc.up);else{const [x,y,f,sc]=cc;bg+=carSVG(x,y,CARC[j%CARC.length],kk*.95*(sc||1),f)}});
+  bg+=fg2.join("");
   return {bg,fg,marks,s};
 }
 const I_EDIT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg>';
@@ -1709,7 +1745,7 @@ function townPageHTML(ds){
   const target=mob?112:86;c.sMax=target;
   /* 앱 수에 꼭 맞게: 각 블록에 필요한 줄 수만큼만 높이를 주고, 앱이 늘면 줄과 골목길이 늘어요 */
   const road=c.road,sw=c.sw,alley=road*.72,Rw=W-road*2,n=ds.length;
-  const need=(d,w)=>{const iw=w-sw*2-12;let s=target;let cols=Math.floor(iw/s);while(cols<1&&s>c.sMin){s-=4;cols=Math.floor(iw/s)}
+  const need=(d,w)=>{const iw=w-sw*2-12;let s=target;const vw=road*VRW;let cols=colsFit(iw,s,vw);
     const body=d.list.length?rowsNeed(d.list.length,Math.max(1,cols),s,alley)+8:s*1.15;return c.lab+sw*2+10+body};
   const mk=Math.max(1,...ds.map(d=>d.list.length)),wts=ds.map(d=>Math.max(d.list.length,4,mk*.25)),total=wts.reduce((a,b)=>a+b,0);
   let best=null;
@@ -1720,7 +1756,7 @@ function townPageHTML(ds){
     let y=road,cells=[],bad=0;
     rows.forEach(rr=>{const rw=rr.reduce((a,i)=>a+wts[i],0),Ww=Rw-road*(rr.length-1);let x=road;
       const ws=rr.map(i=>Ww*wts[i]/rw),h=Math.max(...rr.map((i,k)=>need(ds[i],ws[k])));
-      rr.forEach((i,k)=>{cells[i]={x,y,w:ws[k],h};if(ws[k]<target*2.6+sw*2)bad++;x+=ws[k]+road});y+=h+road});
+      rr.forEach((i,k)=>{cells[i]={x,y,w:ws[k],h};if(ws[k]<target*GX*2.2+sw*2)bad++;x+=ws[k]+road});y+=h+road});
     const score=y+bad*400;if(!best||score<best.score)best={score,cells,rows,H:y};
   }
   const H=Math.round(best.H+road*.2);c.H=H;c.pk={cells:best.cells,rows:best.rows};
